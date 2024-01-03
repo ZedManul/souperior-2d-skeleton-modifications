@@ -1,25 +1,20 @@
 @tool
 @icon("customIKIcon.png")
-extends Node
+extends SoupMod
 class_name SoupTwoBoneIK
 
 ## "Souperior" custom modification for Skeleton2D; Procedurally affects two bones to end at a target, if possible.
 
-## The skeleton this modification affects
-@onready @export var Skeleton: Skeleton2D = find_skeledaddy()
-## Target node for the modification
-@export_node_path("Node2D") var TargetNode: NodePath
+## Target node for the modification;
+## 
+## Defines the point to which the chain tries to go
+@export var TargetNode: Node2D
 ## if true, the modification is calculated and applied
-@export var Enabled: bool = false:
-	set(new_value):
-		Enabled=new_value
-		if Skeleton is Skeleton2D:
-			if Enabled:
-				handle_IK()
-	get:
-		return Enabled
+@export var Enabled: bool = false
+
 
 ## Easing value for the modification. 
+## 
 ## Smoothes modification's reaction to changes. 
 ## At 0 the modification snaps to the target
 ## At 1 the modification does not react to the target at all
@@ -29,9 +24,11 @@ class_name SoupTwoBoneIK
 	get:
 		return Easing
 
-
+## Flips the bend direction
 @export var FlipBendDirection: bool = false
-## Softness slows down the bones as the constrained bones straighten. 
+
+## Softness slows down the bones as the chain straightens.
+##  
 ## With 0 softness, IK bones may move very quickly just before the target goes out of range, 
 ## which is usually undesirable
 @export_range(0, 1, 0.01, "or_greater", "or_less") var Softness: float = 0:
@@ -39,27 +36,33 @@ class_name SoupTwoBoneIK
 		Softness=clampf(new_value,0,1)
 	get:
 		return Softness
+
 @export_category("Bones")
 #region Bone 1  
 @export var JointOneBoneIdx: int = -1:
 	set(new_value):
 		JointOneBoneIdx=new_value
+		if !(ModStack is SoupStack):
+			return
+		var Skeleton: Skeleton2D = ModStack.Skeleton
 		if Skeleton is Skeleton2D:
 			if (JointOneBoneIdx>=0)and(JointOneBoneIdx<Skeleton.get_bone_count()):
-				if (JointOneBone != Skeleton.get_bone(JointOneBoneIdx).get_path()):
-					JointOneBone = Skeleton.get_bone(JointOneBoneIdx).get_path()
+				if (JointOneBone != Skeleton.get_bone(JointOneBoneIdx)):
+					JointOneBone = Skeleton.get_bone(JointOneBoneIdx)
 					return
 		if JointOneBone:
-			JointOneBone = ""
+			JointOneBone = null
 	get:
 		return JointOneBoneIdx
-@export_node_path("Bone2D") var JointOneBone: NodePath:
+@export var JointOneBone: Bone2D:
 	set(new_value):
 		JointOneBone=new_value
-		if (Skeleton is Skeleton2D):
+		if !(ModStack is SoupStack):
+			return
+		if (ModStack.Skeleton is Skeleton2D):
 			if JointOneBone:
-				if JointOneBoneIdx != get_node(JointOneBone).get_index_in_skeleton():
-					JointOneBoneIdx = get_node(JointOneBone).get_index_in_skeleton()
+				if JointOneBoneIdx != JointOneBone.get_index_in_skeleton():
+					JointOneBoneIdx = JointOneBone.get_index_in_skeleton()
 	get:
 		return JointOneBone
 #endregion 
@@ -68,22 +71,27 @@ class_name SoupTwoBoneIK
 @export  var JointTwoBoneIdx: int = -1:
 	set(new_value):
 		JointTwoBoneIdx=new_value
+		if !(ModStack is SoupStack):
+			return
+		var Skeleton: Skeleton2D = ModStack.Skeleton
 		if Skeleton is Skeleton2D:
 			if (JointTwoBoneIdx>=0)and(JointTwoBoneIdx<Skeleton.get_bone_count()):
-				if (JointTwoBone != Skeleton.get_bone(JointTwoBoneIdx).get_path()):
-					JointTwoBone = Skeleton.get_bone(JointTwoBoneIdx).get_path()
+				if (JointTwoBone != Skeleton.get_bone(JointTwoBoneIdx)):
+					JointTwoBone = Skeleton.get_bone(JointTwoBoneIdx)
 					return
 		if JointTwoBone:
-			JointTwoBone = ""
+			JointTwoBone = null
 	get:
 		return JointTwoBoneIdx
-@export_node_path("Bone2D") var JointTwoBone: NodePath:
+@export var JointTwoBone: Bone2D:
 	set(new_value):
 		JointTwoBone=new_value
-		if (Skeleton is Skeleton2D):
+		if !(ModStack is SoupStack):
+			return
+		if (ModStack.Skeleton is Skeleton2D):
 			if JointTwoBone:
-				if JointTwoBoneIdx != get_node(JointTwoBone).get_index_in_skeleton():
-					JointTwoBoneIdx = get_node(JointTwoBone).get_index_in_skeleton()
+				if JointTwoBoneIdx != JointTwoBone.get_index_in_skeleton():
+					JointTwoBoneIdx = JointTwoBone.get_index_in_skeleton()
 	get:
 		return JointTwoBone
 #endregion
@@ -97,15 +105,22 @@ var SecondBone: Bone2D
 var TargetVector: Vector2
 #endregion
 
-
+func _ready() -> void:
+	requests.append(ModificationRequest.new(-1,Transform2D.IDENTITY))
+	requests.append(ModificationRequest.new(-1,Transform2D.IDENTITY))
 
 
 func _process(delta) -> void:
-	if Enabled and TargetNode:
+	if Enabled and TargetNode and parent_enable_check():
 		handle_IK()
+		ModStack.apply_modification(requests[0])
+		ModStack.apply_modification(requests[1])
 
 
 func handle_IK() -> void:
+	if !(ModStack is SoupStack):
+			return
+	var Skeleton: Skeleton2D = ModStack.Skeleton
 	#region Updateding Calculation-related variables
 	FirstBone = Skeleton.get_bone(JointOneBoneIdx)
 	SecondBone = Skeleton.get_bone(JointTwoBoneIdx)
@@ -137,7 +152,8 @@ func handle_IK() -> void:
 			- FirstBone.get_bone_angle() + PI
 	
 	var jointTransform: Transform2D = Transform2D(boneAngle, Vector2.ONE, 0, bonePos)
-	FirstBone.transform = jointTransform.interpolate_with(FirstBone.get_transform(), Easing)
+	requests[0].override(JointOneBoneIdx,jointTransform)
+	#FirstBone.transform = jointTransform.interpolate_with(FirstBone.get_transform(), Easing)
 	#endregion
 	
 	
@@ -148,11 +164,12 @@ func handle_IK() -> void:
 	- SecondBone.get_bone_angle()
 	
 	jointTransform = Transform2D(boneAngle, Vector2.ONE, 0, bonePos)
-	SecondBone.transform = jointTransform.interpolate_with(SecondBone.transform, Easing)
+	requests[1].override(JointTwoBoneIdx,jointTransform)
+	#SecondBone.transform = jointTransform.interpolate_with(SecondBone.transform, Easing)
 	#endregion
 
 func calculate_target_vector() -> Vector2:
-	var realVector: Vector2 = get_node(TargetNode).global_position - FirstBone.global_position
+	var realVector: Vector2 = TargetNode.global_position - FirstBone.global_position
 	var boneDifference: float = abs(vectorize_bone(FirstBone).length() - vectorize_bone(SecondBone).length())
 	
 	var fullLength: float \
@@ -169,7 +186,7 @@ func calculate_target_vector() -> Vector2:
 func vectorize_bone(bone: Bone2D) -> Vector2:
 	var res = ((Vector2.RIGHT * bone.get_length()) \
 	.rotated(bone.get_bone_angle()))
-	return Vector2(res.x*Skeleton.scale.x, res.y*Skeleton.scale.y)
+	return Vector2(res.x*ModStack.Skeleton.scale.x, res.y*ModStack.Skeleton.scale.y)
 
 func calculate_bone_position(bone: Bone2D) -> Vector2:
 	var bonedad=bone.get_parent()
@@ -213,15 +230,3 @@ func flip_angle(a: float) -> float:
 
 func calculate_softness_result(a:float):
 	return -(0.25*(a-1-Softness)*(a-1-Softness)/Softness)+1
-
-
-func find_skeledaddy() -> Skeleton2D:
-	var foundNode: Node = self
-	for i in 1000:
-		foundNode = foundNode.get_parent()
-		if foundNode is Skeleton2D:
-			return foundNode
-			break
-		elif foundNode == get_tree().root:
-			break
-	return null

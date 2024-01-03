@@ -1,12 +1,21 @@
 Thanks for downloading my plugin :]
 
-The Souperior Modification nodes are NOT enabled by default.
+This has been reworked a bit since last time;
+The modification stack is now a separate node.
+I recommend putting it as a direct child of the Skeleton2D node.
+Technically, it doesnt really matter where exactly it is in the tree, 
+as you can just manually select the skeleton node for it to affect.
+By default it will try to find a skeleton somewhere above itself in the hierarchy.
 
-Soupy nodes automatically assign a skeleton to themselves 
-if there is one above them in the tree.
-Alternatively, you can assign the skeleton node yourself.
-I personally recommend grouping the modification nodes 
-as close to the skeleton in the hierarchy as possible.
+
+Modifications (IK, LookAt, SubStack)
+MUST be children (direct or not) of the Stack node.
+If a modification is a direct child of a substack 
+(BUT NOT OF ANOTHER MODIFICATION), 
+it will also inherit the enable state of the substacj
+
+
+
 Skeletons are, alas, still a bit buggy, and weird edgecases arise when shifting nodes around.
 If something seems to be broken, try reloading your project.
 Skeletons are weird like that.

@@ -22,6 +22,10 @@ window/stretch/scale_mode="integer"
 
 enabled=PackedStringArray("res://addons/Souperior 2D Skeleton Modifications/plugin.cfg")
 
+[filesystem]
+
+import/blender/enabled=false
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

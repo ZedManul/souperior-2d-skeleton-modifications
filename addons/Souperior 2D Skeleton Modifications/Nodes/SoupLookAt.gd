@@ -1,25 +1,21 @@
 @tool
 @icon("customLookAtIcon.png")
-extends Node
+extends SoupMod
 class_name SoupLookAt
 
 ## "Souperior" custom modification for Skeleton2D; Points bone angle at the target.
 
-## The skeleton this modification affects
-@onready @export var Skeleton: Skeleton2D = find_skeledaddy()
-## Target node for the modification
-@export_node_path("Node2D") var TargetNode: NodePath
+
+## Target node for the modification;
+## 
+## Points the bone at it.
+@export var TargetNode: Node2D
+
 ## if true, the modification is calculated and applied
-@export var Enabled: bool = false:
-	set(new_value):
-		Enabled=new_value
-		if Skeleton is Skeleton2D:
-			if Enabled:
-				handle_lookAt()
-	get:
-		return Enabled
+@export var Enabled: bool = false
 
 ## Easing value for the modification. 
+## 
 ## Smoothes modification's reaction to changes. 
 ## At 0 the modification snaps to the target
 ## At 1 the modification does not react to the target at all
@@ -34,36 +30,46 @@ class_name SoupLookAt
 @export var BoneIdx: int = -1:
 	set(new_value):
 		BoneIdx=new_value
+		if !(ModStack is SoupStack):
+			return
+		var Skeleton: Skeleton2D = ModStack.Skeleton
 		if Skeleton is Skeleton2D:
 			if (BoneIdx>=0)and(BoneIdx<Skeleton.get_bone_count()):
-				if (Bone != Skeleton.get_bone(BoneIdx).get_path()):
-					Bone = Skeleton.get_bone(BoneIdx).get_path()
+				if (Bone != Skeleton.get_bone(BoneIdx)):
+					Bone = Skeleton.get_bone(BoneIdx)
 					return
 		if Bone:
-			Bone = ""
+			Bone = null
 	get:
 		return BoneIdx
-@export_node_path("Bone2D") var Bone: NodePath:
+@export var Bone: Bone2D:
 	set(new_value):
 		Bone=new_value
-		if (Skeleton is Skeleton2D):
+		if !(ModStack is SoupStack):
+			return
+		if (ModStack.Skeleton is Skeleton2D):
 			if Bone:
-				if BoneIdx != get_node(Bone).get_index_in_skeleton():
-					BoneIdx = get_node(Bone).get_index_in_skeleton()
+				if BoneIdx != Bone.get_index_in_skeleton():
+					BoneIdx = Bone.get_index_in_skeleton()
 	get:
 		return Bone
 #endregion 
 var TargetVector: Vector2
 
+func _ready() -> void:
+	requests.append(ModificationRequest.new(-1,Transform2D.IDENTITY))
 
 func _process(delta) -> void:
-	if Enabled and TargetNode:
+	if Enabled and TargetNode and parent_enable_check():
 		handle_lookAt()
+		ModStack.apply_modification(requests[0])
 
 func handle_lookAt() -> void:
-	var boneNode: Bone2D = get_node(Bone)
+	if !(ModStack is SoupStack):
+			return
+	var Skeleton: Skeleton2D = ModStack.Skeleton
 	TargetVector \
-	= get_node(TargetNode).global_position - boneNode.global_position
+	=TargetNode.global_position - Skeleton.get_bone(BoneIdx).global_position
 	
 	var isFlipped: int = int(sign(Skeleton.scale).x!=sign(Skeleton.scale).y)
 	var isInverted: int = int(sign(Skeleton.scale).y==-1)
@@ -72,31 +78,21 @@ func handle_lookAt() -> void:
 	if !isFlipped:
 		boneAngle \
 			= TargetVector.angle() \
-			- boneNode.get_bone_angle() \
-			- boneNode.get_parent().global_rotation
+			- Bone.get_bone_angle() \
+			- Bone.get_parent().global_rotation
 	else:
 		boneAngle \
 			= flip_angle(TargetVector.angle() \
-			- boneNode.get_parent().global_rotation) \
-			- boneNode.get_bone_angle() + PI
+			- Bone.get_parent().global_rotation) \
+			- Bone.get_bone_angle() + PI
 	
-	var bonePos: Vector2 = boneNode.position 
-	var jointTransform: Transform2D = Transform2D( boneAngle, bonePos).interpolate_with(boneNode.transform, Easing)
-	boneNode.transform = jointTransform
-
+	var bonePos: Vector2 = Bone.position 
+	var jointTransform: Transform2D = Transform2D( boneAngle, bonePos).interpolate_with(Bone.transform, Easing)
+	requests[0].override(BoneIdx,jointTransform)
 
 func flip_angle(a: float) -> float:
 	return PI - a
 
-func find_skeledaddy() -> Skeleton2D:
-	var foundNode: Node = self
-	for i in 1000:
-		foundNode = foundNode.get_parent()
-		if foundNode is Skeleton2D:
-			return foundNode
-			break
-		elif foundNode == get_tree().root:
-			break
-	return null
+
 
 
