@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b40dvjixk0k5e"
-path="res://.godot/imported/SoupyLogo.png-6134b3e5190b8008800771ef5110f661.ctex"
+uid="uid://dw440fgy88mpi"
+path="res://.godot/imported/customTransformEasingIcon.png-a59c0dfd29650278a4504db2e7969558.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SoupyLogo.png"
-dest_files=["res://.godot/imported/SoupyLogo.png-6134b3e5190b8008800771ef5110f661.ctex"]
+source_file="res://addons/Souperior 2D Skeleton Modifications/Resources/customTransformEasingIcon.png"
+dest_files=["res://.godot/imported/customTransformEasingIcon.png-a59c0dfd29650278a4504db2e7969558.ctex"]
 
 [params]
 

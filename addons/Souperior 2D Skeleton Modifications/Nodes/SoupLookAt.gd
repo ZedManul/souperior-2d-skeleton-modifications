@@ -14,17 +14,6 @@ class_name SoupLookAt
 ## if true, the modification is calculated and applied
 @export var Enabled: bool = false
 
-## Easing value for the modification. 
-## 
-## Smoothes modification's reaction to changes. 
-## At 0 the modification snaps to the target
-## At 1 the modification does not react to the target at all
-@export_range(0, 1, 0.01, "or_greater", "or_less") var Easing: float = 0:
-	set(new_value):
-		Easing=clampf(new_value,0,1)
-	get:
-		return Easing
-
 @export_category("Bones")
 #region Bone 
 @export var BoneIdx: int = -1:
@@ -56,15 +45,27 @@ class_name SoupLookAt
 #endregion 
 var TargetVector: Vector2
 
+@export_category("Easing")
+## Toggles Easing
+##
+## This sort of easing is rather advanced 
+## and may be unwanted on some modifications
+@export var UseEasing: bool = false
+## Easing Resource
+##
+## Defines easing behaviour
+@export var Easing: TransformEasing
+
 func _ready() -> void:
 	requests.append(ModificationRequest.new(-1,Transform2D.IDENTITY))
 
 func _process(delta) -> void:
 	if Enabled and TargetNode and parent_enable_check():
-		handle_lookAt()
+		handle_lookAt(delta)
 		ModStack.apply_modification(requests[0])
+		
 
-func handle_lookAt() -> void:
+func handle_lookAt(delta) -> void:
 	if !(ModStack is SoupStack):
 			return
 	var Skeleton: Skeleton2D = ModStack.Skeleton
@@ -87,7 +88,10 @@ func handle_lookAt() -> void:
 			- Bone.get_bone_angle() + PI
 	
 	var bonePos: Vector2 = Bone.position 
-	var jointTransform: Transform2D = Transform2D( boneAngle, bonePos).interpolate_with(Bone.transform, Easing)
+	var jointTransform: Transform2D = Transform2D(boneAngle, bonePos)
+	if UseEasing and (Easing is TransformEasing):
+		Easing.update_xy(delta,jointTransform)
+		jointTransform = Transform2D(Easing.State.get_rotation(),bonePos)
 	requests[0].override(BoneIdx,jointTransform)
 
 func flip_angle(a: float) -> float:

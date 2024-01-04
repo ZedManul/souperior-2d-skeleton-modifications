@@ -1,12 +1,52 @@
-[gd_scene load_steps=6 format=3 uid="uid://4y6pv0jklqj7"]
+[gd_scene load_steps=11 format=3 uid="uid://4y6pv0jklqj7"]
 
 [ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Nodes/SoupStack.gd" id="1_470nx"]
 [ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Nodes/SoupLookAt.gd" id="1_rtiii"]
 [ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Nodes/SoupTwoBoneIK.gd" id="2_uy6an"]
 [ext_resource type="Texture2D" uid="uid://caaeipk0j0683" path="res://addons/Souperior 2D Skeleton Modifications/DEMO/CustomIKDemo.png" id="3_lj5jx"]
+[ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Resources/TransformEasing.gd" id="5_6x6tg"]
 [ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Nodes/SoupSubStack.gd" id="5_w7amt"]
 
+[sub_resource type="Resource" id="Resource_scmlx"]
+script = ExtResource("5_6x6tg")
+Frequency = 3.0
+Damping = 0.5
+Reaction = 2.0
+TFrequency = 1.0
+TDamping = 1.0
+TReaction = 1.0
+
+[sub_resource type="Resource" id="Resource_2dadm"]
+script = ExtResource("5_6x6tg")
+Frequency = 2.0
+Damping = 0.8
+Reaction = 2.0
+TFrequency = 1.0
+TDamping = 1.0
+TReaction = 1.0
+
+[sub_resource type="Resource" id="Resource_dhrbo"]
+script = ExtResource("5_6x6tg")
+Frequency = 2.0
+Damping = 0.3
+Reaction = -2.5
+TFrequency = 1.0
+TDamping = 1.0
+TReaction = 1.0
+
+[sub_resource type="Resource" id="Resource_sksen"]
+script = ExtResource("5_6x6tg")
+Frequency = 1.0
+Damping = 0.6
+Reaction = -2.0
+TFrequency = 1.0
+TDamping = 1.0
+TReaction = 1.0
+
 [node name="SoupIkDemo" type="Node2D"]
+
+[node name="HeadLookatTarget" type="Marker2D" parent="."]
+position = Vector2(105, -49)
 
 [node name="LegIKTarget" type="Marker2D" parent="."]
 position = Vector2(0, 70)
@@ -14,8 +54,9 @@ position = Vector2(0, 70)
 [node name="FootLookatTarget" type="Marker2D" parent="LegIKTarget"]
 position = Vector2(0, 29)
 
-[node name="HeadLookatTarget" type="Marker2D" parent="."]
-position = Vector2(133, 22)
+[node name="NeckLookatTarget" type="Marker2D" parent="."]
+position = Vector2(81, -96)
+rotation = -3.14159
 
 [node name="DemoSkelly" type="Skeleton2D" parent="."]
 
@@ -23,10 +64,10 @@ position = Vector2(133, 22)
 script = ExtResource("1_470nx")
 Skeleton = NodePath("..")
 
-[node name="SoupSubStack" type="Node" parent="DemoSkelly/SoupStack"]
+[node name="LegStacc" type="Node" parent="DemoSkelly/SoupStack"]
 script = ExtResource("5_w7amt")
 
-[node name="LegIK" type="Node" parent="DemoSkelly/SoupStack/SoupSubStack" node_paths=PackedStringArray("TargetNode", "JointOneBone", "JointTwoBone")]
+[node name="LegIK" type="Node" parent="DemoSkelly/SoupStack/LegStacc" node_paths=PackedStringArray("TargetNode", "JointOneBone", "JointTwoBone")]
 script = ExtResource("2_uy6an")
 TargetNode = NodePath("../../../../LegIKTarget")
 Enabled = true
@@ -35,21 +76,36 @@ JointOneBoneIdx = 3
 JointOneBone = NodePath("../../../Body/UpperLeg")
 JointTwoBoneIdx = 4
 JointTwoBone = NodePath("../../../Body/UpperLeg/LowerLeg")
+JointOneEasing = SubResource("Resource_scmlx")
+JointTwoEasing = SubResource("Resource_2dadm")
 
-[node name="SoupLookAt" type="Node" parent="DemoSkelly/SoupStack/SoupSubStack" node_paths=PackedStringArray("TargetNode", "Bone")]
+[node name="SoupLookAt" type="Node" parent="DemoSkelly/SoupStack/LegStacc" node_paths=PackedStringArray("TargetNode", "Bone")]
 script = ExtResource("1_rtiii")
 TargetNode = NodePath("../../../../LegIKTarget/FootLookatTarget")
 Enabled = true
 BoneIdx = 5
 Bone = NodePath("../../../Body/UpperLeg/LowerLeg/Foot")
 
-[node name="HeadLookAt" type="Node" parent="DemoSkelly/SoupStack" node_paths=PackedStringArray("TargetNode", "Bone")]
+[node name="HedStacc" type="Node" parent="DemoSkelly/SoupStack"]
+script = ExtResource("5_w7amt")
+
+[node name="HeadLookAt" type="Node" parent="DemoSkelly/SoupStack/HedStacc" node_paths=PackedStringArray("TargetNode", "Bone")]
 script = ExtResource("1_rtiii")
-TargetNode = NodePath("../../../HeadLookatTarget")
+TargetNode = NodePath("../../../../HeadLookatTarget")
 Enabled = true
-Easing = 0.79
 BoneIdx = 2
-Bone = NodePath("../../Body/Neck/Head")
+Bone = NodePath("../../../Body/Neck/Head")
+UseEasing = true
+Easing = SubResource("Resource_dhrbo")
+
+[node name="NeckLookAt" type="Node" parent="DemoSkelly/SoupStack/HedStacc" node_paths=PackedStringArray("TargetNode", "Bone")]
+script = ExtResource("1_rtiii")
+TargetNode = NodePath("../../../../NeckLookatTarget")
+Enabled = true
+BoneIdx = 1
+Bone = NodePath("../../../Body/Neck")
+UseEasing = true
+Easing = SubResource("Resource_sksen")
 
 [node name="Body" type="Bone2D" parent="DemoSkelly"]
 rest = Transform2D(1, 0, 0, 1, 0, 0)
@@ -61,6 +117,7 @@ metadata/_edit_lock_ = true
 
 [node name="Neck" type="Bone2D" parent="DemoSkelly/Body"]
 position = Vector2(8, -13)
+rotation = -0.728386
 rest = Transform2D(1, 0, 0, 1, 8, -13)
 
 [node name="NeckRT" type="RemoteTransform2D" parent="DemoSkelly/Body/Neck"]
@@ -70,7 +127,7 @@ metadata/_edit_lock_ = true
 
 [node name="Head" type="Bone2D" parent="DemoSkelly/Body/Neck"]
 position = Vector2(74, -9)
-rotation = 0.711847
+rotation = 1.12446
 scale = Vector2(1, 1)
 rest = Transform2D(1, 0, 0, 1, 74, -9)
 auto_calculate_length_and_angle = false
@@ -120,7 +177,8 @@ metadata/_edit_lock_ = true
 [node name="Sprites" type="Node2D" parent="."]
 
 [node name="Neck" type="Sprite2D" parent="Sprites"]
-position = Vector2(-5, -32)
+position = Vector2(-14.3489, -18.5251)
+rotation = -0.728386
 texture = ExtResource("3_lj5jx")
 centered = false
 region_enabled = true
@@ -143,8 +201,8 @@ region_enabled = true
 region_rect = Rect2(37, 69, 47, 48)
 
 [node name="Head" type="Sprite2D" parent="Sprites"]
-position = Vector2(83.4698, -40.5429)
-rotation = 0.711847
+position = Vector2(52.8701, -87.0581)
+rotation = 0.396074
 scale = Vector2(1, 1)
 texture = ExtResource("3_lj5jx")
 centered = false

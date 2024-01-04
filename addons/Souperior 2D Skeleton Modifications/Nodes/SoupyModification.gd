@@ -14,7 +14,6 @@ class_name SoupMod
 func _ready() -> void:
 	await get_tree().process
 
-
 func parent_enable_check() -> bool:
 	if !(ModStack is SoupStack):
 		return false
@@ -22,17 +21,6 @@ func parent_enable_check() -> bool:
 		return (ModStack.Enabled) #and (SubStack.Enabled)
 	else:
 		return ModStack.Enabled
-
-class ModificationRequest:
-	var boneIndex: int = -1
-	var requestTransform: Transform2D = Transform2D.IDENTITY
-	func _init(inputIndex: int, inputTransform: Transform2D):
-		boneIndex = inputIndex
-		requestTransform = inputTransform
-	
-	func override(inputIndex: int, inputTransform: Transform2D):
-		boneIndex = inputIndex
-		requestTransform = inputTransform
 
 func find_stack() -> SoupStack:
 	var foundNode: Node = get_parent()
@@ -45,3 +33,14 @@ func find_stack() -> SoupStack:
 		elif foundNode == get_tree().root:
 			break
 	return null
+
+class ModificationRequest:
+	var boneIndex: int = -1
+	var requestTransform: Transform2D = Transform2D.IDENTITY
+	func _init(inputIndex: int, inputTransform: Transform2D) -> void:
+		boneIndex = inputIndex
+		requestTransform = inputTransform
+	
+	func override(inputIndex: int, inputTransform: Transform2D) -> void:
+		boneIndex = inputIndex
+		requestTransform = inputTransform

@@ -12,18 +12,6 @@ class_name SoupTwoBoneIK
 ## if true, the modification is calculated and applied
 @export var Enabled: bool = false
 
-
-## Easing value for the modification. 
-## 
-## Smoothes modification's reaction to changes. 
-## At 0 the modification snaps to the target
-## At 1 the modification does not react to the target at all
-@export_range(0, 1, 0.01, "or_greater", "or_less") var Easing: float = 0:
-	set(new_value):
-		Easing=clampf(new_value,0,1)
-	get:
-		return Easing
-
 ## Flips the bend direction
 @export var FlipBendDirection: bool = false
 
@@ -66,7 +54,6 @@ class_name SoupTwoBoneIK
 	get:
 		return JointOneBone
 #endregion 
-
 #region Bone 2
 @export  var JointTwoBoneIdx: int = -1:
 	set(new_value):
@@ -96,8 +83,29 @@ class_name SoupTwoBoneIK
 		return JointTwoBone
 #endregion
 
-
-
+@export_category("Easing")
+@export_group("Joint One")
+## Toggles Easing
+##
+## This sort of easing is rather advanced 
+## and may be unwanted on some modifications
+@export var UseEasingOnJointOne: bool = false
+## Easing Resource
+## 
+## [MUST BE UNIQUE!] 
+## Defines easing behaviour
+@export var JointOneEasing: TransformEasing
+@export_group("Joint Two")
+## Toggles Easing
+##
+## This sort of easing is rather advanced 
+## and may be unwanted on some modifications
+@export var UseEasingOnJointTwo: bool = false
+## Easing Resource
+##
+## [MUST BE UNIQUE!] 
+## Defines easing behaviour
+@export var JointTwoEasing: TransformEasing
 
 #region Calculation Related Variables
 var FirstBone: Bone2D
@@ -109,15 +117,13 @@ func _ready() -> void:
 	requests.append(ModificationRequest.new(-1,Transform2D.IDENTITY))
 	requests.append(ModificationRequest.new(-1,Transform2D.IDENTITY))
 
-
 func _process(delta) -> void:
 	if Enabled and TargetNode and parent_enable_check():
-		handle_IK()
+		handle_IK(delta)
 		ModStack.apply_modification(requests[0])
 		ModStack.apply_modification(requests[1])
 
-
-func handle_IK() -> void:
+func handle_IK(delta: float) -> void:
 	if !(ModStack is SoupStack):
 			return
 	var Skeleton: Skeleton2D = ModStack.Skeleton
@@ -152,8 +158,10 @@ func handle_IK() -> void:
 			- FirstBone.get_bone_angle() + PI
 	
 	var jointTransform: Transform2D = Transform2D(boneAngle, Vector2.ONE, 0, bonePos)
+	if UseEasingOnJointOne and (JointOneEasing is TransformEasing):
+		JointOneEasing.update_xy(delta,jointTransform)
+		jointTransform = Transform2D(JointOneEasing.State.get_rotation(),bonePos)
 	requests[0].override(JointOneBoneIdx,jointTransform)
-	#FirstBone.transform = jointTransform.interpolate_with(FirstBone.get_transform(), Easing)
 	#endregion
 	
 	
@@ -164,8 +172,10 @@ func handle_IK() -> void:
 	- SecondBone.get_bone_angle()
 	
 	jointTransform = Transform2D(boneAngle, Vector2.ONE, 0, bonePos)
+	if UseEasingOnJointTwo and (JointTwoEasing is TransformEasing):
+		JointTwoEasing.update_xy(delta,jointTransform)
+		jointTransform = Transform2D(JointTwoEasing.State.get_rotation(),bonePos)
 	requests[1].override(JointTwoBoneIdx,jointTransform)
-	#SecondBone.transform = jointTransform.interpolate_with(SecondBone.transform, Easing)
 	#endregion
 
 func calculate_target_vector() -> Vector2:
@@ -179,8 +189,6 @@ func calculate_target_vector() -> Vector2:
 	var resultVector: Vector2 = realVector
 	if Softness>0 and distanceRatio<(1+Softness) and distanceRatio>(1-Softness):
 		resultVector=resultVector.normalized() * (boneDifference + fullLength * calculate_softness_result(distanceRatio))
-	
-	
 	return resultVector
 
 func vectorize_bone(bone: Bone2D) -> Vector2:

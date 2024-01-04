@@ -14,11 +14,13 @@ If a modification is a direct child of a substack
 (BUT NOT OF ANOTHER MODIFICATION), 
 it will also inherit the enable state of the substacj
 
-
-
 Skeletons are, alas, still a bit buggy, and weird edgecases arise when shifting nodes around.
 If something seems to be broken, try reloading your project.
 Skeletons are weird like that.
+
+There is now support for custom easing motion on all constraints!
+I am quite happy with how the system turned out, 
+and I will likely make it a separate plugin later on.
 
 Soupy Nodes are entirely separate from the inbuilt skeleton modifications, 
 and applying both at the same time to one bone may be a bad idea.
