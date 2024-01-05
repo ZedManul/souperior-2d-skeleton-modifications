@@ -5,7 +5,7 @@ class_name SoupTwoBoneIK
 
 ## "Souperior" custom modification for Skeleton2D; Procedurally affects two bones to end at a target, if possible.
 
-## Target node for the modification;
+## Target node for the modification:
 ## 
 ## Defines the point to which the chain tries to go
 @export var TargetNode: Node2D
@@ -85,27 +85,39 @@ class_name SoupTwoBoneIK
 
 @export_category("Easing")
 @export_group("Joint One")
-## Toggles Easing
+## Toggles Easing:
 ##
 ## This sort of easing is rather advanced 
 ## and may be unwanted on some modifications
 @export var UseEasingOnJointOne: bool = false
-## Easing Resource
+## Easing Resource:
 ## 
-## [MUST BE UNIQUE!] 
 ## Defines easing behaviour
-@export var JointOneEasing: TransformEasing
+@export var JointOneEasing: SoupySecondOrderEasing:
+	set(new_value):
+		if new_value is SoupySecondOrderEasing: 
+			JointOneEasing = new_value.duplicate(true)
+		else: 
+			JointOneEasing = null
+	get:
+		return JointOneEasing
 @export_group("Joint Two")
-## Toggles Easing
+## Toggles Easing:
 ##
 ## This sort of easing is rather advanced 
 ## and may be unwanted on some modifications
 @export var UseEasingOnJointTwo: bool = false
-## Easing Resource
+## Easing Resource:
 ##
-## [MUST BE UNIQUE!] 
 ## Defines easing behaviour
-@export var JointTwoEasing: TransformEasing
+@export var JointTwoEasing: SoupySecondOrderEasing:
+	set(new_value):
+		if new_value is SoupySecondOrderEasing: 
+			JointTwoEasing = new_value.duplicate(true)
+		else: 
+			JointTwoEasing = null
+	get:
+		return JointTwoEasing
 
 #region Calculation Related Variables
 var FirstBone: Bone2D
@@ -158,9 +170,9 @@ func handle_IK(delta: float) -> void:
 			- FirstBone.get_bone_angle() + PI
 	
 	var jointTransform: Transform2D = Transform2D(boneAngle, Vector2.ONE, 0, bonePos)
-	if UseEasingOnJointOne and (JointOneEasing is TransformEasing):
-		JointOneEasing.update_xy(delta,jointTransform)
-		jointTransform = Transform2D(JointOneEasing.State.get_rotation(),bonePos)
+	if UseEasingOnJointOne and (JointOneEasing is SoupySecondOrderEasing):
+		JointOneEasing.update(delta,jointTransform.x)
+		jointTransform = Transform2D(JointOneEasing.state.angle(),bonePos)
 	requests[0].override(JointOneBoneIdx,jointTransform)
 	#endregion
 	
@@ -172,9 +184,9 @@ func handle_IK(delta: float) -> void:
 	- SecondBone.get_bone_angle()
 	
 	jointTransform = Transform2D(boneAngle, Vector2.ONE, 0, bonePos)
-	if UseEasingOnJointTwo and (JointTwoEasing is TransformEasing):
-		JointTwoEasing.update_xy(delta,jointTransform)
-		jointTransform = Transform2D(JointTwoEasing.State.get_rotation(),bonePos)
+	if UseEasingOnJointTwo and (JointTwoEasing is SoupySecondOrderEasing):
+		JointTwoEasing.update(delta,jointTransform.x)
+		jointTransform = Transform2D(JointTwoEasing.state.angle(),bonePos)
 	requests[1].override(JointTwoBoneIdx,jointTransform)
 	#endregion
 

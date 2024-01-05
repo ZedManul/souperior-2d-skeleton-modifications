@@ -9,12 +9,10 @@ func _enter_tree():
 	add_custom_type("SoupTwoBoneIK", "Node", preload("Nodes/SoupTwoBoneIK.gd"), preload("Nodes/customIKIcon.png"))
 	add_custom_type("SoupLookAt", "Node", preload("Nodes/SoupLookAt.gd"), preload("Nodes/customLookAtIcon.png"))
 	add_custom_type("SecondOrderEasing", "Resource", preload("Resources/SecondOrderEasing.gd"), preload("Resources/customEasingIcon.png"))
-	add_custom_type("TransformEasing", "Resource", preload("Resources/TransformEasing.gd"), preload("Resources/customTransformEasingIcon.png"))
 
 
 
 func _exit_tree():
-	remove_custom_type("TransformEasing")
 	remove_custom_type("SecondOrderEasing")
 	remove_custom_type("SoupTwoBoneIK")
 	remove_custom_type("SoupLookAt")

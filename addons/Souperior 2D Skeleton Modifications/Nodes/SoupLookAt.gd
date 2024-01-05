@@ -46,15 +46,22 @@ class_name SoupLookAt
 var TargetVector: Vector2
 
 @export_category("Easing")
-## Toggles Easing
+## Toggles Easing:
 ##
 ## This sort of easing is rather advanced 
 ## and may be unwanted on some modifications
 @export var UseEasing: bool = false
-## Easing Resource
+## Easing Resource:
 ##
 ## Defines easing behaviour
-@export var Easing: TransformEasing
+@export var Easing: SoupySecondOrderEasing: 
+	set(new_value):
+		if new_value is SoupySecondOrderEasing: 
+			Easing = new_value.duplicate(true)
+		else: 
+			Easing = null
+	get:
+		return Easing
 
 func _ready() -> void:
 	requests.append(ModificationRequest.new(-1,Transform2D.IDENTITY))
@@ -63,7 +70,6 @@ func _process(delta) -> void:
 	if Enabled and TargetNode and parent_enable_check():
 		handle_lookAt(delta)
 		ModStack.apply_modification(requests[0])
-		
 
 func handle_lookAt(delta) -> void:
 	if !(ModStack is SoupStack):
@@ -89,9 +95,9 @@ func handle_lookAt(delta) -> void:
 	
 	var bonePos: Vector2 = Bone.position 
 	var jointTransform: Transform2D = Transform2D(boneAngle, bonePos)
-	if UseEasing and (Easing is TransformEasing):
-		Easing.update_xy(delta,jointTransform)
-		jointTransform = Transform2D(Easing.State.get_rotation(),bonePos)
+	if UseEasing and (Easing is SoupySecondOrderEasing):
+		Easing.update(delta,jointTransform.x)
+		jointTransform = Transform2D(Easing.state.angle(),bonePos)
 	requests[0].override(BoneIdx,jointTransform)
 
 func flip_angle(a: float) -> float:
