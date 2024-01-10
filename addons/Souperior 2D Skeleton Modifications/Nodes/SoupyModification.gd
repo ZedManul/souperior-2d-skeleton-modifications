@@ -23,6 +23,7 @@ func free_request(requestIdx: int, boneIdx: int)->void:
 func initialize_request(requestIdx: int, boneIdx: int, mode: int)->void:
 	# Resize the requests array to the needed size
 	requests.resize(maxi(requests.size(),requestIdx+1))
+
 	# Remove the previous Modification Struct from the array in Modification Manager
 	if requests[requestIdx] is ModificationRequest:
 		free_request(requestIdx, requests[requestIdx].targetBoneIdx)

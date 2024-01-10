@@ -4,7 +4,9 @@ extends Node2D
 class_name SoupyPositionConstraintGizmo
 @onready var visualizee: SoupConstraint = get_parent()
 
-
+func _ready() -> void:
+	z_index = 2048
+	top_level = true
 
 func _draw() -> void:
 	if visualizee is SoupConstraint:

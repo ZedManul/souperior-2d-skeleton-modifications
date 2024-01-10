@@ -66,6 +66,7 @@ var TargetVector: Vector2
 			Easing = null
 
 func _process(delta) -> void:
+	#print_debug(requests)
 	if Enabled and TargetNode and parent_enable_check():
 		handle_lookAt(delta)
 		ModStack.execute_bone_modifications(BoneIdx)
@@ -105,9 +106,6 @@ func flip_angle(a: float) -> float:
 func stack_hook_initialization():
 	if Enabled:
 		initialize_request(0, BoneIdx, SoupStack.Modification.ANGLE)
-
-func _exit_tree() -> void:
-	free_request(0,BoneIdx)
 
 func _enter_tree() -> void:
 	stack_hook_initialization()

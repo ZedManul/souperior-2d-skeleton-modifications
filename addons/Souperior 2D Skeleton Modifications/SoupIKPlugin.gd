@@ -13,7 +13,6 @@ func _enter_tree():
 
 
 func _exit_tree():
-
 	remove_custom_type("SoupTwoBoneIK")
 	remove_custom_type("SoupLookAt")
 	remove_custom_type("SoupyModification")
