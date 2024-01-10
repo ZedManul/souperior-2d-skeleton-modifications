@@ -1,18 +1,13 @@
 @tool
 @icon("customModificationIcon.png")
-extends Node
+extends SoupStackPart
 class_name SoupMod
 
 ## Parent node for modification stacks.
 ##
 ## Not intended for actual use.
 
-@onready var ModStack: SoupStack = find_stack()
-@onready var SubStack: Node = get_parent()
 @onready var requests: Array[ModificationRequest] = []
-
-func _ready() -> void:
-	await get_tree().process
 
 func parent_enable_check() -> bool:
 	if !(ModStack is SoupStack):
@@ -22,25 +17,27 @@ func parent_enable_check() -> bool:
 	else:
 		return ModStack.Enabled
 
-func find_stack() -> SoupStack:
-	var foundNode: Node = get_parent()
-	for i in 1000:
-		if foundNode is SoupStack:
-			return foundNode
-		elif foundNode is SoupSubStack:
-			foundNode = foundNode.get_parent()
-			continue
-		elif foundNode == get_tree().root:
-			break
-	return null
+func free_request(requestIdx: int, boneIdx: int)->void:
+	ModStack.BoneData[boneIdx].modifications.erase(requests[requestIdx].modStruct)
+
+func initialize_request(requestIdx: int, boneIdx: int, mode: int)->void:
+	# Resize the requests array to the needed size
+	requests.resize(maxi(requests.size(),requestIdx+1))
+	# Remove the previous Modification Struct from the array in Modification Manager
+	if requests[requestIdx] is ModificationRequest:
+		free_request(requestIdx, requests[requestIdx].targetBoneIdx)
+	if ModStack is SoupStack and ModStack.BoneData.size()>0:
+		# Add a new Modification Struct to the array in Modification Manager
+		ModStack.BoneData[boneIdx].modifications.append(SoupStack.Modification.new(mode))
+		# Package the Modification Struct as Modification Request and add to the local array
+		requests[requestIdx] = ModificationRequest.new(boneIdx\
+		, ModStack.BoneData[boneIdx].modifications.back())
 
 class ModificationRequest:
-	var boneIndex: int = -1
-	var requestTransform: Transform2D = Transform2D.IDENTITY
-	func _init(inputIndex: int, inputTransform: Transform2D) -> void:
-		boneIndex = inputIndex
-		requestTransform = inputTransform
 	
-	func override(inputIndex: int, inputTransform: Transform2D) -> void:
-		boneIndex = inputIndex
-		requestTransform = inputTransform
+	var targetBoneIdx: int
+	var modStruct: SoupStack.Modification
+	func _init(boneIdx: int, mStruct: SoupStack.Modification):
+		targetBoneIdx = boneIdx
+		modStruct = mStruct
+

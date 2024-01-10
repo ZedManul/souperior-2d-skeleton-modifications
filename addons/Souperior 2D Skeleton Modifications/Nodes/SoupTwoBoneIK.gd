@@ -22,8 +22,7 @@ class_name SoupTwoBoneIK
 @export_range(0, 1, 0.01, "or_greater", "or_less") var Softness: float = 0:
 	set(new_value):
 		Softness=clampf(new_value,0,1)
-	get:
-		return Softness
+
 
 @export_category("Bones")
 #region Bone 1  
@@ -34,14 +33,14 @@ class_name SoupTwoBoneIK
 			return
 		var Skeleton: Skeleton2D = ModStack.Skeleton
 		if Skeleton is Skeleton2D:
-			if (JointOneBoneIdx>=0)and(JointOneBoneIdx<Skeleton.get_bone_count()):
-				if (JointOneBone != Skeleton.get_bone(JointOneBoneIdx)):
-					JointOneBone = Skeleton.get_bone(JointOneBoneIdx)
-					return
-		if JointOneBone:
+			JointOneBoneIdx=clampi(new_value,0,Skeleton.get_bone_count()-1)
+			initialize_request(0, JointOneBoneIdx,SoupStack.Modification.ANGLE)
+			if (JointOneBone != Skeleton.get_bone(JointOneBoneIdx)):
+				JointOneBone = Skeleton.get_bone(JointOneBoneIdx)
+				return
+		else:
 			JointOneBone = null
-	get:
-		return JointOneBoneIdx
+
 @export var JointOneBone: Bone2D:
 	set(new_value):
 		JointOneBone=new_value
@@ -51,8 +50,7 @@ class_name SoupTwoBoneIK
 			if JointOneBone:
 				if JointOneBoneIdx != JointOneBone.get_index_in_skeleton():
 					JointOneBoneIdx = JointOneBone.get_index_in_skeleton()
-	get:
-		return JointOneBone
+
 #endregion 
 #region Bone 2
 @export  var JointTwoBoneIdx: int = -1:
@@ -62,14 +60,14 @@ class_name SoupTwoBoneIK
 			return
 		var Skeleton: Skeleton2D = ModStack.Skeleton
 		if Skeleton is Skeleton2D:
-			if (JointTwoBoneIdx>=0)and(JointTwoBoneIdx<Skeleton.get_bone_count()):
-				if (JointTwoBone != Skeleton.get_bone(JointTwoBoneIdx)):
-					JointTwoBone = Skeleton.get_bone(JointTwoBoneIdx)
-					return
-		if JointTwoBone:
+			JointTwoBoneIdx=clampi(new_value,0,Skeleton.get_bone_count()-1)
+			initialize_request(1, JointTwoBoneIdx,SoupStack.Modification.ANGLE)
+			if (JointTwoBone != Skeleton.get_bone(JointTwoBoneIdx)):
+				JointTwoBone = Skeleton.get_bone(JointTwoBoneIdx)
+				return
+		else:
 			JointTwoBone = null
-	get:
-		return JointTwoBoneIdx
+
 @export var JointTwoBone: Bone2D:
 	set(new_value):
 		JointTwoBone=new_value
@@ -79,8 +77,6 @@ class_name SoupTwoBoneIK
 			if JointTwoBone:
 				if JointTwoBoneIdx != JointTwoBone.get_index_in_skeleton():
 					JointTwoBoneIdx = JointTwoBone.get_index_in_skeleton()
-	get:
-		return JointTwoBone
 #endregion
 
 @export_category("Easing")
@@ -99,8 +95,7 @@ class_name SoupTwoBoneIK
 			JointOneEasing = new_value.duplicate(true)
 		else: 
 			JointOneEasing = null
-	get:
-		return JointOneEasing
+
 @export_group("Joint Two")
 ## Toggles Easing:
 ##
@@ -116,8 +111,6 @@ class_name SoupTwoBoneIK
 			JointTwoEasing = new_value.duplicate(true)
 		else: 
 			JointTwoEasing = null
-	get:
-		return JointTwoEasing
 
 #region Calculation Related Variables
 var FirstBone: Bone2D
@@ -125,15 +118,11 @@ var SecondBone: Bone2D
 var TargetVector: Vector2
 #endregion
 
-func _ready() -> void:
-	requests.append(ModificationRequest.new(-1,Transform2D.IDENTITY))
-	requests.append(ModificationRequest.new(-1,Transform2D.IDENTITY))
-
 func _process(delta) -> void:
 	if Enabled and TargetNode and parent_enable_check():
 		handle_IK(delta)
-		ModStack.apply_modification(requests[0])
-		ModStack.apply_modification(requests[1])
+		ModStack.execute_bone_modifications(JointOneBoneIdx)
+		ModStack.execute_bone_modifications(JointTwoBoneIdx)
 
 func handle_IK(delta: float) -> void:
 	if !(ModStack is SoupStack):
@@ -173,7 +162,7 @@ func handle_IK(delta: float) -> void:
 	if UseEasingOnJointOne and (JointOneEasing is SoupySecondOrderEasing):
 		JointOneEasing.update(delta,jointTransform.x)
 		jointTransform = Transform2D(JointOneEasing.state.angle(),bonePos)
-	requests[0].override(JointOneBoneIdx,jointTransform)
+	requests[0].modStruct.suggestedState = jointTransform
 	#endregion
 	
 	
@@ -187,7 +176,7 @@ func handle_IK(delta: float) -> void:
 	if UseEasingOnJointTwo and (JointTwoEasing is SoupySecondOrderEasing):
 		JointTwoEasing.update(delta,jointTransform.x)
 		jointTransform = Transform2D(JointTwoEasing.state.angle(),bonePos)
-	requests[1].override(JointTwoBoneIdx,jointTransform)
+	requests[1].modStruct.suggestedState = jointTransform
 	#endregion
 
 func calculate_target_vector() -> Vector2:
@@ -250,3 +239,8 @@ func flip_angle(a: float) -> float:
 
 func calculate_softness_result(a:float):
 	return -(0.25*(a-1-Softness)*(a-1-Softness)/Softness)+1
+
+func stack_hook_initialization():
+	if Enabled:
+		initialize_request(0, JointOneBoneIdx, SoupStack.Modification.ANGLE)
+		initialize_request(1, JointTwoBoneIdx, SoupStack.Modification.ANGLE)
