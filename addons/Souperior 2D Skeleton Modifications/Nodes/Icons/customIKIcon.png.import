@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://vsvvigpuoi1x"
-path="res://.godot/imported/customIKIcon.png-b7979b0ba7e6aefe2216350473b0b2cb.ctex"
+path="res://.godot/imported/customIKIcon.png-1e9a31178dbe98a9fb523b0582453e51.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Souperior 2D Skeleton Modifications/Nodes/customIKIcon.png"
-dest_files=["res://.godot/imported/customIKIcon.png-b7979b0ba7e6aefe2216350473b0b2cb.ctex"]
+source_file="res://addons/Souperior 2D Skeleton Modifications/Nodes/Icons/customIKIcon.png"
+dest_files=["res://.godot/imported/customIKIcon.png-1e9a31178dbe98a9fb523b0582453e51.ctex"]
 
 [params]
 

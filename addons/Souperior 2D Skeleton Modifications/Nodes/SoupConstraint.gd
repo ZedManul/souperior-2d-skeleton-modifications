@@ -114,8 +114,9 @@ func find_stack() -> SoupStack:
 			foundNode = foundNode.get_parent()
 			continue
 		elif foundNode is Skeleton2D:
-			for j:SoupStack in foundNode.get_children(false):
-				return j
+			for j in foundNode.get_children(false):
+				if j is SoupStack:
+					return j
 			break
 		else:
 			break

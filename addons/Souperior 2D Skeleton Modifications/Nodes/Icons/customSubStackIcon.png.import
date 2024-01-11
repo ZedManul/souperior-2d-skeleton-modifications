@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cta70roy3ygg1"
-path="res://.godot/imported/customEnhancerIcon.png-e3b87add6d793fdfca761a1fd9d89a77.ctex"
+uid="uid://87o8w258aoar"
+path="res://.godot/imported/customSubStackIcon.png-57580a482b68655ef66050a53bc910d9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Souperior 2D Skeleton Modifications/Nodes/customEnhancerIcon.png"
-dest_files=["res://.godot/imported/customEnhancerIcon.png-e3b87add6d793fdfca761a1fd9d89a77.ctex"]
+source_file="res://addons/Souperior 2D Skeleton Modifications/Nodes/Icons/customSubStackIcon.png"
+dest_files=["res://.godot/imported/customSubStackIcon.png-57580a482b68655ef66050a53bc910d9.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dddadlltk6anr"
-path="res://.godot/imported/customLookAtIcon.png-f0ac886c254e0458ef15af2c1a5eaf1d.ctex"
+uid="uid://dt11ekhfksadq"
+path="res://.godot/imported/customStackIcon.png-c9941200e7adf623e1bc92f89ffd3647.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Souperior 2D Skeleton Modifications/Nodes/customLookAtIcon.png"
-dest_files=["res://.godot/imported/customLookAtIcon.png-f0ac886c254e0458ef15af2c1a5eaf1d.ctex"]
+source_file="res://addons/Souperior 2D Skeleton Modifications/Nodes/Icons/customStackIcon.png"
+dest_files=["res://.godot/imported/customStackIcon.png-c9941200e7adf623e1bc92f89ffd3647.ctex"]
 
 [params]
 

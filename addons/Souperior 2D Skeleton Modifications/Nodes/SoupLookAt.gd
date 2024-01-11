@@ -15,7 +15,7 @@ class_name SoupLookAt
 	set(new_value):
 		Enabled = new_value
 		if Enabled:
-			initialize_request(0, BoneIdx, SoupStack.Modification.ANGLE)
+			stack_hook_initialization()
 		else:
 			free_request(0,BoneIdx)
 
@@ -29,7 +29,7 @@ class_name SoupLookAt
 		var Skeleton: Skeleton2D = ModStack.Skeleton
 		if Skeleton is Skeleton2D:
 			BoneIdx=clampi(new_value,0,Skeleton.get_bone_count()-1)
-			initialize_request(0, BoneIdx, SoupStack.Modification.ANGLE)
+			stack_hook_initialization()
 			if (Bone != Skeleton.get_bone(BoneIdx)):
 				Bone = Skeleton.get_bone(BoneIdx)
 				return
@@ -66,8 +66,9 @@ var TargetVector: Vector2
 			Easing = null
 
 func _process(delta) -> void:
-	#print_debug(requests)
 	if Enabled and TargetNode and parent_enable_check():
+		if requests.is_empty():
+			stack_hook_initialization()
 		handle_lookAt(delta)
 		ModStack.execute_bone_modifications(BoneIdx)
 
@@ -79,29 +80,16 @@ func handle_lookAt(delta) -> void:
 	=TargetNode.global_position - Skeleton.get_bone(BoneIdx).global_position
 	
 	var isFlipped: int = int(sign(Skeleton.scale).x!=sign(Skeleton.scale).y)
-	var isInverted: int = int(sign(Skeleton.scale).y==-1)
-	var boneAngle: float
-	
-	if !isFlipped:
-		boneAngle \
-			= TargetVector.angle() \
-			- Bone.get_bone_angle() \
-			- Bone.get_parent().global_rotation
-	else:
-		boneAngle \
-			= flip_angle(TargetVector.angle() \
-			- Bone.get_parent().global_rotation) \
-			- Bone.get_bone_angle() + PI
-	
+	var boneAngle: float = -Bone.get_bone_angle()\
+	+ TargetVector.angle()*sign(Bone.global_scale.y)
 	var bonePos: Vector2 = Bone.position 
-	var jointTransform: Transform2D = Transform2D(boneAngle, bonePos)
+	var jointTransform: Transform2D \
+	= Transform2D(AngleGlobalToLocal(boneAngle, Bone.get_parent()), bonePos)
 	if UseEasing and (Easing is SoupySecondOrderEasing):
 		Easing.update(delta,jointTransform.x)
 		jointTransform = Transform2D(Easing.state.angle(),bonePos)
 	requests[0].modStruct.suggestedState = jointTransform
 
-func flip_angle(a: float) -> float:
-	return PI - a
 
 func stack_hook_initialization():
 	if Enabled:
@@ -109,3 +97,7 @@ func stack_hook_initialization():
 
 func _enter_tree() -> void:
 	stack_hook_initialization()
+
+
+func AngleGlobalToLocal( angle: float, referenceNode: Node2D) -> float:
+	return (angle - referenceNode.global_rotation*sign(referenceNode.global_scale.y))

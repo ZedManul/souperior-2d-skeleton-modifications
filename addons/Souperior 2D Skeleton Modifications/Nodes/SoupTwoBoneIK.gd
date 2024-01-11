@@ -10,7 +10,14 @@ class_name SoupTwoBoneIK
 ## Defines the point to which the chain tries to go
 @export var TargetNode: Node2D
 ## if true, the modification is calculated and applied
-@export var Enabled: bool = false
+@export var Enabled: bool = false:
+	set(new_value):
+		Enabled = new_value
+		if Enabled:
+			stack_hook_initialization()
+		else:
+			free_request(0,JointOneBoneIdx)
+			free_request(1,JointTwoBoneIdx)
 
 ## Flips the bend direction
 @export var FlipBendDirection: bool = false
@@ -120,6 +127,8 @@ var TargetVector: Vector2
 
 func _process(delta) -> void:
 	if Enabled and TargetNode and parent_enable_check():
+		if requests.is_empty():
+			stack_hook_initialization()
 		handle_IK(delta)
 		ModStack.execute_bone_modifications(JointOneBoneIdx)
 		ModStack.execute_bone_modifications(JointTwoBoneIdx)
@@ -127,6 +136,7 @@ func _process(delta) -> void:
 func handle_IK(delta: float) -> void:
 	if !(ModStack is SoupStack):
 			return
+	
 	var Skeleton: Skeleton2D = ModStack.Skeleton
 	#region Updateding Calculation-related variables
 	FirstBone = Skeleton.get_bone(JointOneBoneIdx)
@@ -138,25 +148,15 @@ func handle_IK(delta: float) -> void:
 	
 	#region Angle calculation modifiers
 	var isFlipped: int = int(sign(Skeleton.scale).x!=sign(Skeleton.scale).y)
-	#var isInverted: int = int(sign(Skeleton.scale).y==-1)
 	var bendDirMod: int = (int(!FlipBendDirection)*2 - 1)
 	#endregion
 	
 	#initializing calculation result variables
 	var bonePos: Vector2 = FirstBone.position 
-	var boneAngle: float = 0.0
-	
-	#region handling first joint
-	if !isFlipped:
-		boneAngle = (TargetVector.angle() \
-			+ bendDirMod * calculate_first_bone_angle() \
-			- FirstBone.get_parent().global_rotation) \
-			- FirstBone.get_bone_angle()
-	else:
-		boneAngle = flip_angle(TargetVector.angle() \
-			- calculate_first_bone_angle() \
-			- FirstBone.get_parent().global_rotation) \
-			- FirstBone.get_bone_angle() + PI
+	var boneAngle: float = (TargetVector.angle() \
+	- FirstBone.get_parent().global_rotation)*sign(FirstBone.global_scale.y) \
+	+ bendDirMod * calculate_first_bone_angle() \
+	- FirstBone.get_bone_angle()
 	
 	var jointTransform: Transform2D = Transform2D(boneAngle, Vector2.ONE, 0, bonePos)
 	if UseEasingOnJointOne and (JointOneEasing is SoupySecondOrderEasing):
@@ -234,9 +234,6 @@ func possibilityCheck() -> bool:
 	return TargetVector.length()<0.001 or TargetVector.length() \
 	< abs(vectorize_bone(FirstBone).length()-vectorize_bone(SecondBone).length())
 
-func flip_angle(a: float) -> float:
-	return PI - a
-
 func calculate_softness_result(a:float):
 	return -(0.25*(a-1-Softness)*(a-1-Softness)/Softness)+1
 
@@ -244,3 +241,7 @@ func stack_hook_initialization():
 	if Enabled:
 		initialize_request(0, JointOneBoneIdx, SoupStack.Modification.ANGLE)
 		initialize_request(1, JointTwoBoneIdx, SoupStack.Modification.ANGLE)
+
+func _enter_tree() -> void:
+	stack_hook_initialization()
+
