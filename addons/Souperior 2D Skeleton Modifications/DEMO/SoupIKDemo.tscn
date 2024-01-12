@@ -118,7 +118,7 @@ remote_path = NodePath("../../../Sprites/Body")
 metadata/_edit_lock_ = true
 
 [node name="Neck" type="Bone2D" parent="DemoSkelly/Body"]
-position = Vector2(8.00002, -13.0001)
+position = Vector2(8, -13)
 rotation = -0.394112
 scale = Vector2(0.999997, 0.999997)
 rest = Transform2D(1, 0, 0, 1, 8, -13)
@@ -139,7 +139,7 @@ metadata/_edit_lock_ = true
 
 [node name="Head" type="Bone2D" parent="DemoSkelly/Body/Neck"]
 position = Vector2(74, -9)
-rotation = -0.0205841
+rotation = -0.0205839
 scale = Vector2(0.999993, 0.999993)
 rest = Transform2D(1, 0, 0, 1, 74, -9)
 auto_calculate_length_and_angle = false
