@@ -36,6 +36,7 @@ class_name SoupLookAt
 			return
 		if (ModStack.Skeleton is Skeleton2D and Bone is Bone2D and BoneIdx != Bone.get_index_in_skeleton()):
 			BoneIdx = Bone.get_index_in_skeleton()
+		
 #endregion 
 
 var TargetVector: Vector2
@@ -66,14 +67,17 @@ func handle_lookAt(delta) -> void:
 		return
 	var Skeleton: Skeleton2D = ModStack.Skeleton
 	TargetVector \
-	=TargetNode.global_position - Skeleton.get_bone(BoneIdx).global_position
+	=TargetNode.global_position - Bone.global_position
 	
 	var resultAngle = AngleGlobalToLocal(\
 	(TargetVector.angle())*sign(Bone.global_scale.y)\
 	-Bone.get_bone_angle(),Bone.get_parent())
-	if UseEasing and (Easing is SoupySecondOrderEasing):
+	if UseEasing and Easing:
 		Easing.update(delta,Vector2.RIGHT.rotated(resultAngle))
 		resultAngle = Easing.state.angle()
-	ModStack.apply_bone_rotation_mod(BoneIdx,resultAngle)
+	
+	var fixedAngle: float = ModStack.apply_bone_rotation_mod(Bone,resultAngle)
+	if fixedAngle and Easing and UseEasing:
+		Easing.state = Vector2.RIGHT.rotated(fixedAngle)
 
 

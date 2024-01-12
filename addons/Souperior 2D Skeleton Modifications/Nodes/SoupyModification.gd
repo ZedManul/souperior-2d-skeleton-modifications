@@ -22,3 +22,11 @@ func PositionGlobalToLocal( position: Vector2, parentNode: Node2D) -> Vector2:
 
 func AngleGlobalToLocal( angle: float, parentNode: Node2D) -> float:
 	return (angle - parentNode.global_rotation*sign(parentNode.global_scale.y))
+
+func PositionLocalToGlobal( position: Vector2, parentNode: Node2D) -> Vector2:
+	return position.rotated(parentNode.global_rotation)\
+	*parentNode.global_scale + parentNode.global_position
+	
+
+func AngleLocalToGlobal( angle: float, parentNode: Node2D) -> float:
+	return (angle + parentNode.global_rotation*sign(parentNode.global_scale.y))

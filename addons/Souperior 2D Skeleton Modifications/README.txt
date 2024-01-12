@@ -1,5 +1,7 @@
 Thanks for downloading my plugin :]
 
+/!\THIS README IS OUTDATED. A NEW, UP TO DATE README WILL BE ADDED NEXT COMMIT. /!\
+
 This has been reworked a bit since last time;
 The modification stack is now a separate node.
 I recommend putting it as a direct child of the Skeleton2D node.

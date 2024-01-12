@@ -9,17 +9,17 @@ class_name SoupStack
 ## if true, the modifications are applied
 @export var Enabled: bool = true
 
-func apply_bone_position_mod(boneIdx:int, targetPos: Vector2) -> void:
-	var bone: Bone2D = Skeleton.get_bone(boneIdx)
-	bone.position = apply_position_constraints(bone,targetPos)
+func apply_bone_position_mod(boneNode:Bone2D, targetPos: Vector2) -> Vector2:
+	boneNode.position = apply_position_constraints(boneNode,targetPos)
+	return boneNode.position
 
-func apply_bone_rotation_mod(boneIdx:int, targetRot: float) -> void:
-	var bone: Bone2D = Skeleton.get_bone(boneIdx)
-	bone.rotation = apply_rotation_constraints(bone,targetRot)
+func apply_bone_rotation_mod(boneNode:Bone2D, targetRot: float) -> float:
+	boneNode.rotation = apply_rotation_constraints(boneNode,targetRot)
+	return boneNode.rotation
 
 func apply_constraints(boneNode:Bone2D) -> void:
-	apply_rotation_constraints(boneNode,boneNode.rotation)
-	apply_position_constraints(boneNode,boneNode.position)
+	boneNode.rotation = apply_rotation_constraints(boneNode,boneNode.rotation)
+	boneNode.position = apply_position_constraints(boneNode,boneNode.position)
 
 func apply_position_constraints(boneNode:Bone2D, targetPos: Vector2) -> Vector2:
 	var fixedPosition: Vector2 = targetPos
@@ -35,6 +35,7 @@ func apply_position_constraints(boneNode:Bone2D, targetPos: Vector2) -> Vector2:
 
 func apply_rotation_constraints(boneNode:Bone2D, targetRot: float) -> float:
 	var fixedAngle: float = targetRot
+	
 	for i in boneNode.get_children():
 		if !(i is SoupConstraint):
 			continue

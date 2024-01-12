@@ -17,3 +17,7 @@ func find_stack() -> SoupStack:
 		elif foundNode == get_tree().root:
 			break
 	return null
+
+func _enter_tree() -> void:
+	SubStack = get_parent()
+	ModStack = find_stack()

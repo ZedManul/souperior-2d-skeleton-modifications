@@ -30,6 +30,5 @@ func _process(delta: float) -> void:
 	+ Bone.global_position.angle_to_point(VirtualPoint)*sign(Bone.global_scale.y)
 	Bone.rotation = AngleGlobalToLocal(resultAngle,Bone.get_parent())
 
-
 func AngleGlobalToLocal( angle: float, parentNode: Node2D) -> float:
 	return (angle - parentNode.global_rotation*sign(parentNode.global_scale.y))

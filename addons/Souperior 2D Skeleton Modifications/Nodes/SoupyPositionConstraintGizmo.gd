@@ -18,10 +18,10 @@ func _draw() -> void:
 func draw_position_constraint():
 	var bone: Bone2D = visualizee.Bone
 	var boneDaddy: Node2D = bone.get_parent()
-	var posLimR: Vector2 = visualizee.PositionLimitRange
+	var posLimR: Vector2 = visualizee.PositionLimitRange#*abs(boneDaddy.global_scale)
 	
 	global_position = boneDaddy.global_position \
-	+ visualizee.PositionLimitOffset.rotated(boneDaddy.global_rotation)
+	+ (visualizee.PositionLimitOffset).rotated(boneDaddy.global_rotation*sign(boneDaddy.global_scale.y))*boneDaddy.global_scale
 	global_scale = boneDaddy.global_scale
 	global_rotation = boneDaddy.global_rotation
 	var gizmoSize:float = maxf(bone.get_length()/3,10)

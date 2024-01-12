@@ -144,20 +144,24 @@ func handle_IK(delta: float) -> void:
 	+ bendDirMod * calculate_first_bone_angle() \
 	- FirstBone.get_bone_angle()
 	
-	if UseEasingOnJointOne and (JointOneEasing is SoupySecondOrderEasing):
+	if UseEasingOnJointOne and JointOneEasing:
 		JointOneEasing.update(delta,Vector2.RIGHT.rotated(boneAngle))
 		boneAngle = JointOneEasing.state.angle()
-	ModStack.apply_bone_rotation_mod(JointOneBoneIdx,boneAngle)
 	
+	var fixedAngle: float = ModStack.apply_bone_rotation_mod(FirstBone,boneAngle)
+	if fixedAngle and JointOneEasing and UseEasingOnJointOne:
+		JointOneEasing.state = Vector2.RIGHT.rotated(fixedAngle)
 	#region handling second joint
 	boneAngle = bendDirMod * calculate_second_bone_angle() \
 	+ FirstBone.get_bone_angle() \
 	- SecondBone.get_bone_angle()
 	
-	if UseEasingOnJointTwo and (JointTwoEasing is SoupySecondOrderEasing):
+	if UseEasingOnJointTwo and JointTwoEasing:
 		JointTwoEasing.update(delta,Vector2.RIGHT.rotated(boneAngle))
 		boneAngle = JointTwoEasing.state.angle()
-	ModStack.apply_bone_rotation_mod(JointTwoBoneIdx,boneAngle)
+	fixedAngle = ModStack.apply_bone_rotation_mod(SecondBone,boneAngle)
+	if fixedAngle and JointTwoEasing and UseEasingOnJointTwo:
+		JointTwoEasing.state = Vector2.RIGHT.rotated(fixedAngle)
 	#endregion
 
 func calculate_target_vector() -> Vector2:
@@ -176,7 +180,7 @@ func calculate_target_vector() -> Vector2:
 func vectorize_bone(bone: Bone2D) -> Vector2:
 	var res = ((Vector2.RIGHT * bone.get_length()) \
 	.rotated(bone.get_bone_angle()))
-	return Vector2(res.x*ModStack.Skeleton.scale.x, res.y*ModStack.Skeleton.scale.y)
+	return Vector2(res.x*bone.global_scale.x, res.y*bone.global_scale.y)
 
 func calculate_bone_position(bone: Bone2D) -> Vector2:
 	var bonedad=bone.get_parent()

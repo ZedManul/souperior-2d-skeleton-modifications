@@ -66,12 +66,13 @@ var AngleConstraintRange: float = 45: # used for export
 
 var PrevBoneTransform: Transform2D
 func _process(delta: float) -> void:
-	if Bone is Bone2D and Enabled:
-		var curBoneTransform\
-		 = Transform2D(Bone.global_rotation,Bone.global_scale,Bone.global_skew,Bone.global_position)
-		if PrevBoneTransform!= curBoneTransform:
-			PrevBoneTransform = curBoneTransform
-			on_bone_updated()
+	if !(Bone is Bone2D and Enabled):
+		return
+	var curBoneTransform\
+	 = Transform2D(Bone.global_rotation,Bone.global_scale,Bone.global_skew,Bone.global_position)
+	if PrevBoneTransform!= curBoneTransform:
+		PrevBoneTransform = curBoneTransform
+		on_bone_updated()
 
 #region Visualiser Functions
 func add_angle_visualizer() -> void:
@@ -126,6 +127,7 @@ func on_bone_updated() -> void:
 	draw_visualizers()
 	if !(ModStack is SoupStack):
 		return
+	#print_debug("it gets here")
 	ModStack.apply_constraints(Bone)
 
 func stack_hook_initialization() -> void:
