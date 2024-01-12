@@ -1,5 +1,5 @@
 @tool
-@icon("customLookAtIcon.png")
+@icon("Icons/customLookAtIcon.png")
 extends SoupMod
 class_name SoupLookAt
 
@@ -11,13 +11,7 @@ class_name SoupLookAt
 @export var TargetNode: Node2D
 
 ## if true, the modification is calculated and applied
-@export var Enabled: bool = false:
-	set(new_value):
-		Enabled = new_value
-		if Enabled:
-			stack_hook_initialization()
-		else:
-			free_request(0,BoneIdx)
+@export var Enabled: bool = false
 
 @export_category("Bones")
 #region Bone 
@@ -27,24 +21,21 @@ class_name SoupLookAt
 		if !(ModStack is SoupStack):
 			return
 		var Skeleton: Skeleton2D = ModStack.Skeleton
-		if Skeleton is Skeleton2D:
-			BoneIdx=clampi(new_value,0,Skeleton.get_bone_count()-1)
-			stack_hook_initialization()
-			if (Bone != Skeleton.get_bone(BoneIdx)):
-				Bone = Skeleton.get_bone(BoneIdx)
-				return
-		else:
+		if !(Skeleton is Skeleton2D):
 			Bone = null
+			return
+		BoneIdx=clampi(new_value,0,Skeleton.get_bone_count()-1)
+		if (Bone != Skeleton.get_bone(BoneIdx)):
+			Bone = Skeleton.get_bone(BoneIdx)
+			return
 
 @export var Bone: Bone2D:
 	set(new_value):
 		Bone=new_value
 		if !(ModStack is SoupStack):
 			return
-		if (ModStack.Skeleton is Skeleton2D):
-			if Bone:
-				if BoneIdx != Bone.get_index_in_skeleton():
-					BoneIdx = Bone.get_index_in_skeleton()
+		if (ModStack.Skeleton is Skeleton2D and Bone is Bone2D and BoneIdx != Bone.get_index_in_skeleton()):
+			BoneIdx = Bone.get_index_in_skeleton()
 #endregion 
 
 var TargetVector: Vector2
@@ -60,17 +51,15 @@ var TargetVector: Vector2
 ## Defines easing behaviour
 @export var Easing: SoupySecondOrderEasing: 
 	set(new_value):
-		if new_value is SoupySecondOrderEasing: 
-			Easing = new_value.duplicate(true)
-		else: 
+		if !(new_value is SoupySecondOrderEasing):
 			Easing = null
+			return
+		Easing = new_value.duplicate(true)
+
 
 func _process(delta) -> void:
 	if Enabled and TargetNode and parent_enable_check():
-		if requests.is_empty():
-			stack_hook_initialization()
 		handle_lookAt(delta)
-		ModStack.execute_bone_modifications(BoneIdx)
 
 func handle_lookAt(delta) -> void:
 	if !(ModStack is SoupStack):
@@ -79,25 +68,12 @@ func handle_lookAt(delta) -> void:
 	TargetVector \
 	=TargetNode.global_position - Skeleton.get_bone(BoneIdx).global_position
 	
-	var isFlipped: int = int(sign(Skeleton.scale).x!=sign(Skeleton.scale).y)
-	var boneAngle: float = -Bone.get_bone_angle()\
-	+ TargetVector.angle()*sign(Bone.global_scale.y)
-	var bonePos: Vector2 = Bone.position 
-	var jointTransform: Transform2D \
-	= Transform2D(AngleGlobalToLocal(boneAngle, Bone.get_parent()), bonePos)
+	var resultAngle = AngleGlobalToLocal(\
+	(TargetVector.angle())*sign(Bone.global_scale.y)\
+	-Bone.get_bone_angle(),Bone.get_parent())
 	if UseEasing and (Easing is SoupySecondOrderEasing):
-		Easing.update(delta,jointTransform.x)
-		jointTransform = Transform2D(Easing.state.angle(),bonePos)
-	requests[0].modStruct.suggestedState = jointTransform
+		Easing.update(delta,Vector2.RIGHT.rotated(resultAngle))
+		resultAngle = Easing.state.angle()
+	ModStack.apply_bone_rotation_mod(BoneIdx,resultAngle)
 
 
-func stack_hook_initialization():
-	if Enabled:
-		initialize_request(0, BoneIdx, SoupStack.Modification.ANGLE)
-
-func _enter_tree() -> void:
-	stack_hook_initialization()
-
-
-func AngleGlobalToLocal( angle: float, referenceNode: Node2D) -> float:
-	return (angle - referenceNode.global_rotation*sign(referenceNode.global_scale.y))

@@ -25,9 +25,9 @@ func _process(delta: float) -> void:
 		Bone.position = PositionGlobalToLocal(resultPos, Bone.get_parent())
 	
 
-func PositionGlobalToLocal( position: Vector2, referenceNode: Node2D) -> Vector2:
-	return (position - referenceNode.global_position)\
-	.rotated(-referenceNode.global_rotation)\
-	/referenceNode.global_scale
+func PositionGlobalToLocal( position: Vector2, parentNode: Node2D) -> Vector2:
+	return (position - parentNode.global_position)\
+	.rotated(-parentNode.global_rotation)\
+	/parentNode.global_scale
 	
 	

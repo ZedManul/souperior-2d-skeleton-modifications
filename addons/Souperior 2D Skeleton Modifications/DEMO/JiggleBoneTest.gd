@@ -18,17 +18,18 @@ extends Node
 
 var VirtualPoint: Vector2 
 func _process(delta: float) -> void:
-	if (Bone is Bone2D and target is Node2D):
-		if Easing is SoupySecondOrderEasing:
-			Easing.update(delta,target.global_position)
-			VirtualPoint = (Easing.state-Bone.global_position).normalized()\
-			*Bone.global_position.distance_to(target.global_position)\
-			+Bone.global_position
-		var correctionAngle: float = -Bone.get_bone_angle()
-		var resultAngle = correctionAngle\
-		+ Bone.global_position.angle_to_point(VirtualPoint)*sign(Bone.global_scale.y)
-		Bone.rotation = AngleGlobalToLocal(resultAngle,Bone.get_parent())
+	if !(Bone is Bone2D and target is Node2D):
+		return
+	if Easing is SoupySecondOrderEasing:
+		Easing.update(delta,target.global_position)
+		VirtualPoint = (Easing.state-Bone.global_position).normalized()\
+		*Bone.global_position.distance_to(target.global_position)\
+		+Bone.global_position
+	var correctionAngle: float = -Bone.get_bone_angle()
+	var resultAngle = correctionAngle\
+	+ Bone.global_position.angle_to_point(VirtualPoint)*sign(Bone.global_scale.y)
+	Bone.rotation = AngleGlobalToLocal(resultAngle,Bone.get_parent())
 
 
-func AngleGlobalToLocal( angle: float, referenceNode: Node2D) -> float:
-	return (angle - referenceNode.global_rotation*sign(referenceNode.global_scale.y))
+func AngleGlobalToLocal( angle: float, parentNode: Node2D) -> float:
+	return (angle - parentNode.global_rotation*sign(parentNode.global_scale.y))

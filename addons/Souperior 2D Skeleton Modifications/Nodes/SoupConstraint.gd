@@ -1,6 +1,6 @@
 @tool 
 
-@icon("customConstraintIcon")
+@icon("Icons/customConstraintIcon")
 extends Node
 class_name SoupConstraint
 
@@ -124,8 +124,9 @@ func find_stack() -> SoupStack:
 
 func on_bone_updated() -> void:
 	draw_visualizers()
-	if ModStack is SoupStack:
-		ModStack.execute_bone_modifications(Bone.get_index_in_skeleton())
+	if !(ModStack is SoupStack):
+		return
+	ModStack.apply_constraints(Bone)
 
 func stack_hook_initialization() -> void:
 	draw_visualizers()
