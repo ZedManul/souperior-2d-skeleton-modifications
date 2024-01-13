@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vsvvigpuoi1x"
-path="res://.godot/imported/customIKIcon.png-1e9a31178dbe98a9fb523b0582453e51.ctex"
+uid="uid://dddadlltk6anr"
+path="res://.godot/imported/icon_look_at.png-8b27f9f2d6bc13a2fbd4d9d2545ec607.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Souperior 2D Skeleton Modifications/Nodes/Icons/customIKIcon.png"
-dest_files=["res://.godot/imported/customIKIcon.png-1e9a31178dbe98a9fb523b0582453e51.ctex"]
+source_file="res://addons/Souperior 2D Skeleton Modifications/Nodes/Icons/icon_look_at.png"
+dest_files=["res://.godot/imported/icon_look_at.png-8b27f9f2d6bc13a2fbd4d9d2545ec607.ctex"]
 
 [params]
 

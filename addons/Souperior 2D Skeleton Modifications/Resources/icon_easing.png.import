@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kjf0k2tgw51i"
-path="res://.godot/imported/customJiggleIcon.png-37cf5b777da423bb36bc289794805c4e.ctex"
+uid="uid://fut6fv5fkr73"
+path="res://.godot/imported/icon_easing.png-4ecd08292e48497bd73573768f387080.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Souperior 2D Skeleton Modifications/Nodes/Icons/customJiggleIcon.png"
-dest_files=["res://.godot/imported/customJiggleIcon.png-37cf5b777da423bb36bc289794805c4e.ctex"]
+source_file="res://addons/Souperior 2D Skeleton Modifications/Resources/icon_easing.png"
+dest_files=["res://.godot/imported/icon_easing.png-4ecd08292e48497bd73573768f387080.ctex"]
 
 [params]
 

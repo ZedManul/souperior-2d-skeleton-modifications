@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdbpwwxdrj6pv"
-path="res://.godot/imported/customStayAtIcon.png-ee9c3609d526996b7f33c5d8ef7944ec.ctex"
+uid="uid://vsvvigpuoi1x"
+path="res://.godot/imported/icon_two_bone_ik.png-a5818bd1680ca98ba8dba3c27dfe2d8f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Souperior 2D Skeleton Modifications/Nodes/Icons/customStayAtIcon.png"
-dest_files=["res://.godot/imported/customStayAtIcon.png-ee9c3609d526996b7f33c5d8ef7944ec.ctex"]
+source_file="res://addons/Souperior 2D Skeleton Modifications/Nodes/Icons/icon_two_bone_ik.png"
+dest_files=["res://.godot/imported/icon_two_bone_ik.png-a5818bd1680ca98ba8dba3c27dfe2d8f.ctex"]
 
 [params]
 

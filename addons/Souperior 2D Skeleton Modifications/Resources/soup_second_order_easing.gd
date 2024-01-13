@@ -1,41 +1,42 @@
 @tool
-@icon("customEasingIcon.png")
-extends Resource
+@icon("icon_easing.png")
 class_name SoupySecondOrderEasing
+extends Resource
+## A custom easing resource; uses physics approximation to produce smooth change.
 
 #region Export Variables
-## Easing Frequency:  
+## Easing frequency:  
 ## 
 ## Defines the speed at which the system will respond;
 ## Values above 20 may cause instability in low-fps environments 
 ## and otherwise does not appear any different from an uneased parameter. 
-@export_range(0.001, 30, 0.1, "or_greater", "or_less") var Frequency: float = 1:
+@export_range(0.001, 30, 0.1, "or_greater", "or_less") var frequency: float = 1:
 	set(new_value):
-		Frequency=clampf(new_value,0.001,30)
-		compute_constants(Frequency,Damping,Reaction)
+		frequency=clampf(new_value,0.001,30)
+		compute_constants(frequency,damping,reaction)
 	get:
-		return Frequency
-## Easing Damping:  
+		return frequency
+## Easing damping:  
 ##
 ## Defines how the system settles at the target value;
 ## Values below 1 allow for vibration
-@export var Damping: float = 1:
+@export var damping: float = 1:
 	set(new_value):
-		Damping=maxf(new_value,0.0)
-		compute_constants(Frequency,Damping,Reaction)
+		damping=maxf(new_value,0.0)
+		compute_constants(frequency,damping,reaction)
 	get:
-		return Damping
-## Easing Reaction:  
+		return damping
+## Easing reaction:  
 ##
 ## Defines how quickly the system reacts to a change in target value;
 ## Values below 0 cause anticipation in motion;
 ## Values above 1 overshoot the motion
-@export var Reaction: float = 1:
+@export var reaction: float = 1:
 	set(new_value):
-		Reaction=new_value
-		compute_constants(Frequency,Damping,Reaction)
+		reaction=new_value
+		compute_constants(frequency,damping,reaction)
 	get:
-		return Reaction
+		return reaction
 #endregion
 
 var ip: Vector2 # Previous Input

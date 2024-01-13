@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cta70roy3ygg1"
-path="res://.godot/imported/customEnhancerIcon.png-2f25046a92868263c3c1efcff15f15ae.ctex"
+uid="uid://cdbpwwxdrj6pv"
+path="res://.godot/imported/icon_stay_at.png-95f726aeb264a5a1508e1e056b1c0c55.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Souperior 2D Skeleton Modifications/Nodes/Icons/customEnhancerIcon.png"
-dest_files=["res://.godot/imported/customEnhancerIcon.png-2f25046a92868263c3c1efcff15f15ae.ctex"]
+source_file="res://addons/Souperior 2D Skeleton Modifications/Nodes/Icons/icon_stay_at.png"
+dest_files=["res://.godot/imported/icon_stay_at.png-95f726aeb264a5a1508e1e056b1c0c55.ctex"]
 
 [params]
 
