@@ -1,7 +1,7 @@
 @tool
 @icon("customEasingIcon.png")
 extends SoupySecondOrderEasing
-class_name SoupySecondOrderEasingGravity
+class_name SoupySecondOrderEasingG
 
 @export var Gravity: Vector2 = Vector2.ZERO
 

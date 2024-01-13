@@ -3,18 +3,19 @@
 extends SoupMod
 class_name SoupLookAt
 
-## "Souperior" custom modification for Skeleton2D; Points bone angle at the target.
+## "Souperior" modification for Skeleton2D; Points bone angle at the target.
 
 ## Target node for the modification;
-## 
-## Points the bone at it.
+## The bone is pointed towards this;
+## /!\ To avoid unintended behaviour, make sure this node is NOT a child of the to-be-modified bone.
 @export var TargetNode: Node2D
 
-## if true, the modification is calculated and applied
+## If true, the modification is calculated and applied.
 @export var Enabled: bool = false
 
 @export_category("Bones")
 #region Bone 
+## Index of the to-be-modified bone in the skeleton.
 @export var BoneIdx: int = -1:
 	set(new_value):
 		BoneIdx=new_value
@@ -28,7 +29,7 @@ class_name SoupLookAt
 		if (Bone != Skeleton.get_bone(BoneIdx)):
 			Bone = Skeleton.get_bone(BoneIdx)
 			return
-
+## The to-be-modified bone node.
 @export var Bone: Bone2D:
 	set(new_value):
 		Bone=new_value
@@ -36,32 +37,28 @@ class_name SoupLookAt
 			return
 		if (ModStack.Skeleton is Skeleton2D and Bone is Bone2D and BoneIdx != Bone.get_index_in_skeleton()):
 			BoneIdx = Bone.get_index_in_skeleton()
-		
 #endregion 
 
-var TargetVector: Vector2
-
 @export_category("Easing")
-## Toggles Easing:
-##
-## This sort of easing is rather advanced 
-## and may be unwanted on some modifications
+## If true, easing is appied.
 @export var UseEasing: bool = false
-## Easing Resource:
-##
-## Defines easing behaviour
-@export var Easing: SoupySecondOrderEasing: 
+## Easing Resource;
+## Defines the easing behaviour.
+@export var Easing: SoupySecondOrderEasingNoG: 
 	set(new_value):
-		if !(new_value is SoupySecondOrderEasing):
+		if !new_value:
 			Easing = null
 			return
 		Easing = new_value.duplicate(true)
-
-
+## [not intended for access]
+## Used for calculating the lookat direction.
+var TargetVector: Vector2
 func _process(delta) -> void:
 	if Enabled and TargetNode and parent_enable_check():
 		handle_lookAt(delta)
 
+## [not intended for access]
+## Handles the modification.
 func handle_lookAt(delta) -> void:
 	if !(ModStack is SoupStack):
 		return

@@ -2,7 +2,13 @@
 @icon("Icons/customStayAtIcon.png")
 extends SoupMod
 class_name SoupStayAt
+## "Souperior" modification for Skeleton2D; 
+## Moves bone's global position to a target global position;
+## Can be used as a jiggle modifier for the bone's position!
 
+## Target node for the modification;
+## The bone tries to stay at the global position of this node;
+## /!\ To avoid unintended behaviour, make sure this node is NOT a child of the to-be-modified bone.
 @export var target: Node2D
 @export var Enabled: bool = false:
 	set(new_value):
@@ -11,6 +17,7 @@ class_name SoupStayAt
 
 @export_category("Bones")
 #region Bone 
+## Index of the to-be-modified bone in the skeleton.
 @export var BoneIdx: int = -1:
 	set(new_value):
 		BoneIdx=new_value
@@ -24,7 +31,7 @@ class_name SoupStayAt
 		if (Bone != Skeleton.get_bone(BoneIdx)):
 			Bone = Skeleton.get_bone(BoneIdx)
 			return
-
+## The to-be-modified bone node.
 @export var Bone: Bone2D:
 	set(new_value):
 		Bone=new_value
@@ -37,17 +44,14 @@ class_name SoupStayAt
 
 #region Easing
 @export_category("Easing")
-## Toggles Easing:
-##
-## This sort of easing is rather advanced 
-## and may be unwanted on some modifications
+## If true, easing is appied;
+## Required for the effect to feel "jiggly".
 @export var UseEasing: bool = false:
 	set(new_value):
 		UseEasing = new_value
 		fix_easing()
-## Easing Resource:
-##
-## Defines easing behaviour
+## Easing Resource;
+## Defines easing behaviour.
 @export var Easing: SoupySecondOrderEasing: 
 	set(new_value):
 		if !new_value:
@@ -73,6 +77,8 @@ func _process(delta: float) -> void:
 	if fixedPos and Easing and UseEasing:
 		Easing.state = PositionLocalToGlobal(fixedPos, Bone.get_parent())
 
+## Updates the internal variables of the easing resource to match the current wanted state;
+## Prevents weird behaviour on bone change, scene reload, or any other situation that may cause the easing internals to become outdated.
 func fix_easing():
 	if !(Easing and Bone and target):
 		return
