@@ -32,7 +32,7 @@ func _draw_position_constraint_rect():
 	global_position = bone_daddy.global_position \
 	+ (_visualizee.position_limit_offset).rotated(bone_daddy.global_rotation*sign(bone_daddy.global_scale.y))*bone_daddy.global_scale
 	global_scale = bone_daddy.global_scale
-	global_rotation = bone_daddy.global_rotation
+	global_rotation = bone_daddy.global_rotation + _visualizee.position_constraint_rotation * sign(bone_daddy.global_scale.y)
 	var gizmo_size:float = maxf(bone.get_length()/3,10)
 	var gizmo_width:float = gizmo_size/10
 	
@@ -67,7 +67,7 @@ func _draw_position_constraint_ellipse():
 	global_position = bone_daddy.global_position \
 	+ (_visualizee.position_limit_offset).rotated(bone_daddy.global_rotation*sign(bone_daddy.global_scale.y))*bone_daddy.global_scale
 	global_scale = bone_daddy.global_scale
-	global_rotation = bone_daddy.global_rotation
+	global_rotation = bone_daddy.global_rotation + _visualizee.position_constraint_rotation * sign(bone_daddy.global_scale.y)
 	var gizmo_size:float = maxf(bone.get_length()/3,10)
 	var gizmo_width:float = gizmo_size/10
 	

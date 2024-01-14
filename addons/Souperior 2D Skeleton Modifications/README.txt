@@ -50,3 +50,7 @@ and applying both at the same time to one bone may be a bad idea.
 The system also relies on bone angle and length, so make sure to
 disable "auto calculate" on bones that dont have any further child bones.
 
+
+If you like the plugin, you can throw a couple dollars my way over at 
+https://boosty.to/zedmanul/donate
+It'd be greatly appreciated :)

@@ -3,7 +3,8 @@
 class_name SoupConstraint
 extends Node
 ## "Souperior" constraint for Skeleton2D;
-## Limits bone rotation and/or position.
+## Limits bone rotation and/or position;
+## (!)-> MUST be a direct child of the Bone2D its modifying.
 
 ## Position Limit Shape Enumerator.
 enum PosLimitShape {
@@ -64,10 +65,6 @@ var rotation_limit_range_degrees: float = 45: # used for export
 		limit_position = new_value
 		_on_bone_node_updated()
 
-## Shape of the position constraint.
-@export_enum("Rectangle", "Ellipse") \
-var position_constraint_shape: int = PosLimitShape.RECTANGLE
-
 ## Center of the permitted position area.
 @export var position_limit_offset := Vector2.ZERO:
 	set(new_value):
@@ -83,6 +80,24 @@ var position_constraint_shape: int = PosLimitShape.RECTANGLE
 			)
 		
 		_on_bone_node_updated()
+
+## Shape of the position constraint.
+@export_enum("Rectangle", "Ellipse") \
+var position_constraint_shape: int = PosLimitShape.RECTANGLE:
+	set(new_value):
+		position_constraint_shape = new_value
+		_draw_visualizers()
+
+## Rotation of the constraint shape, in degrees.
+@export_range(-180.0, 180.0, 0.001, "or_greater", "or_less") \
+var position_constraint_rotation_degrees: float = 0.0:
+	set(new_value):
+		position_constraint_rotation_degrees = clampf(new_value, -180, 180)
+		position_constraint_rotation = PI * position_constraint_rotation_degrees / 180
+		_on_bone_node_updated()
+
+## Rotation of the constraint shape, in radians.
+var position_constraint_rotation: float = 0
 
 ## If true, the position constraint gizmo will be drawn.
 @export var draw_position_limit_gizmo: bool = true:

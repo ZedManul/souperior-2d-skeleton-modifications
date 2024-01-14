@@ -4,7 +4,7 @@ class_name SoupStack
 extends Node
 ## A skeleton's (spinal) brain;    
 ## All of the constraints and modifications go through this thing;
-## MUST be a direct child of a Skeleton2D node.
+## (!)-> MUST be a direct child of a Skeleton2D node.
 
 ## If true, the modifications are applied.
 @export var enabled: bool = true
@@ -50,24 +50,26 @@ func apply_position_constraints(bone_node: Bone2D, target_position: Vector2) -> 
 		
 		var pos_lim_offset: Vector2 = i.position_limit_offset
 		var pos_lim_range: Vector2 = i.position_limit_range
-		
+		fixed_position -= pos_lim_offset
+		fixed_position = fixed_position.rotated(-i.position_constraint_rotation)
 		match i.position_constraint_shape:
 		
 			i.PosLimitShape.RECTANGLE:
 				fixed_position = \
-				target_position.clamp(
-						pos_lim_offset - pos_lim_range,
-						pos_lim_offset + pos_lim_range
+				fixed_position.clamp(
+						-pos_lim_range,
+						pos_lim_range
 					)
 		
 			i.PosLimitShape.ELLIPSE:
-				fixed_position = (target_position - pos_lim_offset) / pos_lim_range
+				fixed_position = (fixed_position) / pos_lim_range
 				if fixed_position.length_squared() <= 1:
-					fixed_position = target_position 
+					fixed_position = fixed_position * pos_lim_range
 				else:
-					fixed_position = fixed_position.normalized() * pos_lim_range + pos_lim_offset
+					fixed_position = fixed_position.normalized() * pos_lim_range
 		
-		
+		fixed_position = fixed_position.rotated(i.position_constraint_rotation)
+		fixed_position += pos_lim_offset
 	return fixed_position
 
 

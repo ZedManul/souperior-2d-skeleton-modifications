@@ -25,77 +25,14 @@ extends SoupMod
 		softness=clampf(new_value,0,1)
 
 @export_category("Bones")
-#region Bone 1  
-@export_group("First Bone")
-## Index of the bone which will be modified to act as the first joint.
-@export var joint_one_bone_idx: int = -1:
-	set(new_value):
-		joint_one_bone_idx=new_value
-		
-		if !(_mod_stack is SoupStack):
-			return
-		
-		var skeleton: Skeleton2D = _mod_stack.skeleton
-		if !(skeleton is Skeleton2D):
-			joint_one_bone_node = null
-			return
-		
-		joint_one_bone_idx=clampi(new_value,0,skeleton.get_bone_count()-1)
-		
-		if (joint_one_bone_node != skeleton.get_bone(joint_one_bone_idx)):
-			joint_one_bone_node = skeleton.get_bone(joint_one_bone_idx)
 
 ## Bone node which will be modified to act as the first joint.
-@export var joint_one_bone_node: Bone2D:
-	set(new_value):
-		joint_one_bone_node=new_value
-		if !(_mod_stack is SoupStack):
-			return
-		
-		if (
-			_mod_stack.skeleton is Skeleton2D 
-			and joint_one_bone_node is Bone2D 
-			and joint_one_bone_idx != joint_one_bone_node.get_index_in_skeleton()
-		):
-			joint_one_bone_idx = joint_one_bone_node.get_index_in_skeleton()
-#endregion 
-
-#region Bone 2
-@export_group("Second Bone")
-## Index of the bone which will be modified to act as the second joint;
-## Must be a child of the first joint bone for the modification to work properly.
-@export  var joint_two_bone_idx: int = -1:
-	set(new_value):
-		joint_two_bone_idx=new_value
-		
-		if !(_mod_stack is SoupStack):
-			joint_two_bone_node = null
-			return
-		
-		var skeleton: Skeleton2D = _mod_stack.skeleton
-		if !(skeleton is Skeleton2D):
-			return
-		
-		joint_two_bone_idx=clampi(new_value,0,skeleton.get_bone_count()-1)
-		
-		if (joint_two_bone_node != skeleton.get_bone(joint_two_bone_idx)):
-			joint_two_bone_node = skeleton.get_bone(joint_two_bone_idx)
+@export var joint_one_bone_node: Bone2D
 
 ## Bone node which will be modified to act as the first joint;
-## Must be a child of the first joint bone for the modification to work properly.
-@export var joint_two_bone_node: Bone2D:
-	set(new_value):
-		joint_two_bone_node=new_value
-		if !(_mod_stack is SoupStack):
-			return
-		
-		if (
-			_mod_stack.skeleton is Skeleton2D 
-			and joint_two_bone_node is Bone2D
-			and joint_two_bone_idx != joint_two_bone_node.get_index_in_skeleton()
-		):
-			joint_two_bone_idx = joint_two_bone_node.get_index_in_skeleton()
-#endregion
+## (!)-> Must be a child of the first joint bone for the modification to work properly;
+## (!)-> Do NOT affect this bone by any other modifications.
+@export var joint_two_bone_node: Bone2D
 
 ## (OPTIONAL) A child node of the second node marking the end of the chain;
 ## Without a chain tip, the modification instead will use second bone's length and angle.
@@ -146,8 +83,16 @@ var _second_bone_vector: Vector2
 
 
 func _process(delta) -> void:
-	if enabled and target_node and _parent_enable_check():
-		_handle_ik(delta)
+	if !(
+			enabled 
+			and target_node 
+			and joint_one_bone_node
+			and joint_two_bone_node
+			and _parent_enable_check()
+		):
+		return
+	
+	_handle_ik(delta)
 
 
 ## [not intended for access]
