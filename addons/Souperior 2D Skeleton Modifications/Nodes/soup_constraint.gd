@@ -5,6 +5,12 @@ extends Node
 ## "Souperior" constraint for Skeleton2D;
 ## Limits bone rotation and/or position.
 
+##
+enum PosLimitShape {
+	RECTANGLE,
+	ELLIPSE,
+}
+
 ## If true, the constraint is calculated and applied.
 @export var enabled: bool = false:
 	set(new_value):
@@ -58,6 +64,10 @@ var rotation_limit_range_degrees: float = 45: # used for export
 		limit_position = new_value
 		_on_bone_node_updated()
 
+## Shape of the position constraint.
+@export_enum("Rectangle", "Ellipse") \
+var position_constraint_shape: int = PosLimitShape.RECTANGLE
+
 ## Center of the permitted position area.
 @export var position_limit_offset := Vector2.ZERO:
 	set(new_value):
@@ -68,7 +78,7 @@ var rotation_limit_range_degrees: float = 45: # used for export
 @export var position_limit_range := Vector2.ONE:
 	set(new_value):
 		position_limit_range = new_value.clamp(
-				Vector2.ZERO,
+				Vector2.ONE * 0.001,
 				abs(new_value) + Vector2.ONE
 			)
 		

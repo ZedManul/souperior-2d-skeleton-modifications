@@ -47,10 +47,27 @@ func apply_position_constraints(bone_node: Bone2D, target_position: Vector2) -> 
 			continue
 		if !i.enabled or !i.limit_position:
 			continue
-		fixed_position = target_position.clamp(
-				i.position_limit_offset - i.position_limit_range,
-				i.position_limit_offset + i.position_limit_range
-			)
+		
+		var pos_lim_offset: Vector2 = i.position_limit_offset
+		var pos_lim_range: Vector2 = i.position_limit_range
+		
+		match i.position_constraint_shape:
+		
+			i.PosLimitShape.RECTANGLE:
+				fixed_position = \
+				target_position.clamp(
+						pos_lim_offset - pos_lim_range,
+						pos_lim_offset + pos_lim_range
+					)
+		
+			i.PosLimitShape.ELLIPSE:
+				fixed_position = (target_position - pos_lim_offset) / pos_lim_range
+				if fixed_position.length_squared() <= 1:
+					fixed_position = target_position 
+				else:
+					fixed_position = fixed_position.normalized() * pos_lim_range + pos_lim_offset
+		
+		
 	return fixed_position
 
 
