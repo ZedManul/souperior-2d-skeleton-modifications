@@ -62,6 +62,10 @@ func _parent_enable_check() -> bool:
 	if !(_mod_stack is SoupStack):
 		return false
 	if (_mod_sub_stack is SoupSubStack):
-		return (_mod_stack.enabled) and (_mod_sub_stack.enabled)
+		return (
+				_mod_stack.enabled 
+				and _mod_sub_stack.enabled
+				and _mod_sub_stack.parent_enabled
+				)
 	else:
 		return _mod_stack.enabled

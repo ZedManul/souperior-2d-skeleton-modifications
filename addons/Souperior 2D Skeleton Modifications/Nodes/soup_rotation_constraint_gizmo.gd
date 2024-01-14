@@ -23,8 +23,10 @@ func _draw_angle_constraint():
 	var bone: Bone2D = _visualizee._bone_node
 	global_position = bone.global_position
 	global_scale = bone.global_scale
+	
 	var bone_angle_correction = bone.get_bone_angle()*global_scale.y
 	global_rotation = bone_angle_correction+bone.get_parent().global_rotation
+	
 	var gizmo_size:float = maxf(bone.get_length()/3,10)
 	var gizmo_width:float = gizmo_size/20
 	
