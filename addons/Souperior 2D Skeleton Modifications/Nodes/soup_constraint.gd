@@ -5,7 +5,7 @@ extends Node
 ## "Souperior" constraint for Skeleton2D;
 ## Limits bone rotation and/or position.
 
-##
+## Position Limit Shape Enumerator.
 enum PosLimitShape {
 	RECTANGLE,
 	ELLIPSE,
