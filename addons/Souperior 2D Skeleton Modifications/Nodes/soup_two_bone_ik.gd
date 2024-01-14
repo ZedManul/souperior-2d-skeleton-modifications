@@ -26,6 +26,7 @@ extends SoupMod
 
 @export_category("Bones")
 #region Bone 1  
+@export_group("First Bone")
 ## Index of the bone which will be modified to act as the first joint.
 @export var joint_one_bone_idx: int = -1:
 	set(new_value):
@@ -60,6 +61,7 @@ extends SoupMod
 #endregion 
 
 #region Bone 2
+@export_group("Second Bone")
 ## Index of the bone which will be modified to act as the second joint;
 ## Must be a child of the first joint bone for the modification to work properly.
 @export  var joint_two_bone_idx: int = -1:
@@ -95,6 +97,10 @@ extends SoupMod
 			joint_two_bone_idx = joint_two_bone_node.get_index_in_skeleton()
 #endregion
 
+## (OPTIONAL) A child node of the second node marking the end of the chain;
+## Without a chain tip, the modification instead will use second bone's length and angle.
+@export var chain_tip: Node2D = null
+
 #region Easing
 @export_category("Easing")
 @export_group("Joint One")
@@ -128,7 +134,15 @@ extends SoupMod
 
 ## [not intended for access]
 ## Used for calculations.
-var target_vector: Vector2
+var _target_vector: Vector2
+
+## [not intended for access]
+## Used for calculations.
+var _first_bone_vector: Vector2
+
+## [not intended for access]
+## Used for calculations.
+var _second_bone_vector: Vector2
 
 
 func _process(delta) -> void:
@@ -142,8 +156,11 @@ func _handle_ik(delta: float) -> void:
 	if !(_mod_stack is SoupStack):
 		return
 	var skeleton: Skeleton2D = _mod_stack.skeleton
-	target_vector = _calculate_target_vector()
-	var distance: float = target_vector.length()
+	_target_vector = _calculate_target_vector()
+	var distance: float = _target_vector.length()
+	
+	_first_bone_vector = _vectorize_first_bone()
+	_second_bone_vector = _vectorize_second_bone()
 	
 	#region Angle calculation modifiers
 	var is_skeleton_flipped: int = int(sign(skeleton.scale).x!=sign(skeleton.scale).y)
@@ -151,10 +168,10 @@ func _handle_ik(delta: float) -> void:
 	#endregion
 	
 	#initializing calculation result variables
-	var bone_rotation: float = (target_vector.angle() \
+	var bone_rotation: float = (_target_vector.angle() \
 	- joint_one_bone_node.get_parent().global_rotation)*sign(joint_one_bone_node.global_scale.y) \
 	+ bend_direction_coefficient * _calculate_first_joint_rotation() \
-	- joint_one_bone_node.get_bone_angle()
+	- _first_bone_vector.angle()
 	
 	if use_easing_on_first_joint and first_joint_easing:
 		first_joint_easing.update(delta,Vector2.RIGHT.rotated(bone_rotation))
@@ -165,8 +182,8 @@ func _handle_ik(delta: float) -> void:
 		first_joint_easing.state = Vector2.RIGHT.rotated(fixed_rotation)
 	#region handling second joint
 	bone_rotation = bend_direction_coefficient * _calculate_second_joint_rotation() \
-	+ joint_one_bone_node.get_bone_angle() \
-	- joint_two_bone_node.get_bone_angle()
+	+ _first_bone_vector.angle() \
+	- _second_bone_vector.angle()
 	
 	if use_easing_on_second_joint and second_joint_easing:
 		second_joint_easing.update(delta,Vector2.RIGHT.rotated(bone_rotation))
@@ -177,14 +194,26 @@ func _handle_ik(delta: float) -> void:
 	#endregion
 
 
+func _vectorize_first_bone() -> Vector2:
+	return joint_two_bone_node.position
+
+func _vectorize_second_bone() -> Vector2:
+	if chain_tip:
+		return chain_tip.position
+	
+	return Vector2(
+			joint_two_bone_node.get_length(),
+			0
+			).rotated(joint_two_bone_node.get_bone_angle())
+
 ## [not intended for access]
 ## Handles additional calculations to account for softness.
 func _calculate_target_vector() -> Vector2:
 	var raw_vector: Vector2 = target_node.global_position - joint_one_bone_node.global_position
-	var bone_length_difference: float = abs(_vectorize_bone(joint_one_bone_node).length() - _vectorize_bone(joint_two_bone_node).length())
+	var bone_length_difference: float = abs(_first_bone_vector.length() - _second_bone_vector.length())
 	
 	var full_length: float \
-	= (_vectorize_bone(joint_one_bone_node).length() + _vectorize_bone(joint_two_bone_node).length()) \
+	= (_first_bone_vector.length() + _second_bone_vector.length()) \
 	- bone_length_difference
 	var distance_ratio: float = (raw_vector.length()-bone_length_difference)/full_length
 	var result_vector: Vector2 = raw_vector
@@ -197,14 +226,6 @@ func _calculate_target_vector() -> Vector2:
 ## Handles even more additional calculations to account for softness.
 func _calculate_softness_result(a:float):
 	return -(0.25*(a-1-softness)*(a-1-softness)/softness)+1
-
-
-## [not intended for access]
-## Used for abstracting some internal calculations.
-func _vectorize_bone(bone: Bone2D) -> Vector2:
-	var result = ((Vector2.RIGHT * bone.get_length()) \
-	.rotated(bone.get_bone_angle()))
-	return Vector2(result.x*bone.global_scale.x, result.y*bone.global_scale.y)
 
 
 ## [not intended for access]
@@ -222,15 +243,15 @@ func _calculate_first_joint_rotation() -> float:
 	if _length_check():
 		return PI \
 		* int(
-				_vectorize_bone(joint_one_bone_node).length() < \
-				_vectorize_bone(joint_two_bone_node).length()
+				_first_bone_vector.length() < \
+				_second_bone_vector.length()
 			)
 	else:
 		return acos(
 				_cos_from_sides(
-					_vectorize_bone(joint_one_bone_node).length(),
-					target_vector.length(),
-					_vectorize_bone(joint_two_bone_node).length()
+					_first_bone_vector.length(),
+					_target_vector.length(),
+					_second_bone_vector.length()
 				)
 			)
 
@@ -243,19 +264,19 @@ func _calculate_second_joint_rotation() -> float:
 	else:
 		return acos(
 				_cos_from_sides(
-					_vectorize_bone(joint_one_bone_node).length(),
-					_vectorize_bone(joint_two_bone_node).length(),
-					target_vector.length()
+					_first_bone_vector.length(),
+					_second_bone_vector.length(),
+					_target_vector.length()
 				)
 			) - PI
 
 
 ## Checks if the distance to the target node is reachable with the current setup.
 func _length_check() -> bool:
-	return (target_vector.length()<0.001) or target_vector.length() < \
+	return (_target_vector.length()<0.001) or _target_vector.length() < \
 	abs(
-			_vectorize_bone(joint_one_bone_node).length() \
-			- _vectorize_bone(joint_two_bone_node).length()
+			_first_bone_vector.length() \
+			- _second_bone_vector.length()
 		)
 
 
