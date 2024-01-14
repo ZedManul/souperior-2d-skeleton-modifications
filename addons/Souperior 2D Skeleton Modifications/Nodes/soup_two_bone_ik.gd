@@ -195,16 +195,16 @@ func _handle_ik(delta: float) -> void:
 
 
 func _vectorize_first_bone() -> Vector2:
-	return joint_two_bone_node.position
+	return joint_two_bone_node.position * abs(joint_one_bone_node.global_scale)
 
 func _vectorize_second_bone() -> Vector2:
 	if chain_tip:
-		return chain_tip.position
+		return chain_tip.position * abs(joint_two_bone_node.global_scale)
 	
 	return Vector2(
 			joint_two_bone_node.get_length(),
 			0
-			).rotated(joint_two_bone_node.get_bone_angle())
+			).rotated(joint_two_bone_node.get_bone_angle()) * abs(joint_two_bone_node.global_scale)
 
 ## [not intended for access]
 ## Handles additional calculations to account for softness.
