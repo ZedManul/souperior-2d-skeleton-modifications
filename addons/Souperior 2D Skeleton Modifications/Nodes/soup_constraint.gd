@@ -4,7 +4,7 @@ class_name SoupConstraint
 extends Node
 ## "Souperior" constraint for Skeleton2D;
 ## Limits bone rotation and/or position;
-## (!)-> MUST be a direct child of the Bone2D its modifying.
+## MUST be a direct child of the Bone2D its modifying.
 
 ## Position Limit Shape Enumerator.
 enum PosLimitShape {

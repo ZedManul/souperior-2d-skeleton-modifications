@@ -11,30 +11,31 @@
 [ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Nodes/soup_jiggle.gd" id="7_janqd"]
 [ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Resources/soup_second_order_easing_g.gd" id="8_eixk0"]
 
-[sub_resource type="Resource" id="Resource_15681"]
+[sub_resource type="Resource" id="Resource_j2d0g"]
 script = ExtResource("8_eixk0")
 gravity = Vector2(0, 4)
 frequency = 2.001
 damping = 0.7
 reaction = 2.0
 
-[sub_resource type="Resource" id="Resource_8lfhb"]
+[sub_resource type="Resource" id="Resource_gf26l"]
 script = ExtResource("8_eixk0")
 gravity = Vector2(0, 10)
 frequency = 1.0
 damping = 0.5
 reaction = 2.0
 
-[sub_resource type="Resource" id="Resource_hir4g"]
+[sub_resource type="Resource" id="Resource_6n5hx"]
 script = ExtResource("7_gg0nr")
 frequency = 1.001
 damping = 0.5
 reaction = 3.0
 
 [node name="SoupIkDemo" type="Node2D"]
+position = Vector2(133, 182)
 
 [node name="HeadLookatTarget" type="Marker2D" parent="."]
-position = Vector2(-125, -125)
+position = Vector2(-107, -151)
 rotation = 3.14159
 scale = Vector2(1, -1)
 
@@ -45,7 +46,7 @@ position = Vector2(0, -15)
 position = Vector2(0, 29)
 
 [node name="DemoSkelly" type="Skeleton2D" parent="."]
-position = Vector2(0, -70)
+position = Vector2(-10, -92)
 scale = Vector2(-1, 1)
 
 [node name="SoupStack" type="Node" parent="DemoSkelly"]
@@ -60,7 +61,7 @@ target_node = NodePath("../../../Body/NeckTarget")
 enabled = true
 bone_node = NodePath("../../../Body/Neck")
 use_easing = true
-easing = SubResource("Resource_15681")
+easing = SubResource("Resource_j2d0g")
 
 [node name="NeckJiggle" type="Node" parent="DemoSkelly/SoupStack/Head" node_paths=PackedStringArray("target_node", "bone_node")]
 script = ExtResource("7_janqd")
@@ -68,7 +69,7 @@ target_node = NodePath("../../../Body/NeckJiggleTarget")
 enabled = true
 bone_node = NodePath("../../../Body/Neck")
 use_easing = true
-easing = SubResource("Resource_8lfhb")
+easing = SubResource("Resource_gf26l")
 
 [node name="HeadLookAt" type="Node" parent="DemoSkelly/SoupStack/Head" node_paths=PackedStringArray("target_node", "bone_node")]
 script = ExtResource("4_qkwhn")
@@ -76,7 +77,7 @@ target_node = NodePath("../../../../HeadLookatTarget")
 enabled = true
 bone_node = NodePath("../../../Body/Neck/Head")
 use_easing = true
-easing = SubResource("Resource_hir4g")
+easing = SubResource("Resource_6n5hx")
 
 [node name="Leg" type="Node" parent="DemoSkelly/SoupStack"]
 script = ExtResource("2_4ajdf")
@@ -107,21 +108,21 @@ position = Vector2(8, -13)
 position = Vector2(64.8875, -54.9055)
 
 [node name="Neck" type="Bone2D" parent="DemoSkelly/Body"]
-position = Vector2(6.96473, -9.1363)
-rotation = -0.457155
+position = Vector2(6.96472, -9.1363)
+rotation = -0.457156
 scale = Vector2(0.999999, 0.999999)
 rest = Transform2D(1, 0, 0, 1, 8, -13)
 
 [node name="NeckConstraint" type="Node" parent="DemoSkelly/Body/Neck"]
 script = ExtResource("5_mqdkd")
 enabled = true
-rotation_limit_angle_degrees = -41.538
-rotation_limit_range_degrees = 70.385
+rotation_limit_angle_degrees = -48.162
+rotation_limit_range_degrees = 60.773
 limit_position = true
-position_limit_offset = Vector2(6.96473, -9.1363)
-position_limit_range = Vector2(9, 4)
+position_limit_offset = Vector2(6.96472, -9.1363)
+position_limit_range = Vector2(5, 9)
 position_constraint_shape = 1
-position_constraint_rotation_degrees = 70.515
+position_constraint_rotation_degrees = 41.0
 
 [node name="NeckRT" type="RemoteTransform2D" parent="DemoSkelly/Body/Neck"]
 position = Vector2(-13, -19)
@@ -130,7 +131,7 @@ metadata/_edit_lock_ = true
 
 [node name="Head" type="Bone2D" parent="DemoSkelly/Body/Neck"]
 position = Vector2(74, -9)
-rotation = 0.874795
+rotation = 0.883867
 scale = Vector2(0.999999, 0.999999)
 rest = Transform2D(1, 0, 0, 1, 74, -9)
 auto_calculate_length_and_angle = false
@@ -151,7 +152,7 @@ metadata/_edit_lock_ = true
 
 [node name="UpperLeg" type="Bone2D" parent="DemoSkelly/Body"]
 position = Vector2(-8, 15)
-rotation = -2.70813
+rotation = -2.89889
 scale = Vector2(0.999999, 0.999999)
 rest = Transform2D(2.22127e-06, 1, -1, 2.22127e-06, -8, 15)
 
@@ -163,7 +164,8 @@ metadata/_edit_lock_ = true
 
 [node name="LowerLeg" type="Bone2D" parent="DemoSkelly/Body/UpperLeg"]
 position = Vector2(74, 9.00017)
-rotation = -2.57794
+rotation = -2.27451
+scale = Vector2(1, 1)
 rest = Transform2D(1, 0, 0, 1, 74, 9.00017)
 
 [node name="LowerLegRT" type="RemoteTransform2D" parent="DemoSkelly/Body/UpperLeg/LowerLeg"]
@@ -174,7 +176,8 @@ metadata/_edit_lock_ = true
 
 [node name="Foot" type="Bone2D" parent="DemoSkelly/Body/UpperLeg/LowerLeg"]
 position = Vector2(96, -5.99979)
-rotation = 0.835477
+rotation = 0.722817
+scale = Vector2(1, 1)
 rest = Transform2D(2.22127e-06, -1, 1, 2.22127e-06, 96, -5.99979)
 auto_calculate_length_and_angle = false
 length = 16.0
@@ -194,7 +197,7 @@ metadata/_edit_lock_ = true
 [node name="Sprites" type="Node2D" parent="."]
 
 [node name="Neck" type="Sprite2D" parent="Sprites"]
-position = Vector2(17.933, -86.3632)
+position = Vector2(7.93301, -108.363)
 rotation = -2.42264
 scale = Vector2(0.999999, -0.999999)
 texture = ExtResource("3_lj5jx")
@@ -203,8 +206,8 @@ region_enabled = true
 region_rect = Rect2(3, 34, 97, 32)
 
 [node name="LegUpper" type="Sprite2D" parent="Sprites"]
-position = Vector2(-12.2095, -69.9405)
-rotation = -0.171668
+position = Vector2(-18.7896, -94.6854)
+rotation = 0.0190997
 scale = Vector2(0.999999, 0.999999)
 texture = ExtResource("3_lj5jx")
 centered = false
@@ -212,7 +215,7 @@ region_enabled = true
 region_rect = Rect2(3, 34, 97, 32)
 
 [node name="Body" type="Sprite2D" parent="Sprites"]
-position = Vector2(28.4279, -87.2294)
+position = Vector2(18.4279, -109.229)
 rotation = -2.87979
 scale = Vector2(1, -1)
 texture = ExtResource("3_lj5jx")
@@ -221,8 +224,8 @@ region_enabled = true
 region_rect = Rect2(37, 69, 47, 48)
 
 [node name="Head" type="Sprite2D" parent="Sprites"]
-position = Vector2(-45.5814, -152.662)
-rotation = 2.98575
+position = Vector2(-55.7317, -174.739)
+rotation = 2.97668
 scale = Vector2(0.999998, -0.999998)
 texture = ExtResource("3_lj5jx")
 centered = false
@@ -230,8 +233,8 @@ region_enabled = true
 region_rect = Rect2(1, 68, 32, 27)
 
 [node name="LegLower" type="Sprite2D" parent="Sprites"]
-position = Vector2(93.5816, -74.0293)
-rotation = 2.40627
+position = Vector2(86.3522, -84.1756)
+rotation = 2.29361
 scale = Vector2(0.999999, 0.999999)
 texture = ExtResource("3_lj5jx")
 centered = false

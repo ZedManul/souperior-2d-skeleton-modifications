@@ -8,7 +8,7 @@ extends SoupMod
 
 ## Target node for the modification;
 ## Defines the point which the bones try to reach;
-## (!) To avoid unintended behaviour, make sure this node is NOT a child of the to-be-modified bones.
+## To avoid unintended behaviour, make sure this node is NOT a child of the to-be-modified bones.
 @export var target_node: Node2D
 
 ## If true, the modification is calculated and applied.
@@ -30,8 +30,8 @@ extends SoupMod
 @export var joint_one_bone_node: Bone2D
 
 ## Bone node which will be modified to act as the first joint;
-## (!)-> Must be a child of the first joint bone for the modification to work properly;
-## (!)-> Do NOT affect this bone by any other modifications.
+## Must be a child of the first joint bone for the modification to work properly;
+## Do NOT affect this bone by any other modifications.
 @export var joint_two_bone_node: Bone2D
 
 ## (OPTIONAL) A child node of the second node marking the end of the chain;

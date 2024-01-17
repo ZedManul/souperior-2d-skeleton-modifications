@@ -8,7 +8,7 @@ extends SoupMod
 
 ## Target node;
 ## The bone tries to align itself towards this node;
-## (!)->  To avoid unintended behaviour, make sure this node is NOT a child of the to-be-modified bone.
+## To avoid unintended behaviour, make sure this node is NOT a child of the to-be-modified bone.
 @export var target_node: Node2D
 
 ## If true, the modification is calculated and applied.
