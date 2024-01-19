@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxna1ymwn5r5e"
-path="res://.godot/imported/icon_modification.png-8b9e4c9af61378ee73cdd6f4f5017ca8.ctex"
+uid="uid://fut6fv5fkr73"
+path="res://.godot/imported/icon_easing.png-926b1a8dd0e79a17f0d86ca44379c0f7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Souperior 2D Skeleton Modifications/Nodes/Icons/icon_modification.png"
-dest_files=["res://.godot/imported/icon_modification.png-8b9e4c9af61378ee73cdd6f4f5017ca8.ctex"]
+source_file="res://addons/Souperior 2D Skeleton Modifications/Easing/icon_easing.png"
+dest_files=["res://.godot/imported/icon_easing.png-926b1a8dd0e79a17f0d86ca44379c0f7.ctex"]
 
 [params]
 

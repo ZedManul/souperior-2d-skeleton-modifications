@@ -1,0 +1,141 @@
+[gd_scene load_steps=5 format=3 uid="uid://iw2v8bhcss5e"]
+
+[ext_resource type="Texture2D" uid="uid://ce05b4oymxktu" path="res://addons/Souperior 2D Skeleton Modifications/DEMO/CustomIKDemo2.png" id="1_8hnxo"]
+[ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Bone States/soup_state_inator.gd" id="2_yj26p"]
+[ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Bone States/soup_state.gd" id="3_aqnka"]
+[ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Bone States/soup_state_sprite.gd" id="4_cx03y"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprites" type="Node2D" parent="."]
+visible = false
+rotation = 3.14159
+
+[node name="180" type="Sprite2D" parent="Sprites"]
+position = Vector2(1.05697e-06, -7)
+texture = ExtResource("1_8hnxo")
+centered = false
+vframes = 8
+frame = 6
+region_enabled = true
+region_rect = Rect2(48, 0, 29, 112)
+
+[node name="-135" type="Sprite2D" parent="Sprites"]
+position = Vector2(-5, -3)
+rotation = -1.0472
+texture = ExtResource("1_8hnxo")
+centered = false
+vframes = 8
+frame = 7
+region_enabled = true
+region_rect = Rect2(48, 0, 29, 112)
+
+[node name="135" type="Sprite2D" parent="Sprites"]
+position = Vector2(7, -4)
+rotation = 1.0472
+texture = ExtResource("1_8hnxo")
+centered = false
+vframes = 8
+frame = 5
+region_enabled = true
+region_rect = Rect2(48, 0, 29, 112)
+
+[node name="90" type="Sprite2D" parent="Sprites"]
+position = Vector2(7, 1.05697e-06)
+rotation = 1.5708
+texture = ExtResource("1_8hnxo")
+centered = false
+vframes = 8
+region_enabled = true
+region_rect = Rect2(48, 0, 29, 112)
+
+[node name="45" type="Sprite2D" parent="Sprites"]
+position = Vector2(5, 3)
+rotation = 2.0944
+texture = ExtResource("1_8hnxo")
+centered = false
+vframes = 8
+frame = 1
+region_enabled = true
+region_rect = Rect2(48, 0, 29, 112)
+
+[node name="-90" type="Sprite2D" parent="Sprites"]
+position = Vector2(-7, -1.05697e-06)
+rotation = -1.5708
+texture = ExtResource("1_8hnxo")
+centered = false
+vframes = 8
+frame = 4
+region_enabled = true
+region_rect = Rect2(48, 0, 29, 112)
+
+[node name="-45" type="Sprite2D" parent="Sprites"]
+position = Vector2(-7, 4)
+rotation = -2.0944
+texture = ExtResource("1_8hnxo")
+centered = false
+vframes = 8
+frame = 3
+region_enabled = true
+region_rect = Rect2(48, 0, 29, 112)
+
+[node name="0" type="Sprite2D" parent="Sprites"]
+position = Vector2(-1.05697e-06, 7)
+rotation = -3.14159
+texture = ExtResource("1_8hnxo")
+centered = false
+vframes = 8
+frame = 2
+region_enabled = true
+region_rect = Rect2(48, 0, 29, 112)
+
+[node name="Skeleton2D" type="Skeleton2D" parent="."]
+
+[node name="Bone2D" type="Bone2D" parent="Skeleton2D"]
+rest = Transform2D(1, 0, 0, 1, 0, 0)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 0.0
+
+[node name="SoupBoneStateInator" type="Node" parent="Skeleton2D/Bone2D"]
+script = ExtResource("2_yj26p")
+
+[node name="angle0" type="Node" parent="Skeleton2D/Bone2D/SoupBoneStateInator"]
+script = ExtResource("3_aqnka")
+
+[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupBoneStateInator/angle0" node_paths=PackedStringArray("target_node")]
+script = ExtResource("4_cx03y")
+target_node = NodePath("../../../0")
+modify_frame = true
+frame_value = 2
+
+[node name="angle45" type="Node" parent="Skeleton2D/Bone2D/SoupBoneStateInator"]
+script = ExtResource("3_aqnka")
+
+[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupBoneStateInator/angle45" node_paths=PackedStringArray("target_node")]
+script = ExtResource("4_cx03y")
+target_node = NodePath("../../../0")
+modify_frame = true
+frame_value = 3
+
+[node name="angle90" type="Node" parent="Skeleton2D/Bone2D/SoupBoneStateInator"]
+script = ExtResource("3_aqnka")
+
+[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupBoneStateInator/angle90" node_paths=PackedStringArray("target_node")]
+script = ExtResource("4_cx03y")
+target_node = NodePath("../../../0")
+modify_frame = true
+frame_value = 4
+
+[node name="0" type="Sprite2D" parent="Skeleton2D/Bone2D"]
+position = Vector2(-9, -7)
+texture = ExtResource("1_8hnxo")
+centered = false
+vframes = 8
+frame = 2
+region_enabled = true
+region_rect = Rect2(48, 0, 29, 112)
+
+[node name="CustomIkDemo2" type="Sprite2D" parent="."]
+position = Vector2(180, -126)
+texture = ExtResource("1_8hnxo")

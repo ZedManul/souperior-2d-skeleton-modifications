@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://fut6fv5fkr73"
-path="res://.godot/imported/icon_easing.png-4ecd08292e48497bd73573768f387080.ctex"
+uid="uid://bsfblvoebi7y"
+path="res://.godot/imported/icon_state_bone.png-a2d5348cb84f3361ce30e30157ba9364.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Souperior 2D Skeleton Modifications/Resources/icon_easing.png"
-dest_files=["res://.godot/imported/icon_easing.png-4ecd08292e48497bd73573768f387080.ctex"]
+source_file="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Bone States/Icons/icon_state_bone.png"
+dest_files=["res://.godot/imported/icon_state_bone.png-a2d5348cb84f3361ce30e30157ba9364.ctex"]
 
 [params]
 
