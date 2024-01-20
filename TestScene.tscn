@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://iw2v8bhcss5e"]
 
 [ext_resource type="Texture2D" uid="uid://ce05b4oymxktu" path="res://addons/Souperior 2D Skeleton Modifications/DEMO/CustomIKDemo2.png" id="1_8hnxo"]
-[ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Bone States/soup_state.gd" id="3_aqnka"]
-[ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Bone States/soup_state_sprite.gd" id="4_cx03y"]
-[ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Bone States/soup_state_angle_fixinator.gd" id="4_sncij"]
+[ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Statinators/soup_state.gd" id="3_aqnka"]
+[ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Statinators/soup_state_sprite.gd" id="4_cx03y"]
+[ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Statinators/soup_state_angle_fixinator.gd" id="4_sncij"]
 
 [sub_resource type="Animation" id="Animation_mr7ct"]
 length = 0.001
@@ -11,7 +11,7 @@ tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("Skeleton2D/Bone2D:rotation")
-tracks/0/interp = 1
+tracks/0/interp = 4
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
@@ -22,7 +22,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_njauc"]
 resource_name = "new_animation"
-length = 2.1
+length = 2.4
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -141,7 +141,7 @@ position = Vector2(-9, -7)
 texture = ExtResource("1_8hnxo")
 centered = false
 vframes = 8
-frame = 4
+frame = 2
 region_enabled = true
 region_rect = Rect2(48, 0, 29, 112)
 

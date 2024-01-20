@@ -11,21 +11,21 @@
 [ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Modifications/soup_jiggle.gd" id="7_janqd"]
 [ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Easing/soup_second_order_easing_g.gd" id="8_eixk0"]
 
-[sub_resource type="Resource" id="Resource_jy8ju"]
+[sub_resource type="Resource" id="Resource_ih21d"]
 script = ExtResource("8_eixk0")
 gravity = Vector2(0, 4)
 frequency = 2.001
 damping = 0.7
 reaction = 2.0
 
-[sub_resource type="Resource" id="Resource_gcs41"]
+[sub_resource type="Resource" id="Resource_dui6h"]
 script = ExtResource("8_eixk0")
 gravity = Vector2(0, 10)
 frequency = 1.0
 damping = 0.5
 reaction = 2.0
 
-[sub_resource type="Resource" id="Resource_yi3f5"]
+[sub_resource type="Resource" id="Resource_3j260"]
 script = ExtResource("7_gg0nr")
 frequency = 1.001
 damping = 0.5
@@ -60,7 +60,7 @@ target_node = NodePath("../../../Body/NeckTarget")
 enabled = true
 bone_node = NodePath("../../../Body/Neck")
 use_easing = true
-easing = SubResource("Resource_jy8ju")
+easing = SubResource("Resource_ih21d")
 
 [node name="NeckJiggle" type="Node" parent="DemoSkelly/SoupStack/Head" node_paths=PackedStringArray("target_node", "bone_node")]
 script = ExtResource("7_janqd")
@@ -68,7 +68,7 @@ target_node = NodePath("../../../Body/NeckJiggleTarget")
 enabled = true
 bone_node = NodePath("../../../Body/Neck")
 use_easing = true
-easing = SubResource("Resource_gcs41")
+easing = SubResource("Resource_dui6h")
 
 [node name="HeadLookAt" type="Node" parent="DemoSkelly/SoupStack/Head" node_paths=PackedStringArray("target_node", "bone_node")]
 script = ExtResource("4_qkwhn")
@@ -76,7 +76,7 @@ target_node = NodePath("../../../../HeadLookatTarget")
 enabled = true
 bone_node = NodePath("../../../Body/Neck/Head")
 use_easing = true
-easing = SubResource("Resource_yi3f5")
+easing = SubResource("Resource_3j260")
 
 [node name="Leg" type="Node" parent="DemoSkelly/SoupStack"]
 script = ExtResource("2_4ajdf")

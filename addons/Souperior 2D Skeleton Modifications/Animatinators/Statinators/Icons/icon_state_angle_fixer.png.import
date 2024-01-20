@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dmccbjymo7ira"
-path="res://.godot/imported/icon_state_angle_fixer.png-5efef08e1b010d2fbf4cfd7a5edd0d15.ctex"
+path="res://.godot/imported/icon_state_angle_fixer.png-5c1ae57added14f04bfa061ed07c4587.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Bone States/Icons/icon_state_angle_fixer.png"
-dest_files=["res://.godot/imported/icon_state_angle_fixer.png-5efef08e1b010d2fbf4cfd7a5edd0d15.ctex"]
+source_file="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Statinators/Icons/icon_state_angle_fixer.png"
+dest_files=["res://.godot/imported/icon_state_angle_fixer.png-5c1ae57added14f04bfa061ed07c4587.ctex"]
 
 [params]
 

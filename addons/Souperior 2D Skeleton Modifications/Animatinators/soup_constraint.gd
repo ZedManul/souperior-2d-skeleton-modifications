@@ -195,9 +195,10 @@ func _initialize_position_visualizer() -> SoupyPositionConstraintGizmo:
 ## [not intended for access]
 ## Redraws the gizmos.
 func _draw_visualizers():
-	if _position_visualizer is SoupyPositionConstraintGizmo:
+	
+	if _position_visualizer:
 		_position_visualizer.queue_redraw()
-	if _angle_visualizer is SoupyAngleConstraintGizmo:
+	if _angle_visualizer:
 		_angle_visualizer.queue_redraw()
 #endregion
 

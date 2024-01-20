@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://chsemqwtrb43f"
-path="res://.godot/imported/icon_bone_state_component.png-ae5db5cf0ae5b5d24565d0affa7341e4.ctex"
+path="res://.godot/imported/icon_bone_state_component.png-575c3c48107db6c499a3379e4e16be2a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Bone States/Icons/icon_bone_state_component.png"
-dest_files=["res://.godot/imported/icon_bone_state_component.png-ae5db5cf0ae5b5d24565d0affa7341e4.ctex"]
+source_file="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Statinators/Icons/icon_bone_state_component.png"
+dest_files=["res://.godot/imported/icon_bone_state_component.png-575c3c48107db6c499a3379e4e16be2a.ctex"]
 
 [params]
 
