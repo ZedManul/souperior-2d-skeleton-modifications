@@ -12,7 +12,7 @@ extends SoupySecondOrderEasing
 func update(delta: float, i: Vector2) -> void:
 	var id: Vector2 = (i-ip) / delta # Input velocity estimation
 	ip = i
-	var k2_stable: float = maxf(k2, maxf(delta*delta/4 + delta*k1/2, delta*k1))
+	var k2_stable: float = maxf(k2, maxf(delta*delta/2.0 + delta*k1/2.0, delta*k1))
 	state = state + sd * delta # Integrate position by velocity
 	sd = sd + delta * (gravity\
 	+ i + k3 * id - state - k1 * sd) / k2_stable

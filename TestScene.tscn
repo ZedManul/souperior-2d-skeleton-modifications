@@ -1,9 +1,47 @@
-[gd_scene load_steps=5 format=3 uid="uid://iw2v8bhcss5e"]
+[gd_scene load_steps=8 format=3 uid="uid://iw2v8bhcss5e"]
 
 [ext_resource type="Texture2D" uid="uid://ce05b4oymxktu" path="res://addons/Souperior 2D Skeleton Modifications/DEMO/CustomIKDemo2.png" id="1_8hnxo"]
-[ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Bone States/soup_state_inator.gd" id="2_yj26p"]
 [ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Bone States/soup_state.gd" id="3_aqnka"]
 [ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Bone States/soup_state_sprite.gd" id="4_cx03y"]
+[ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Bone States/soup_state_angle_fixinator.gd" id="4_sncij"]
+
+[sub_resource type="Animation" id="Animation_mr7ct"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skeleton2D/Bone2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_njauc"]
+resource_name = "new_animation"
+length = 2.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skeleton2D/Bone2D:rotation")
+tracks/0/interp = 4
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8, 2.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.785397, -1.57079, -2.09439, -3.14159, -3.92699, -4.71238, -5.49778]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5udpp"]
+_data = {
+"RESET": SubResource("Animation_mr7ct"),
+"new_animation": SubResource("Animation_njauc")
+}
 
 [node name="Node2D" type="Node2D"]
 
@@ -92,50 +130,103 @@ region_rect = Rect2(48, 0, 29, 112)
 [node name="Skeleton2D" type="Skeleton2D" parent="."]
 
 [node name="Bone2D" type="Bone2D" parent="Skeleton2D"]
+scale = Vector2(0.999994, 0.999994)
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
-
-[node name="SoupBoneStateInator" type="Node" parent="Skeleton2D/Bone2D"]
-script = ExtResource("2_yj26p")
-
-[node name="angle0" type="Node" parent="Skeleton2D/Bone2D/SoupBoneStateInator"]
-script = ExtResource("3_aqnka")
-
-[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupBoneStateInator/angle0" node_paths=PackedStringArray("target_node")]
-script = ExtResource("4_cx03y")
-target_node = NodePath("../../../0")
-modify_frame = true
-frame_value = 2
-
-[node name="angle45" type="Node" parent="Skeleton2D/Bone2D/SoupBoneStateInator"]
-script = ExtResource("3_aqnka")
-
-[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupBoneStateInator/angle45" node_paths=PackedStringArray("target_node")]
-script = ExtResource("4_cx03y")
-target_node = NodePath("../../../0")
-modify_frame = true
-frame_value = 3
-
-[node name="angle90" type="Node" parent="Skeleton2D/Bone2D/SoupBoneStateInator"]
-script = ExtResource("3_aqnka")
-
-[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupBoneStateInator/angle90" node_paths=PackedStringArray("target_node")]
-script = ExtResource("4_cx03y")
-target_node = NodePath("../../../0")
-modify_frame = true
-frame_value = 4
 
 [node name="0" type="Sprite2D" parent="Skeleton2D/Bone2D"]
 position = Vector2(-9, -7)
 texture = ExtResource("1_8hnxo")
 centered = false
 vframes = 8
-frame = 2
+frame = 4
 region_enabled = true
 region_rect = Rect2(48, 0, 29, 112)
+
+[node name="SoupStateAngleFixInator" type="Node" parent="Skeleton2D/Bone2D" node_paths=PackedStringArray("target_node")]
+script = ExtResource("4_sncij")
+target_node = NodePath("..")
+rotation_plane_angle_degrees = 45.85
+
+[node name="AngleState-30_74_to_30_74" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
+script = ExtResource("3_aqnka")
+
+[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState-30_74_to_30_74" node_paths=PackedStringArray("target_node")]
+script = ExtResource("4_cx03y")
+target_node = NodePath("../../../0")
+modify_frame = true
+frame_value = 2
+
+[node name="AngleState30_74_to_73_91" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
+script = ExtResource("3_aqnka")
+
+[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState30_74_to_73_91" node_paths=PackedStringArray("target_node")]
+script = ExtResource("4_cx03y")
+target_node = NodePath("../../../0")
+modify_frame = true
+frame_value = 3
+
+[node name="AngleState73_91_to_106_09" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
+script = ExtResource("3_aqnka")
+
+[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState73_91_to_106_09" node_paths=PackedStringArray("target_node")]
+script = ExtResource("4_cx03y")
+target_node = NodePath("../../../0")
+modify_frame = true
+frame_value = 4
+
+[node name="AngleState106_09_to_149_26" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
+script = ExtResource("3_aqnka")
+
+[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState106_09_to_149_26" node_paths=PackedStringArray("target_node")]
+script = ExtResource("4_cx03y")
+target_node = NodePath("../../../0")
+modify_frame = true
+frame_value = 7
+
+[node name="AngleState149_26_to_-149_26" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
+script = ExtResource("3_aqnka")
+
+[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState149_26_to_-149_26" node_paths=PackedStringArray("target_node")]
+script = ExtResource("4_cx03y")
+target_node = NodePath("../../../0")
+modify_frame = true
+frame_value = 6
+
+[node name="AngleState-149_26_to_-106_09" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
+script = ExtResource("3_aqnka")
+
+[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState-149_26_to_-106_09" node_paths=PackedStringArray("target_node")]
+script = ExtResource("4_cx03y")
+target_node = NodePath("../../../0")
+modify_frame = true
+frame_value = 5
+
+[node name="AngleState-106_09_to_-73_91" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
+script = ExtResource("3_aqnka")
+
+[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState-106_09_to_-73_91" node_paths=PackedStringArray("target_node")]
+script = ExtResource("4_cx03y")
+target_node = NodePath("../../../0")
+modify_frame = true
+
+[node name="AngleState-73_91_to_-30_74" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
+script = ExtResource("3_aqnka")
+
+[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState-73_91_to_-30_74" node_paths=PackedStringArray("target_node")]
+script = ExtResource("4_cx03y")
+target_node = NodePath("../../../0")
+modify_frame = true
+frame_value = 1
 
 [node name="CustomIkDemo2" type="Sprite2D" parent="."]
 position = Vector2(180, -126)
 texture = ExtResource("1_8hnxo")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5udpp")
+}
+autoplay = "new_animation"

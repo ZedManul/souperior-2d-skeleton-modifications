@@ -1,5 +1,5 @@
 @tool
-@icon("Icons/icon_state_bone.png")
+@icon("Icons/icon_state.png")
 class_name SoupStateInator
 extends Node
 

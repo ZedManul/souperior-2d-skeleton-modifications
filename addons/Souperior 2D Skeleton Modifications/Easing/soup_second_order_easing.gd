@@ -50,7 +50,7 @@ var k3: float
 
 func compute_constants(f: float, z: float, r: float) -> void:
 	k1 = z / (PI * f)
-	k2 = 1 / ((TAU * f)*(TAU * f))
+	k2 = 1.0 / ((TAU * f)*(TAU * f))
 	k3 = r * z / (TAU * f)
 func initialize_variables(i0: Vector2) -> void:
 	ip = i0
@@ -59,6 +59,6 @@ func initialize_variables(i0: Vector2) -> void:
 func update(delta: float, i: Vector2) -> void:
 	var id: Vector2 = (i-ip) / delta # Input velocity estimation
 	ip = i
-	var k2_stable: float = maxf(k2, maxf(delta*delta/4 + delta*k1/2, delta*k1))
+	var k2_stable: float = maxf(k2, maxf(delta*delta/2.0 + delta*k1/2.0, delta*k1))
 	state = state + sd * delta # Integrate position by velocity
 	sd = sd + delta * (i + k3 * id - state - k1 * sd) / k2_stable

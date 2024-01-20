@@ -31,10 +31,10 @@ enum PosLimitShape {
 var rotation_limit_angle: float = 0.0 # in radians; used in code
 
 ## Angle of the permitted rotation arc center, in degrees; used for export.
-@export_range(-180.0, 180.0, 0.001, "or_greater", "or_less") \
-var rotation_limit_angle_degrees: float = 0.0:
+@export_range(-180,180,0.001,"or_greater", "or_less") \
+		 var rotation_limit_angle_degrees: float = 0.0:
 	set(new_value):
-		rotation_limit_angle_degrees = clampf(new_value, -180, 180)
+		rotation_limit_angle_degrees = wrapf(new_value, -180, 180)
 		rotation_limit_angle = PI * rotation_limit_angle_degrees / 180
 		_on_bone_node_updated()
 
@@ -42,10 +42,10 @@ var rotation_limit_angle_degrees: float = 0.0:
 var rotation_limit_range: float = PI / 4 # in radians; used in code
 
 ## Half-width of the permitted angle arc, in degrees; used for export.
-@export_range(0.0, 180.0, 0.001, "or_greater", "or_less") \
-var rotation_limit_range_degrees: float = 45: # used for export
+@export_range(-180,180,0.001,"or_greater", "or_less") \
+		var rotation_limit_range_degrees: float = 45: # used for export
 	set(new_value):
-		rotation_limit_range_degrees = clampf(new_value, -180, 180)
+		rotation_limit_range_degrees = clampf(new_value, 0, 180)
 		rotation_limit_range = PI * rotation_limit_range_degrees / 180
 		_on_bone_node_updated()
 

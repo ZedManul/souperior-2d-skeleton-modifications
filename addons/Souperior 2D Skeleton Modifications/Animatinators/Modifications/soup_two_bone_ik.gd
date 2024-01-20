@@ -108,13 +108,13 @@ func _handle_ik(delta: float) -> void:
 	_second_bone_vector = _vectorize_second_bone()
 	
 	#region Angle calculation modifiers
-	var is_skeleton_flipped: int = int(sign(skeleton.scale).x!=sign(skeleton.scale).y)
 	var bend_direction_coefficient: int = (int(!flip_bend_direction)*2 - 1)
 	#endregion
 	
 	#initializing calculation result variables
 	var bone_rotation: float = (_target_vector.angle() \
-	- joint_one_bone_node.get_parent().global_rotation)*sign(joint_one_bone_node.global_scale.y) \
+	- joint_one_bone_node.get_parent().global_rotation) \
+	* sign(joint_one_bone_node.global_scale.y) \
 	+ bend_direction_coefficient * _calculate_first_joint_rotation() \
 	- _first_bone_vector.angle()
 	
@@ -126,9 +126,11 @@ func _handle_ik(delta: float) -> void:
 	if fixed_rotation and first_joint_easing and use_easing_on_first_joint:
 		first_joint_easing.state = Vector2.RIGHT.rotated(fixed_rotation)
 	#region handling second joint
-	bone_rotation = bend_direction_coefficient * _calculate_second_joint_rotation() \
+	bone_rotation = _calculate_second_joint_rotation()\
+	* sign(joint_one_bone_node.global_scale.y) \
 	+ _first_bone_vector.angle() \
-	- _second_bone_vector.angle()
+	+ _second_bone_vector.angle()
+	
 	
 	if use_easing_on_second_joint and second_joint_easing:
 		second_joint_easing.update(delta,Vector2.RIGHT.rotated(bone_rotation))
@@ -204,16 +206,10 @@ func _calculate_first_joint_rotation() -> float:
 ## [not intended for access]
 ## Applies mathemagic to the second joint
 func _calculate_second_joint_rotation() -> float:
-	if _length_check():
-		return PI
-	else:
-		return acos(
-				_cos_from_sides(
-					_first_bone_vector.length(),
-					_second_bone_vector.length(),
-					_target_vector.length()
-				)
-			) - PI
+	return (
+			target_node.global_position 
+			- joint_two_bone_node.global_position
+		).angle() - joint_one_bone_node.global_rotation
 
 
 ## Checks if the distance to the target node is reachable with the current setup.

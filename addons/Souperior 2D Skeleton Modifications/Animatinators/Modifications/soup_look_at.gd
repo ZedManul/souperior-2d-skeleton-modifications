@@ -13,12 +13,22 @@ extends SoupMod
 ## If true, the modification is calculated and applied.
 @export var enabled: bool = false
 
+## Offset angle from target, in radians.
+var angle_offset: float = 0
+
+## Offset angle from target, in degrees; used for export.
+@export_range(-180,180,0.001,"or_greater", "or_less") \
+		 var angle_offset_degrees: float = 0:
+	set(new_value):
+		angle_offset_degrees = wrapf(new_value,-180,180)
+		angle_offset = deg_to_rad(angle_offset_degrees)
+
 @export_category("Bones")
 
 ## The to-be-modified bone node.
 @export var bone_node: Bone2D
 
-@export_category("easing")
+@export_category("Easing")
 
 ## If true, easing is appied.
 @export var use_easing: bool = false
@@ -58,7 +68,7 @@ func _handle_look_at(delta) -> void:
 			* sign(bone_node.global_scale.y)\
 			- bone_node.get_bone_angle(),
 			bone_node.get_parent()
-		)
+		) + angle_offset
 	
 	if use_easing and easing:
 		easing.update(delta,Vector2.RIGHT.rotated(result_rotation))

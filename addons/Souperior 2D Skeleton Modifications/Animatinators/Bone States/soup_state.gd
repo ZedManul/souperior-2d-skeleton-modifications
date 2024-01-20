@@ -21,11 +21,10 @@ func apply()->void:
 	for i: Node in get_children(false):
 		if i is SoupStateComponent:
 			i.apply()
-	print_debug("State Applied!")
+
 
 
 func record()->void:
 	for i: Node in get_children(false):
 		if i is SoupStateComponent:
 			i.record()
-	print_debug("State Recorded!")
