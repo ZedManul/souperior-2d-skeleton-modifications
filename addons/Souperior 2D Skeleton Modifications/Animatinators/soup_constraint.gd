@@ -124,11 +124,13 @@ var _previous_bone_node_transform: Transform2D
 
 ## [not intended for access]
 ## Position gizmo; internal node.
-@onready var _position_visualizer: SoupyPositionConstraintGizmo = _initialize_position_visualizer()
+@onready var _position_visualizer: SoupyPositionConstraintGizmo = \
+		_add_position_visualizer()
 
 ## [not intended for access]
 ## Rotation gizmo; internal node.
-@onready var _angle_visualizer: SoupyAngleConstraintGizmo = _initialize_angle_visualizer()
+@onready var _angle_visualizer: SoupyAngleConstraintGizmo = \
+		_add_angle_visualizer()
 
 
 func _enter_tree() -> void:
@@ -156,40 +158,26 @@ func _process(_delta: float) -> void:
 #region Visualiser Functions
 ## [not intended for access]
 ## Creates the rotation constraint gizmo node.
-func _add_angle_visualizer() -> void:
+func _add_angle_visualizer() -> SoupyAngleConstraintGizmo:
 	for i in get_children(true):
 		if i is SoupyAngleConstraintGizmo:
 			i.queue_free()
-	add_child(SoupyAngleConstraintGizmo.new(), true, INTERNAL_MODE_BACK)
-
-
-## [not intended for access]
-## Creates the rotation constraint gizmo node and returns it.
-func _initialize_angle_visualizer() -> SoupyAngleConstraintGizmo:
-	_add_angle_visualizer()
-	for i in get_children(true):
-		if i is SoupyAngleConstraintGizmo:
-			return i
-	return null
+	var new_vis_node: SoupyAngleConstraintGizmo = \
+			SoupyAngleConstraintGizmo.new()
+	add_child(new_vis_node, true, INTERNAL_MODE_BACK)
+	return new_vis_node
 
 
 ## [not intended for access]
 ## Creates the position constraint gizmo node.
-func _add_position_visualizer() -> void:
+func _add_position_visualizer() -> SoupyPositionConstraintGizmo:
 	for i in get_children(true):
 		if i is SoupyPositionConstraintGizmo:
 			i.queue_free()
-	add_child(SoupyPositionConstraintGizmo.new(), true, INTERNAL_MODE_BACK)
-
-
-## [not intended for access]
-## Creates the position constraint gizmo node and returns it.
-func _initialize_position_visualizer() -> SoupyPositionConstraintGizmo:
-	_add_position_visualizer()
-	for i in get_children(true):
-		if i is SoupyPositionConstraintGizmo:
-			return i
-	return null
+	var new_vis_node: SoupyPositionConstraintGizmo = \
+			SoupyPositionConstraintGizmo.new()
+	add_child(new_vis_node, true, INTERNAL_MODE_BACK)
+	return new_vis_node
 
 
 ## [not intended for access]

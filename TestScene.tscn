@@ -130,92 +130,94 @@ region_rect = Rect2(48, 0, 29, 112)
 [node name="Skeleton2D" type="Skeleton2D" parent="."]
 
 [node name="Bone2D" type="Bone2D" parent="Skeleton2D"]
-scale = Vector2(0.999994, 0.999994)
+scale = Vector2(0.999992, 0.999992)
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 auto_calculate_length_and_angle = false
 length = 16.0
-bone_angle = 0.0
+bone_angle = 15.0
 
 [node name="0" type="Sprite2D" parent="Skeleton2D/Bone2D"]
-position = Vector2(-9, -7)
+position = Vector2(-7.00004, -9.00006)
+rotation = 0.261799
 texture = ExtResource("1_8hnxo")
 centered = false
 vframes = 8
-frame = 2
+frame = 4
 region_enabled = true
 region_rect = Rect2(48, 0, 29, 112)
 
-[node name="SoupStateAngleFixInator" type="Node" parent="Skeleton2D/Bone2D" node_paths=PackedStringArray("target_node")]
+[node name="SoupStateAngleFixInator" type="Node" parent="Skeleton2D/Bone2D" node_paths=PackedStringArray("bone_node", "reference_node")]
 script = ExtResource("4_sncij")
-target_node = NodePath("..")
-rotation_plane_angle_degrees = 45.85
+bone_node = NodePath("..")
+reference_node = NodePath("../..")
+rotation_plane_angle_degrees = 57.25
 
-[node name="AngleState-30_74_to_30_74" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
+[node name="AngleState-37_44_to_37_44" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
 script = ExtResource("3_aqnka")
 
-[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState-30_74_to_30_74" node_paths=PackedStringArray("target_node")]
+[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState-37_44_to_37_44" node_paths=PackedStringArray("target_node")]
 script = ExtResource("4_cx03y")
 target_node = NodePath("../../../0")
 modify_frame = true
 frame_value = 2
 
-[node name="AngleState30_74_to_73_91" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
+[node name="AngleState37_44_to_77_37" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
 script = ExtResource("3_aqnka")
 
-[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState30_74_to_73_91" node_paths=PackedStringArray("target_node")]
+[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState37_44_to_77_37" node_paths=PackedStringArray("target_node")]
 script = ExtResource("4_cx03y")
 target_node = NodePath("../../../0")
 modify_frame = true
 frame_value = 3
 
-[node name="AngleState73_91_to_106_09" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
+[node name="AngleState77_37_to_102_63" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
 script = ExtResource("3_aqnka")
 
-[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState73_91_to_106_09" node_paths=PackedStringArray("target_node")]
+[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState77_37_to_102_63" node_paths=PackedStringArray("target_node")]
 script = ExtResource("4_cx03y")
 target_node = NodePath("../../../0")
 modify_frame = true
 frame_value = 4
 
-[node name="AngleState106_09_to_149_26" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
+[node name="AngleState102_63_to_142_56" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
 script = ExtResource("3_aqnka")
 
-[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState106_09_to_149_26" node_paths=PackedStringArray("target_node")]
+[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState102_63_to_142_56" node_paths=PackedStringArray("target_node")]
 script = ExtResource("4_cx03y")
 target_node = NodePath("../../../0")
 modify_frame = true
 frame_value = 7
 
-[node name="AngleState149_26_to_-149_26" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
+[node name="AngleState142_56_to_-142_56" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
 script = ExtResource("3_aqnka")
 
-[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState149_26_to_-149_26" node_paths=PackedStringArray("target_node")]
+[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState142_56_to_-142_56" node_paths=PackedStringArray("target_node")]
 script = ExtResource("4_cx03y")
 target_node = NodePath("../../../0")
 modify_frame = true
 frame_value = 6
 
-[node name="AngleState-149_26_to_-106_09" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
+[node name="AngleState-142_56_to_-102_63" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
 script = ExtResource("3_aqnka")
 
-[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState-149_26_to_-106_09" node_paths=PackedStringArray("target_node")]
+[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState-142_56_to_-102_63" node_paths=PackedStringArray("target_node")]
 script = ExtResource("4_cx03y")
 target_node = NodePath("../../../0")
 modify_frame = true
 frame_value = 5
 
-[node name="AngleState-106_09_to_-73_91" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
+[node name="AngleState-102_63_to_-77_37" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
 script = ExtResource("3_aqnka")
 
-[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState-106_09_to_-73_91" node_paths=PackedStringArray("target_node")]
+[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState-102_63_to_-77_37" node_paths=PackedStringArray("target_node")]
 script = ExtResource("4_cx03y")
 target_node = NodePath("../../../0")
 modify_frame = true
 
-[node name="AngleState-73_91_to_-30_74" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
+[node name="AngleState-77_37_to_-37_44" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
 script = ExtResource("3_aqnka")
 
-[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState-73_91_to_-30_74" node_paths=PackedStringArray("target_node")]
+[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState-77_37_to_-37_44" node_paths=PackedStringArray("target_node")]
 script = ExtResource("4_cx03y")
 target_node = NodePath("../../../0")
 modify_frame = true
