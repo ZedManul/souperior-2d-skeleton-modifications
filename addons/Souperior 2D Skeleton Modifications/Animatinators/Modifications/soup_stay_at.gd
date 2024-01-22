@@ -27,7 +27,7 @@ extends SoupMod
 #endregion 
 
 #region easing
-@export_category("easing")
+@export_category("Easing")
 ## If true, easing is appied;
 ## Required for the effect to feel "jiggly".
 @export var use_easing: bool = false:
