@@ -109,8 +109,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	_calculate_true_rotation()
 	
-	if ((_previous_true_rotation == true_rotation) 
-			or enabled):
+	if !((_previous_true_rotation != true_rotation) 
+			and enabled):
 		return
 	
 	update_state()
@@ -220,6 +220,7 @@ func _draw_visualizer():
 ## Updates the true_rotation variable.
 func _calculate_true_rotation() -> void:
 	_previous_true_rotation = true_rotation
+	
 	if !bone_node:
 		return
 	

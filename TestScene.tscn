@@ -130,14 +130,14 @@ region_rect = Rect2(48, 0, 29, 112)
 [node name="Skeleton2D" type="Skeleton2D" parent="."]
 
 [node name="Bone2D" type="Bone2D" parent="Skeleton2D"]
-scale = Vector2(0.999992, 0.999992)
+scale = Vector2(0.999991, 0.999991)
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
 [node name="0" type="Sprite2D" parent="Skeleton2D/Bone2D"]
-position = Vector2(-9.20172, -7.16454)
+position = Vector2(-9.00008, -7.00006)
 texture = ExtResource("1_8hnxo")
 centered = false
 vframes = 8
