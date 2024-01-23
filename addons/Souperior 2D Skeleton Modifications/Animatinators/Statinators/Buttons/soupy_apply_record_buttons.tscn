@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://b48octotst0xl"]
+
+[ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Statinators/Buttons/soupy_apply_record_buttons_script.gd" id="1_8uyqi"]
+
+[node name="HBoxContainer" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8uyqi")
+
+[node name="Apply" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "APPLY"
+
+[node name="Record" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "RECORD"

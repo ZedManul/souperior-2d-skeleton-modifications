@@ -141,7 +141,7 @@ position = Vector2(-9.00008, -7.00006)
 texture = ExtResource("1_8hnxo")
 centered = false
 vframes = 8
-frame = 2
+frame = 1
 region_enabled = true
 region_rect = Rect2(48, 0, 29, 112)
 
