@@ -128,8 +128,8 @@ func _handle_ik(delta: float) -> void:
 	#region handling second joint
 	bone_rotation = _calculate_second_joint_rotation()\
 	* sign(joint_one_bone_node.global_scale.y) \
-	+ _first_bone_vector.angle() \
-	+ _second_bone_vector.angle()
+	- _second_bone_vector.angle()
+	
 	
 	
 	if use_easing_on_second_joint and second_joint_easing:
@@ -209,7 +209,7 @@ func _calculate_second_joint_rotation() -> float:
 	return (
 			target_node.global_position 
 			- joint_two_bone_node.global_position
-		).angle() - joint_one_bone_node.global_rotation
+		).angle() - joint_one_bone_node.global_rotation 
 
 
 ## Checks if the distance to the target node is reachable with the current setup.
