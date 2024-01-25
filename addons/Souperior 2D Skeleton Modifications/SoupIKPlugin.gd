@@ -2,6 +2,7 @@
 extends EditorPlugin
 
 var apply_and_record_inspector_plugin
+var angle_fixinator_record_inspector_plugin
 
 func _enter_tree():
 	#region Load Easing
@@ -70,6 +71,11 @@ func _enter_tree():
 			preload("Animatinators/Statinators/Icons/icon_state_angle_fixer.png"))
 	#endregion
 	
+	angle_fixinator_record_inspector_plugin = preload(
+		"Animatinators/Statinators/Buttons/soupy_angle_fix_record_button.gd"
+	).new()
+	add_inspector_plugin(angle_fixinator_record_inspector_plugin)
+	
 	apply_and_record_inspector_plugin = preload(
 		"Animatinators/Statinators/Buttons/soupy_apply_record_buttons.gd"
 	).new()
@@ -78,6 +84,7 @@ func _enter_tree():
 
 func _exit_tree():
 	remove_inspector_plugin(apply_and_record_inspector_plugin)
+	remove_inspector_plugin(angle_fixinator_record_inspector_plugin)
 	
 	#region Unload Property State Managers
 	remove_custom_type("SoupStateAngleFixInator")
@@ -104,7 +111,7 @@ func _exit_tree():
 	remove_custom_type("SoupStack")
 	#endregion
 	
-	#region 
+	#region Unload Easing
 	remove_custom_type("SoupSecondOrderEasing")
 	remove_custom_type("SoupSecondOrderEasingG")
 	remove_custom_type("SoupSecondOrderEasingNoG")

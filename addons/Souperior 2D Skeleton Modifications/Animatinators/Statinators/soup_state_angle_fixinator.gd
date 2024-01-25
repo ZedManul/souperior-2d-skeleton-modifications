@@ -2,8 +2,7 @@
 @icon("Icons/icon_state_angle_fixer.png")
 class_name SoupStateAngleFixInator
 extends SoupStateInator
-## Automatically switches between child property state groups depending on a bone's rotation;
-## All direct children MUST be Soup State Component Groups
+## Automatically switches a property state group depending on bone's rotation.
 
 ## If true, the node will automatically apply states
 @export var enabled: bool = true
@@ -19,8 +18,18 @@ extends SoupStateInator
 ## if not specified, global rotation will be used instead.
 @export var reference_node: Node2D = get_parent()
 
+@export var state_group_node: SoupStateComponentGroup:
+	set(new_value):
+		state_group_node = new_value
+		if state_group_node:
+			state_group_node.state_count = section_count
+
+@export_group("Rotation Plane")
 ## Rotation angle offset; in radians.
-var angle_offset: float = 0
+var angle_offset: float = 0:
+	set(new_value):
+		angle_offset = new_value
+
 ## Rotation angle offset; in degrees.
 @export_range(-180,180,0.001,"or_greater", "or_less") \
 		var angle_offset_degrees: float = 0:
@@ -28,14 +37,14 @@ var angle_offset: float = 0
 		angle_offset_degrees = wrapf(new_value,-180,180)
 		angle_offset = deg_to_rad(angle_offset_degrees)
 
-
-@export_group("Rotation Plane")
 ## Amount of sections and corresponding states;
 ## Make sure there are at least this many "Soup State Component Group" nodes as children of this node.
 @export_range(0,60,1) var section_count: int = 8:
 	set(new_value):
 		section_count = clampi(new_value,1,60)
 		_calculate_border_vectors()
+		if state_group_node:
+			state_group_node.state_count = section_count
 
 ## Offsets the rotation of the borders; in radians.
 var rotation_plane_angle: float = 0:
@@ -103,14 +112,15 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	_calculate_border_vectors()
-	child_order_changed.connect(_on_children_changed)
 
 
 func _process(delta: float) -> void:
 	_calculate_true_rotation()
 	
-	if !((_previous_true_rotation != true_rotation) 
-			and enabled):
+	if !(
+			(_previous_true_rotation != true_rotation) 
+			and enabled
+		):
 		return
 	
 	update_state()
@@ -118,8 +128,35 @@ func _process(delta: float) -> void:
 
 ## Checks the "true rotation" against border angles and applies the corresponding state group.
 func update_state() -> void: 
-	if !bone_node:
+	if !(
+			bone_node 
+			and state_group_node
+		):
 		return
+	
+	_draw_visualizer()
+	
+	state_group_node.current_state = check_sector()
+	state_group_node.apply()
+
+
+## Checks the "true rotation" against border angles and records the corresponding state group.
+func record_current_state():
+	if !(
+			bone_node 
+			and state_group_node
+		):
+		return
+	
+	_draw_visualizer()
+	
+	state_group_node.current_state = check_sector()
+	state_group_node.record()
+
+
+#region Borders
+## Checks "true rotation" and returns the number of the current sector
+func check_sector() -> int:
 	var checked_angle: float = wrapf(true_rotation,-PI,PI)
 	var chosen_state: int
 	for i: int in section_count:
@@ -137,17 +174,8 @@ func update_state() -> void:
 				chosen_state = i
 				break
 	
-	_draw_visualizer()
-	
-	if chosen_state >= get_child_count():
-		return
-	
-	var state_node: Node = get_child(chosen_state)
-	if state_node is SoupStateComponentGroup:
-		get_child(chosen_state).apply()
+	return chosen_state
 
-
-#region Borders
 ## [not intended for access]
 ## Calculates border vectors.
 func _calculate_border_vectors() -> void:
@@ -163,11 +191,9 @@ func _calculate_border_vectors() -> void:
 			)
 	
 	_calculate_border_angles()
-	_rename_state_nodes()
 	update_state()
 	
 	_draw_visualizer()
-	
 
 
 ## [not intended for access]
@@ -176,22 +202,6 @@ func _calculate_border_angles() -> void:
 	_border_angles.clear()
 	for i: Vector2 in _border_vectors:
 		_border_angles.append(i.angle())
-
-
-## [not intended for access]
-## Renames state group nodes to match the angles
-func _rename_state_nodes() -> void:
-	for i: int in get_child_count():
-		if i >= section_count:
-			get_child(i).set_name("UnusedState" + str(i))
-			continue
-		
-		get_child(i).set_name(
-				"AngleState" \
-				+ str(roundf(rad_to_deg(_border_angles[i]) * 100) / 100) \
-				+ "_to_" \
-				+ str(roundf(rad_to_deg(_border_angles[(i+1)%section_count]) * 100) / 100)
-			)
 #endregion
 
 
@@ -231,5 +241,3 @@ func _calculate_true_rotation() -> void:
 	true_rotation -= reference_node.global_rotation 
 
 
-func _on_children_changed() -> void:
-	_calculate_border_vectors()

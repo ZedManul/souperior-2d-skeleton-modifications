@@ -17,7 +17,6 @@ func _draw() -> void:
 		if (
 			_visualizee.bone_node is Node2D 
 			and _visualizee.draw_gizmo 
-			and _visualizee.enabled 
 			and Engine.is_editor_hint()
 		):
 			_draw_border_star()

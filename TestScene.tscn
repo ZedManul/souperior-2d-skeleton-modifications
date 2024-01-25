@@ -1,9 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://iw2v8bhcss5e"]
 
-[ext_resource type="Texture2D" uid="uid://ce05b4oymxktu" path="res://addons/Souperior 2D Skeleton Modifications/DEMO/CustomIKDemo2.png" id="1_8hnxo"]
 [ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Statinators/soup_state_component_group.gd" id="3_aqnka"]
 [ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Statinators/soup_state_sprite.gd" id="4_cx03y"]
 [ext_resource type="Script" path="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Statinators/soup_state_angle_fixinator.gd" id="4_sncij"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hbq5k"]
+load_path = "res://.godot/imported/custom_ik_demo.png-ffa43ee21cc549b0a5c769bcce6836c0.ctex"
 
 [sub_resource type="Animation" id="Animation_mr7ct"]
 length = 0.001
@@ -51,7 +53,7 @@ rotation = 3.14159
 
 [node name="180" type="Sprite2D" parent="Sprites"]
 position = Vector2(1.05697e-06, -7)
-texture = ExtResource("1_8hnxo")
+texture = SubResource("CompressedTexture2D_hbq5k")
 centered = false
 vframes = 8
 frame = 6
@@ -61,7 +63,7 @@ region_rect = Rect2(48, 0, 29, 112)
 [node name="-135" type="Sprite2D" parent="Sprites"]
 position = Vector2(-5, -3)
 rotation = -1.0472
-texture = ExtResource("1_8hnxo")
+texture = SubResource("CompressedTexture2D_hbq5k")
 centered = false
 vframes = 8
 frame = 7
@@ -71,7 +73,7 @@ region_rect = Rect2(48, 0, 29, 112)
 [node name="135" type="Sprite2D" parent="Sprites"]
 position = Vector2(7, -4)
 rotation = 1.0472
-texture = ExtResource("1_8hnxo")
+texture = SubResource("CompressedTexture2D_hbq5k")
 centered = false
 vframes = 8
 frame = 5
@@ -81,7 +83,7 @@ region_rect = Rect2(48, 0, 29, 112)
 [node name="90" type="Sprite2D" parent="Sprites"]
 position = Vector2(7, 1.05697e-06)
 rotation = 1.5708
-texture = ExtResource("1_8hnxo")
+texture = SubResource("CompressedTexture2D_hbq5k")
 centered = false
 vframes = 8
 region_enabled = true
@@ -90,7 +92,7 @@ region_rect = Rect2(48, 0, 29, 112)
 [node name="45" type="Sprite2D" parent="Sprites"]
 position = Vector2(5, 3)
 rotation = 2.0944
-texture = ExtResource("1_8hnxo")
+texture = SubResource("CompressedTexture2D_hbq5k")
 centered = false
 vframes = 8
 frame = 1
@@ -100,7 +102,7 @@ region_rect = Rect2(48, 0, 29, 112)
 [node name="-90" type="Sprite2D" parent="Sprites"]
 position = Vector2(-7, -1.05697e-06)
 rotation = -1.5708
-texture = ExtResource("1_8hnxo")
+texture = SubResource("CompressedTexture2D_hbq5k")
 centered = false
 vframes = 8
 frame = 4
@@ -110,7 +112,7 @@ region_rect = Rect2(48, 0, 29, 112)
 [node name="-45" type="Sprite2D" parent="Sprites"]
 position = Vector2(-7, 4)
 rotation = -2.0944
-texture = ExtResource("1_8hnxo")
+texture = SubResource("CompressedTexture2D_hbq5k")
 centered = false
 vframes = 8
 frame = 3
@@ -120,7 +122,7 @@ region_rect = Rect2(48, 0, 29, 112)
 [node name="0" type="Sprite2D" parent="Sprites"]
 position = Vector2(-1.05697e-06, 7)
 rotation = -3.14159
-texture = ExtResource("1_8hnxo")
+texture = SubResource("CompressedTexture2D_hbq5k")
 centered = false
 vframes = 8
 frame = 2
@@ -130,101 +132,47 @@ region_rect = Rect2(48, 0, 29, 112)
 [node name="Skeleton2D" type="Skeleton2D" parent="."]
 
 [node name="Bone2D" type="Bone2D" parent="Skeleton2D"]
-scale = Vector2(0.999991, 0.999991)
+scale = Vector2(1, 1)
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 
 [node name="0" type="Sprite2D" parent="Skeleton2D/Bone2D"]
-position = Vector2(-9.00008, -7.00006)
-texture = ExtResource("1_8hnxo")
+position = Vector2(-6.99998, -7.00002)
+texture = SubResource("CompressedTexture2D_hbq5k")
 centered = false
 vframes = 8
-frame = 2
 region_enabled = true
-region_rect = Rect2(48, 0, 29, 112)
+region_rect = Rect2(1, 1, 38, 128)
 
-[node name="SoupStateAngleFixInator" type="Node" parent="Skeleton2D/Bone2D" node_paths=PackedStringArray("bone_node", "reference_node")]
+[node name="SoupStateAngleFixInator" type="Node" parent="Skeleton2D/Bone2D" node_paths=PackedStringArray("bone_node", "reference_node", "state_group_node")]
 script = ExtResource("4_sncij")
 bone_node = NodePath("..")
 reference_node = NodePath("../..")
-rotation_plane_tilt_degrees = 46.65
+state_group_node = NodePath("SoupStateComponentGroup")
+rotation_plane_tilt_degrees = 54.2
 
-[node name="AngleState-31_11_to_31_11" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
+[node name="SoupStateComponentGroup" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
 script = ExtResource("3_aqnka")
+state_count = 8
 
-[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState-31_11_to_31_11" node_paths=PackedStringArray("target_node")]
+[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/SoupStateComponentGroup" node_paths=PackedStringArray("target_node")]
 script = ExtResource("4_cx03y")
 target_node = NodePath("../../../0")
+state_count = 8
 modify_frame = true
-frame_value = 2
-
-[node name="AngleState31_11_to_74_13" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
-script = ExtResource("3_aqnka")
-
-[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState31_11_to_74_13" node_paths=PackedStringArray("target_node")]
-script = ExtResource("4_cx03y")
-target_node = NodePath("../../../0")
-modify_frame = true
-frame_value = 3
-
-[node name="AngleState74_13_to_105_87" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
-script = ExtResource("3_aqnka")
-
-[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState74_13_to_105_87" node_paths=PackedStringArray("target_node")]
-script = ExtResource("4_cx03y")
-target_node = NodePath("../../../0")
-modify_frame = true
-frame_value = 4
-
-[node name="AngleState105_87_to_148_89" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
-script = ExtResource("3_aqnka")
-
-[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState105_87_to_148_89" node_paths=PackedStringArray("target_node")]
-script = ExtResource("4_cx03y")
-target_node = NodePath("../../../0")
-modify_frame = true
-frame_value = 7
-
-[node name="AngleState148_89_to_-148_89" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
-script = ExtResource("3_aqnka")
-
-[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState148_89_to_-148_89" node_paths=PackedStringArray("target_node")]
-script = ExtResource("4_cx03y")
-target_node = NodePath("../../../0")
-modify_frame = true
-frame_value = 6
-
-[node name="AngleState-148_89_to_-105_87" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
-script = ExtResource("3_aqnka")
-
-[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState-148_89_to_-105_87" node_paths=PackedStringArray("target_node")]
-script = ExtResource("4_cx03y")
-target_node = NodePath("../../../0")
-modify_frame = true
-frame_value = 5
-
-[node name="AngleState-105_87_to_-74_13" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
-script = ExtResource("3_aqnka")
-
-[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState-105_87_to_-74_13" node_paths=PackedStringArray("target_node")]
-script = ExtResource("4_cx03y")
-target_node = NodePath("../../../0")
-modify_frame = true
-
-[node name="AngleState-74_13_to_-31_11" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator"]
-script = ExtResource("3_aqnka")
-
-[node name="SoupStateSprite" type="Node" parent="Skeleton2D/Bone2D/SoupStateAngleFixInator/AngleState-74_13_to_-31_11" node_paths=PackedStringArray("target_node")]
-script = ExtResource("4_cx03y")
-target_node = NodePath("../../../0")
-modify_frame = true
-frame_value = 1
+frame_value = PackedInt32Array(0, 1, 2, 3, 4, 5, 6, 7)
+frame_coords_value = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+offset_value = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+flip_h_value = Array[bool]([false, false, false, false, false, false, false, false])
+flip_v_value = Array[bool]([false, false, false, false, false, false, false, false])
+region_value = Array[Rect2]([Rect2(0, 0, 0, 0), Rect2(0, 0, 0, 0), Rect2(0, 0, 0, 0), Rect2(0, 0, 0, 0), Rect2(0, 0, 0, 0), Rect2(0, 0, 0, 0), Rect2(0, 0, 0, 0), Rect2(0, 0, 0, 0)])
+tex_value = Array[Texture2D]([null, null, null, null, null, null, null, null])
 
 [node name="CustomIkDemo2" type="Sprite2D" parent="."]
 position = Vector2(180, -126)
-texture = ExtResource("1_8hnxo")
+texture = SubResource("CompressedTexture2D_hbq5k")
 region_enabled = true
 region_rect = Rect2(8, 176, 150, 80)
 
@@ -234,7 +182,7 @@ rotation = -1.83259
 
 [node name="CustomIkDemo2" type="Sprite2D" parent="CustomIkDemo2/Node2D"]
 position = Vector2(13, 0)
-texture = ExtResource("1_8hnxo")
+texture = SubResource("CompressedTexture2D_hbq5k")
 region_enabled = true
 region_rect = Rect2(106, 160, 50, 16)
 

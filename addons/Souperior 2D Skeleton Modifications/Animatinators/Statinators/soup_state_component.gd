@@ -11,6 +11,7 @@ signal applied()
 signal recorded()
 
 
+
 ## Does nothing; 
 ## Overriden by the inheriting classes.
 func apply() -> void:
