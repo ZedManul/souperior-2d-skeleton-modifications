@@ -20,6 +20,7 @@ gdscript/warnings/untyped_declaration=1
 
 [display]
 
+window/stretch/scale=3.0
 window/stretch/scale_mode="integer"
 
 [editor_plugins]
