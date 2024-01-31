@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3e16ydft4x3i"
-path="res://.godot/imported/icon_sub_stack.svg-f563f9ef1d858cccb3436d8d8206672b.ctex"
+uid="uid://cfh2vegnlynn"
+path="res://.godot/imported/icon_modification.png-604d3f99a8359e1d5e18a09da4d31155.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Icons/icon_sub_stack.svg"
-dest_files=["res://.godot/imported/icon_sub_stack.svg-f563f9ef1d858cccb3436d8d8206672b.ctex"]
+source_file="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Modifications/Icons/icon_modification.png"
+dest_files=["res://.godot/imported/icon_modification.png-604d3f99a8359e1d5e18a09da4d31155.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

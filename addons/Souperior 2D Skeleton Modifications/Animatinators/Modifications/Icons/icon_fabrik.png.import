@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://basfl1youl20f"
-path="res://.godot/imported/icon_jiggle.svg-e32208c6fb3a1da973237446f2f433a7.ctex"
+uid="uid://ddv2e1jp3g6ve"
+path="res://.godot/imported/icon_fabrik.png-1d93e9f8fb53817b5b5c053603a0c3c5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Modifications/Icons/icon_jiggle.svg"
-dest_files=["res://.godot/imported/icon_jiggle.svg-e32208c6fb3a1da973237446f2f433a7.ctex"]
+source_file="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Modifications/Icons/icon_fabrik.png"
+dest_files=["res://.godot/imported/icon_fabrik.png-1d93e9f8fb53817b5b5c053603a0c3c5.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

@@ -1,5 +1,5 @@
 @tool
-@icon("Icons/icon_stay_at.svg")
+@icon("Icons/icon_stay_at.png")
 class_name SoupStayAt
 extends SoupMod
 ## "Souperior" modification for Skeleton2D; 

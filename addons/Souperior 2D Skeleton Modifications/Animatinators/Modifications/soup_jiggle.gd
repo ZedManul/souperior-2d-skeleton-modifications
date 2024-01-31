@@ -1,5 +1,5 @@
 @tool
-@icon("Icons/icon_jiggle.svg")
+@icon("Icons/icon_jiggle.png")
 class_name SoupJiggle 
 extends SoupMod
 ## "Souperior" modification for Skeleton2D; 

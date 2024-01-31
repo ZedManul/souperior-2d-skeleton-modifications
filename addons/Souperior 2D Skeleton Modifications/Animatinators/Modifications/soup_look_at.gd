@@ -1,5 +1,5 @@
 @tool
-@icon("Icons/icon_look_at.svg")
+@icon("Icons/icon_look_at.png")
 class_name SoupLookAt
 extends SoupMod
 
