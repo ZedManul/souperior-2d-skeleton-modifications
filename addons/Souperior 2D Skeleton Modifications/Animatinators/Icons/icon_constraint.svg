@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="16.0px"
+   height="16.0px"
+   viewBox="0 0 16.0 16.0"
+   version="1.1"
+   id="SVGRoot"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs27059" />
+  <g
+     id="layer1">
+    <path
+       id="rect28521"
+       style="color:#000000;fill:#73efe8;-inkscape-stroke:none;paint-order:markers fill stroke"
+       d="M 4.2441406 0.24414062 L 4.2441406 1 L 4.2441406 6.2441406 L 5.7558594 6.2441406 L 5.7558594 1.9082031 C 10.233238 2.288358 13.711642 5.7667611 14.091797 10.244141 L 9.7558594 10.244141 L 9.7558594 11.755859 L 15.755859 11.755859 L 15.755859 11 C 15.755859 5.068643 10.931357 0.24414063 5 0.24414062 L 4.2441406 0.24414062 z M 9.7558594 11.755859 L 8.2441406 11.755859 L 8.2441406 14.244141 L 1.7558594 14.244141 L 1.7558594 7.7558594 L 4.2441406 7.7558594 L 4.2441406 6.2441406 L 0.24414062 6.2441406 L 0.24414062 7 L 0.24414062 15.755859 L 9.7558594 15.755859 L 9.7558594 11.755859 z M 4.2441406 7.7558594 L 4.2441406 11.755859 L 8.2441406 11.755859 L 8.2441406 10.244141 L 5.7558594 10.244141 L 5.7558594 7.7558594 L 4.2441406 7.7558594 z M 5.7558594 7.7558594 L 8.2441406 7.7558594 L 8.2441406 10.244141 L 9.7558594 10.244141 L 9.7558594 6.2441406 L 5.7558594 6.2441406 L 5.7558594 7.7558594 z " />
+    <circle
+       style="fill:#f1641f;fill-opacity:1;stroke-width:1.51181;paint-order:markers fill stroke"
+       id="path27198"
+       cx="5"
+       cy="11"
+       r="2" />
+    <circle
+       style="fill:#f1641f;fill-opacity:1;stroke-width:1.51181;paint-order:markers fill stroke"
+       id="path27200"
+       cx="12"
+       cy="4"
+       r="2" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#f1641f;stroke-width:1.51181;stroke-opacity:1;paint-order:markers fill stroke"
+       d="M 5,11 12,4"
+       id="path28291" />
+  </g>
+</svg>

@@ -1,5 +1,5 @@
 @tool
-@icon("Icons/icon_two_bone_ik.png")
+@icon("Icons/icon_two_bone_ik.svg")
 class_name SoupTwoBoneIK
 extends SoupMod
 

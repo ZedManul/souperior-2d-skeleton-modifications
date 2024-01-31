@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c0nw6i0qi7u08"
-path="res://.godot/imported/icon_stay_at.png-8c27f53328efdd688cad521be579e218.ctex"
+uid="uid://3k8o1etkxfdk"
+path="res://.godot/imported/icon_two_bone_ik.svg-4708d88c6ccc5396893973bfc8b62bb3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Icons/icon_stay_at.png"
-dest_files=["res://.godot/imported/icon_stay_at.png-8c27f53328efdd688cad521be579e218.ctex"]
+source_file="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Modifications/Icons/icon_two_bone_ik.svg"
+dest_files=["res://.godot/imported/icon_two_bone_ik.svg-4708d88c6ccc5396893973bfc8b62bb3.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

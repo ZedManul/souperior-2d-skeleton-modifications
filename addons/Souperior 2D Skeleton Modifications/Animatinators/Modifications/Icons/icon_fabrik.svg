@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="16.0px"
+   height="16.0px"
+   viewBox="0 0 16.0 16.0"
+   version="1.1"
+   id="SVGRoot"
+   sodipodi:docname="icon_fabrik.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview22479"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="px"
+     showgrid="true"
+     inkscape:zoom="35.356609"
+     inkscape:cx="9.0223585"
+     inkscape:cy="9.7294399"
+     inkscape:window-width="1858"
+     inkscape:window-height="1057"
+     inkscape:window-x="1905"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid22602" />
+  </sodipodi:namedview>
+  <defs
+     id="defs22474">
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect25950"
+       is_visible="true"
+       lpeversion="1" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect25946"
+       is_visible="true"
+       lpeversion="1" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect25942"
+       is_visible="true"
+       lpeversion="1" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="fill:#f1641f;stroke-width:1.51181;paint-order:markers fill stroke;fill-opacity:1"
+       id="path22611"
+       cx="3"
+       cy="3"
+       r="2" />
+    <circle
+       style="fill:#f1641f;stroke-width:1.51181;paint-order:markers fill stroke;fill-opacity:1"
+       id="path25154"
+       cx="5"
+       cy="12"
+       r="2" />
+    <circle
+       style="fill:#f1641f;stroke-width:1.51181;paint-order:markers fill stroke;fill-opacity:1"
+       id="path25156"
+       cx="9"
+       cy="5"
+       r="2" />
+    <circle
+       style="fill:#f1641f;stroke-width:1.51181;paint-order:markers fill stroke;fill-opacity:1"
+       id="path25160"
+       cx="12"
+       cy="11"
+       r="2" />
+    <path
+       style="fill:none;fill-opacity:1;stroke-width:1.51181;paint-order:markers fill stroke;stroke:#f1641f;stroke-opacity:1"
+       d="m 3,3 2,9"
+       id="path25940"
+       inkscape:path-effect="#path-effect25942"
+       inkscape:original-d="m 3,3 c 0.6676667,3.001 1.3343333,6.001 2,9" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#f1641f;stroke-width:1.51181;stroke-opacity:1;paint-order:markers fill stroke"
+       d="M 5,12 9,5"
+       id="path25944"
+       inkscape:path-effect="#path-effect25946"
+       inkscape:original-d="M 5,12 C 6.3343333,9.6676667 7.6676667,7.3343333 9,5" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#f1641f;stroke-width:1.51181;stroke-opacity:1;paint-order:markers fill stroke"
+       d="m 9,5 3,6"
+       id="path25948"
+       inkscape:path-effect="#path-effect25950"
+       inkscape:original-d="m 9,5 c 1.001,2.001 2.001,4.001 3,6" />
+    <circle
+       style="fill:#73efe8;fill-opacity:1;stroke:none;stroke-width:1.51181;stroke-opacity:1;paint-order:markers fill stroke"
+       id="path25952"
+       cx="12"
+       cy="11"
+       r="1" />
+  </g>
+</svg>

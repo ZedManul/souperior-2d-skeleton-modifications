@@ -1,5 +1,5 @@
 @tool 
-@icon("Icons/icon_constraint.png")
+@icon("Icons/icon_constraint.svg")
 class_name SoupConstraint
 extends Node
 ## "Souperior" constraint for Skeleton2D;

@@ -1,5 +1,5 @@
 @tool
-@icon("Icons/icon_stack.png")
+@icon("Icons/icon_stack.svg")
 class_name SoupStack
 extends Node
 ## A skeleton's (spinal) brain;    

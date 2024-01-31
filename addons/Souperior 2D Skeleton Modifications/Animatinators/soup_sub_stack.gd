@@ -1,5 +1,5 @@
 @tool
-@icon("Icons/icon_sub_stack.png")
+@icon("Icons/icon_sub_stack.svg")
 class_name SoupSubStack
 extends Node
 ## Used for grouping modifications within a stack;

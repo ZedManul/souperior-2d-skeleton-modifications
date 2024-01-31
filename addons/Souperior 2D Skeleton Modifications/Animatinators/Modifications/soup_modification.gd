@@ -1,5 +1,5 @@
 @tool
-@icon("Icons/icon_modification.png")
+@icon("Icons/icon_modification.svg")
 class_name SoupMod
 extends Node
 ## Base node for "Souperior" modifications;

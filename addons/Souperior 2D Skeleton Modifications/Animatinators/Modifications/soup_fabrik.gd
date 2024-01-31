@@ -1,5 +1,5 @@
 @tool
-@icon("Icons/icon_two_bone_ik.png")
+@icon("Icons/icon_fabrik.svg")
 class_name SoupFABRIK
 extends SoupMod
 ## "Souperior" modification for Skeleton2D; Reaches for the target with a chain of bones;

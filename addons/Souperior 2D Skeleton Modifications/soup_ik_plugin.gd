@@ -17,32 +17,36 @@ func _enter_tree():
 	#region Load Misc
 	add_custom_type("SoupStack", "Node", 
 			preload("Animatinators/soup_stack.gd"), 
-			preload("Animatinators/Icons/icon_stack.png"))
+			preload("Animatinators/Icons/icon_stack.svg"))
 	add_custom_type("SoupSubStack", "Node", 
 			preload("Animatinators/soup_sub_stack.gd"), 
-			preload("Animatinators/Icons/icon_sub_stack.png"))
+			preload("Animatinators/Icons/icon_sub_stack.svg"))
 	add_custom_type("SoupConstraint", "Node", 
 			preload("Animatinators/soup_constraint.gd"), 
-			preload("Animatinators/Icons/icon_constraint.png"))
+			preload("Animatinators/Icons/icon_constraint.svg"))
 	#endregion
 	
 	#region Load Modifications
+	add_custom_type("SoupFABRIK", "Node", 
+			preload("Animatinators/Modifications/soup_fabrik.gd"), 
+			preload("Animatinators/Modifications/Icons/icon_fabrik.svg"))
 	add_custom_type("SoupTwoBoneIK", "Node", 
 			preload("Animatinators/Modifications/soup_two_bone_ik.gd"), 
-			preload("Animatinators/Modifications/Icons/icon_two_bone_ik.png"))
+			preload("Animatinators/Modifications/Icons/icon_two_bone_ik.svg"))
 	add_custom_type("SoupLookAt", "Node", 
 			preload("Animatinators/Modifications/soup_look_at.gd"), 
-			preload("Animatinators/Modifications/Icons/icon_look_at.png"))
+			preload("Animatinators/Modifications/Icons/icon_look_at.svg"))
 	add_custom_type("SoupStayAt", "Node", 
 			preload("Animatinators/Modifications/soup_stay_at.gd"), 
-			preload("Animatinators/Modifications/Icons/icon_stay_at.png"))
+			preload("Animatinators/Modifications/Icons/icon_stay_at.svg"))
 	add_custom_type("SoupJiggle", "Node", 
 			preload("Animatinators/Modifications/soup_jiggle.gd"), 
-			preload("Animatinators/Modifications/Icons/icon_jiggle.png"))
+			preload("Animatinators/Modifications/Icons/icon_jiggle.svg"))
 	#endregion
 
 func _exit_tree():
 	#region Unload Modifications
+	remove_custom_type("SoupFABRIK")
 	remove_custom_type("SoupTwoBoneIK")
 	remove_custom_type("SoupLookAt")
 	remove_custom_type("SoupStayAt")

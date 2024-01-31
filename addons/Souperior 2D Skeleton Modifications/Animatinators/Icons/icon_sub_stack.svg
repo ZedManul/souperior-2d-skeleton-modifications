@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="16.0px"
+   height="16.0px"
+   viewBox="0 0 16.0 16.0"
+   version="1.1"
+   id="SVGRoot"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs32456" />
+  <g
+     id="layer1">
+    <circle
+       style="fill:#73efe8;stroke-width:1.51181;paint-order:markers fill stroke"
+       id="path33321"
+       cx="6"
+       cy="8"
+       r="1" />
+    <circle
+       style="fill:#73efe8;stroke-width:1.51181;paint-order:markers fill stroke"
+       id="path33325"
+       cx="10"
+       cy="8"
+       r="1" />
+    <path
+       id="rect33345"
+       style="fill:#f1641f;fill-opacity:1;stroke-width:1.35221;paint-order:markers fill stroke"
+       d="M 4.5 4 A 1.5 1.5 0 0 0 3 5.5 A 1.5 1.5 0 0 0 4.5 7 A 1.5 1.5 0 0 0 5.9101562 6 L 10.089844 6 A 1.5 1.5 0 0 0 11.5 7 A 1.5 1.5 0 0 0 13 5.5 A 1.5 1.5 0 0 0 11.5 4 A 1.5 1.5 0 0 0 10.089844 5 L 5.9140625 5 A 1.5 1.5 0 0 0 4.5 4 z " />
+    <path
+       id="rect33345-1"
+       style="fill:#f1641f;fill-opacity:1;stroke-width:1.35221;paint-order:markers fill stroke"
+       d="m 4.410156,9 a 1.5,1.5 0 0 0 -1.5,1.5 1.5,1.5 0 0 0 1.5,1.5 1.5,1.5 0 0 0 1.410156,-1 H 10 a 1.5,1.5 0 0 0 1.410156,1 1.5,1.5 0 0 0 1.5,-1.5 1.5,1.5 0 0 0 -1.5,-1.5 A 1.5,1.5 0 0 0 10,10 H 5.824219 A 1.5,1.5 0 0 0 4.410156,9 Z" />
+    <rect
+       style="fill:#f1641f;fill-opacity:1;stroke-width:1.51181;paint-order:markers fill stroke"
+       id="rect34103"
+       width="2"
+       height="3"
+       x="1"
+       y="1"
+       ry="1" />
+    <rect
+       style="fill:#f1641f;fill-opacity:1;stroke-width:1.51181;paint-order:markers fill stroke"
+       id="rect34105"
+       width="14"
+       height="2"
+       x="1"
+       y="1"
+       ry="1" />
+    <rect
+       style="fill:#f1641f;fill-opacity:1;stroke-width:1.51181;paint-order:markers fill stroke"
+       id="rect34107"
+       width="2"
+       height="3"
+       x="13"
+       y="1"
+       ry="1" />
+    <rect
+       style="fill:#f1641f;fill-opacity:1;stroke-width:1.51181;paint-order:markers fill stroke"
+       id="rect34109"
+       width="2"
+       height="3"
+       x="1"
+       y="12"
+       ry="1" />
+    <rect
+       style="fill:#f1641f;fill-opacity:1;stroke-width:1.51181;paint-order:markers fill stroke"
+       id="rect34111"
+       width="14"
+       height="2"
+       x="1"
+       y="13"
+       ry="1" />
+    <rect
+       style="fill:#f1641f;fill-opacity:1;stroke-width:1.51181;paint-order:markers fill stroke"
+       id="rect34113"
+       width="2"
+       height="3"
+       x="13"
+       y="12"
+       ry="1" />
+  </g>
+</svg>
