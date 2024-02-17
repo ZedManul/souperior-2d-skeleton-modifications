@@ -108,12 +108,12 @@ func _forward_pass() -> void:
 				this_bone, 
 				wrapf(
 						angle \
-						+ this_bone.get_bone_angle() \
+						- this_bone.get_bone_angle() \
 						- this_bone.get_parent().global_rotation,
 						-PI, PI
 					)
 			) \
-			- this_bone.get_bone_angle() \
+			+ this_bone.get_bone_angle() \
 			+ this_bone.get_parent().global_rotation
 		
 		_joint_points[i + 1] = a + Vector2(_limb_lengths[i], 0).rotated(angle)
@@ -141,7 +141,7 @@ func _initialize_calculation_variables(delta: float) -> void:
 			bone_nodes[-1].global_position \
 			+ Vector2.from_angle(
 					bone_nodes[-1].global_rotation \
-					+ bone_nodes[-1].get_bone_angle()
+					- bone_nodes[-1].get_bone_angle()
 				) * bone_nodes[-1].get_length()
 		)
 	#endregion
@@ -154,11 +154,15 @@ func _apply_chain_to_bones() -> void:
 		_mod_stack.apply_bone_rotation_mod(
 				bone_nodes[i],
 				rotation_global_to_local(
-						_joint_points[i + 1].angle_to_point(
-								_joint_points[i]
-							) * sign(bone_nodes[i].global_scale.y),
+						(
+							_joint_points[i].angle_to_point(
+									_joint_points[i + 1]
+								) 
+						) * sign(bone_nodes[i].global_scale.y)
+						- bone_nodes[i].get_bone_angle(),
 						bone_nodes[i].get_parent()
-				)
+					) 
+					
 			)
 
 
