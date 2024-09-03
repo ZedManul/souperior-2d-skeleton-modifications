@@ -11,6 +11,7 @@ extends Node
 ## The modification sub-stack this node belongs to.
 @onready var _mod_sub_stack: Node = get_parent()
 
+@export_enum("idle", "physics") var ik_process_mode: int = 0
 
 func _enter_tree() -> void:
 	_mod_sub_stack = get_parent()

@@ -83,6 +83,8 @@ func _process(delta: float) -> void:
 ## Updates the internal variables of the easing resource to match the current wanted state;
 ## Prevents weird behaviour on bone change, scene reload, or any other situation that may cause the easing internals to become outdated.
 func fix_easing():
-	if !(easing and bone_node and target_node):
+	if !(easing and bone_node and target_node and is_inside_tree()):
 		return
+	await get_tree().process_frame
 	easing.initialize_variables(target_node.global_position)
+	bone_node.global_position = target_node.global_position

@@ -167,7 +167,10 @@ func _apply_chain_to_bones() -> void:
 
 
 ## Resets easing value to the target value. prevents jerks on initialization.
+## ...except it doesnt and I have to fix it :sob:
 func fix_easing():
-	if !(easing and bone_nodes[0] and target_node):
+	if !(easing and target_node and is_inside_tree()):
 		return
-	easing.initialize_variables(target_node.global_position - bone_nodes[0].global_position)
+	await get_tree().process_frame
+	easing.initialize_variables(target_node.global_position)
+	_target_point = target_node.global_position
