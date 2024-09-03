@@ -45,7 +45,7 @@ If something seems to be broken, try reloading your project.
 Skeletons are weird like that.
 
 There is now support for custom easing motion on all modifications!
-I am quite happy with how the system turned out, 
+I am quite happy with how the system turned out,
 and I will likely make it a separate plugin later on.
 
 Soupy Nodes are entirely separate from the inbuilt skeleton modifications, 
@@ -55,4 +55,9 @@ The system also relies on bone angle and length, so make sure to
 disable "auto calculate" on bones that dont have any further child bones.
 
 
-
+TODO:
+	>Rework Easing to be tied to special target nodes, rather than baked into the IK itself
+	>Fix the way the easing is handled while am at it :P
+	>Add processing mode options (both for nodes and ik)
+	>Add a script which automagically generates skeletal rig based on a branch with sprite nodes.
+	

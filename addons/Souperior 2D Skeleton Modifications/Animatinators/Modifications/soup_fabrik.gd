@@ -73,6 +73,8 @@ func _process(delta) -> void:
 
 ## make and apply IK calculations
 func handle_ik(delta: float) -> void:
+	#print_debug("Easing State:" + str(easing.state))
+	#print_debug("Target Point:" + str(_target_point))
 	_initialize_calculation_variables(delta)
 	for i:int in iterations:
 		_backward_pass()
@@ -168,6 +170,7 @@ func _apply_chain_to_bones() -> void:
 
 ## Resets easing value to the target value. prevents jerks on initialization.
 ## ...except it doesnt and I have to fix it :sob:
+## Note to self: It seems that Easing State is relative to origin point, whereas target point is global
 func fix_easing():
 	if !(easing and target_node and is_inside_tree()):
 		return

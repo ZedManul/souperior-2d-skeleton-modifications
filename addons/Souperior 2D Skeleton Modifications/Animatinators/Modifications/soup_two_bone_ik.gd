@@ -219,5 +219,3 @@ func _length_check() -> bool:
 			_first_bone_vector.length() \
 			- _second_bone_vector.length()
 		)
-
-
