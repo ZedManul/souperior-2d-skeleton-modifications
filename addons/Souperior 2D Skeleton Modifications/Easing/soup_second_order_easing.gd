@@ -13,9 +13,8 @@ extends Resource
 @export_range(0.001, 30, 0.1, "or_greater", "or_less") var frequency: float = 1:
 	set(new_value):
 		frequency=clampf(new_value,0.001,30)
-		compute_constants(frequency,damping,reaction)
-	get:
-		return frequency
+		_compute_constants(frequency,damping,reaction)
+
 ## Easing damping:  
 ##
 ## Defines how the system settles at the target value;
@@ -23,9 +22,8 @@ extends Resource
 @export var damping: float = 1:
 	set(new_value):
 		damping=maxf(new_value,0.0)
-		compute_constants(frequency,damping,reaction)
-	get:
-		return damping
+		_compute_constants(frequency,damping,reaction)
+
 ## Easing reaction:  
 ##
 ## Defines how quickly the system reacts to a change in target value;
@@ -34,9 +32,7 @@ extends Resource
 @export var reaction: float = 1:
 	set(new_value):
 		reaction=new_value
-		compute_constants(frequency,damping,reaction)
-	get:
-		return reaction
+		_compute_constants(frequency,damping,reaction)
 #endregion
 
 var ip: Vector2 # Previous Input
@@ -48,7 +44,7 @@ var k2: float
 var k3: float
 
 
-func compute_constants(f: float, z: float, r: float) -> void:
+func _compute_constants(f: float, z: float, r: float) -> void:
 	k1 = z / (PI * f)
 	k2 = 1.0 / ((TAU * f)*(TAU * f))
 	k3 = r * z / (TAU * f)

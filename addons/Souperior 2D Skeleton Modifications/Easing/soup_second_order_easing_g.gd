@@ -1,7 +1,6 @@
 @tool
 @icon("icon_easing.png")
-class_name SoupySecondOrderEasingG
-extends SoupySecondOrderEasing
+class_name SoupySecondOrderEasingG extends SoupySecondOrderEasing
 ## A custom easing resource;
 ## Uses physics approximation to produce smooth change; 
 ## Applies gravity to the eased parameter.

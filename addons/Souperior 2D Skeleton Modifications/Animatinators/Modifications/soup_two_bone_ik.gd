@@ -38,36 +38,6 @@ extends SoupMod
 ## Without a chain tip, the modification instead will use second bone's length and angle.
 @export var chain_tip: Node2D = null
 
-#region Easing
-@export_category("Easing")
-@export_group("Joint One")
-
-## If true, easing is appied to the first joint.
-@export var use_easing_on_first_joint: bool = false
-
-## Easing Resource;
-## Defines easing behaviour for the first joint.
-@export var first_joint_easing: SoupySecondOrderEasingNoG:
-	set(new_value):
-		if !new_value:
-			first_joint_easing = null
-			return
-		first_joint_easing = new_value.duplicate(true)
-
-@export_group("Joint Two")
-
-## If true, easing is appied to the second joint.
-@export var use_easing_on_second_joint: bool = false
-
-## Easing Resource;
-## Defines easing behaviour for the second joint.
-@export var second_joint_easing: SoupySecondOrderEasingNoG:
-	set(new_value):
-		if !new_value:
-			second_joint_easing = null
-			return
-		second_joint_easing = new_value.duplicate(true)
-#endregion
 
 ## [not intended for access]
 ## Used for calculations.
@@ -82,7 +52,7 @@ var _first_bone_vector: Vector2
 var _second_bone_vector: Vector2
 
 
-func _process(delta) -> void:
+func process_loop(delta) -> void:
 	if !(
 			enabled 
 			and target_node 
@@ -118,26 +88,12 @@ func _handle_ik(delta: float) -> void:
 	+ bend_direction_coefficient * _calculate_first_joint_rotation() \
 	- _first_bone_vector.angle()
 	
-	if use_easing_on_first_joint and first_joint_easing:
-		first_joint_easing.update(delta,Vector2.RIGHT.rotated(bone_rotation))
-		bone_rotation = first_joint_easing.state.angle()
-	
 	var fixed_rotation: float = _mod_stack.apply_bone_rotation_mod(joint_one_bone_node,bone_rotation)
-	if fixed_rotation and first_joint_easing and use_easing_on_first_joint:
-		first_joint_easing.state = Vector2.RIGHT.rotated(fixed_rotation)
 	#region handling second joint
 	bone_rotation = _calculate_second_joint_rotation()\
 	* sign(joint_one_bone_node.global_scale.y) \
 	- _second_bone_vector.angle()
-	
-	
-	
-	if use_easing_on_second_joint and second_joint_easing:
-		second_joint_easing.update(delta,Vector2.RIGHT.rotated(bone_rotation))
-		bone_rotation = second_joint_easing.state.angle()
 	fixed_rotation = _mod_stack.apply_bone_rotation_mod(joint_two_bone_node,bone_rotation)
-	if fixed_rotation and second_joint_easing and use_easing_on_second_joint:
-		second_joint_easing.state = Vector2.RIGHT.rotated(fixed_rotation)
 	#endregion
 
 

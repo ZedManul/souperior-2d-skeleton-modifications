@@ -28,22 +28,7 @@ var angle_offset: float = 0
 ## The to-be-modified bone node.
 @export var bone_node: Bone2D
 
-@export_category("Easing")
-
-## If true, easing is appied.
-@export var use_easing: bool = false
-
-## Easing Resource;
-## Defines the easing behaviour.
-@export var easing: SoupySecondOrderEasingNoG: 
-	set(new_value):
-		if !new_value:
-			easing = null
-			return
-		easing = new_value.duplicate(true)
-
-
-func _process(delta) -> void:
+func process_loop(delta) -> void:
 	if !(
 			enabled 
 			and target_node 
@@ -70,12 +55,4 @@ func _handle_look_at(delta) -> void:
 			bone_node.get_parent()
 		) + angle_offset
 	
-	if use_easing and easing:
-		easing.update(delta,Vector2.RIGHT.rotated(result_rotation))
-		result_rotation = easing.state.angle()
-	
 	var fixed_rotation: float = _mod_stack.apply_bone_rotation_mod(bone_node,result_rotation)
-	if fixed_rotation and easing and use_easing:
-		easing.state = Vector2.RIGHT.rotated(fixed_rotation)
-
-

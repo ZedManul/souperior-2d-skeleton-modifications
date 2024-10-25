@@ -56,8 +56,11 @@ disable "auto calculate" on bones that dont have any further child bones.
 
 
 TODO:
-	>Rework Easing to be tied to special target nodes, rather than baked into the IK itself
-	>Fix the way the easing is handled while am at it :P
-	>Add processing mode options (both for nodes and ik)
-	>Add a script which automagically generates skeletal rig based on a branch with sprite nodes.
+	->Rework Easing to be tied to special target nodes, rather than baked into the IK itself
+	 DONE!->This starts with removing easing options for all the current mods
+	->Make the target stuff now
+	->Fix the way the easing is handled while am at it :P
+	 DONE!->BONUS: Pole Target for FABRIK (Suddenly done????)
+	->Add processing mode options (both for targets and ik)
+	->Add a script which automagically generates skeletal rig based on a branch with sprite nodes.
 	

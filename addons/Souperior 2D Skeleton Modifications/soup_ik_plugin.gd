@@ -9,9 +9,6 @@ func _enter_tree():
 	add_custom_type("SoupSecondOrderEasingG", "Resource", 
 			preload("Easing/soup_second_order_easing_g.gd"), 
 			preload("Easing/icon_easing.png"))
-	add_custom_type("SoupSecondOrderEasingNoG", "Resource", 
-			preload("Easing/soup_second_order_easing_no_g.gd"), 
-			preload("Easing/icon_easing.png"))
 	#endregion
 	
 	#region Load Misc
@@ -39,9 +36,6 @@ func _enter_tree():
 	add_custom_type("SoupStayAt", "Node", 
 			preload("Animatinators/Modifications/soup_stay_at.gd"), 
 			preload("Animatinators/Modifications/Icons/icon_stay_at.png"))
-	add_custom_type("SoupJiggle", "Node", 
-			preload("Animatinators/Modifications/soup_jiggle.gd"), 
-			preload("Animatinators/Modifications/Icons/icon_jiggle.png"))
 	#endregion
 
 func _exit_tree():
@@ -50,7 +44,6 @@ func _exit_tree():
 	remove_custom_type("SoupTwoBoneIK")
 	remove_custom_type("SoupLookAt")
 	remove_custom_type("SoupStayAt")
-	remove_custom_type("SoupJiggle")
 	remove_custom_type("SoupyModification")
 	#endregion
 	
@@ -63,5 +56,4 @@ func _exit_tree():
 	#region Unload Easing
 	remove_custom_type("SoupSecondOrderEasing")
 	remove_custom_type("SoupSecondOrderEasingG")
-	remove_custom_type("SoupSecondOrderEasingNoG")
 	#endregion 

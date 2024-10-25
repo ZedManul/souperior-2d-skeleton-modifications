@@ -11,11 +11,29 @@ extends Node
 ## The modification sub-stack this node belongs to.
 @onready var _mod_sub_stack: Node = get_parent()
 
-@export_enum("idle", "physics") var ik_process_mode: int = 0
+@export_enum("PROCESS", "PHYSICS_PROCESS") var ik_process_mode: int = 0:
+	set(value):
+		ik_process_mode = value
+		set_process(ik_process_mode == 0)
+		set_physics_process(ik_process_mode == 1)
 
 func _enter_tree() -> void:
 	_mod_sub_stack = get_parent()
 	_mod_stack = _find_stack()
+
+
+func _process(delta) -> void:
+	process_loop(delta)
+	#	print_debug("processingn....")
+
+
+func _physics_process(delta) -> void:
+	process_loop(delta)
+	#print_debug("physics processingn....")
+
+
+func process_loop(_delta):
+	pass
 
 
 ## Returns [position] relative to the [parent_node] from [global_pos].

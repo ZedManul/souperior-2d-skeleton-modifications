@@ -10,44 +10,23 @@ extends SoupMod
 ## To avoid unintended behaviour, make sure this node is NOT a child of a to-be-modified bone.
 @export var target_node: Node2D
 
+## Pole node for the modification;
+## The chain tries to angle towards this;
+## To avoid unintended behaviour, make sure this node is NOT a child of a to-be-modified bone.
+@export var pole_node: Node2D
+
 ## If true, the modification is calculated and applied.
 @export var enabled: bool = false
-
-@export_category("Bones")
 
 ## The to-be-modified bone nodes.
 @export var bone_nodes: Array[Bone2D]
 
 ## How many passes the FABRIK does PER FRAME;
-## This should work just fine at 1, but if you feel like the chain moves to the target too slow, you can icrease it;
+## This should work just fine at 1, but if you feel like the chain moves to the target too slow, you can increase it;
 ## Although I do not recommend to do so, as it effectively multiplies the amount of computations per frame.
 @export var iterations: int = 1:
 	set(new_value):
 		iterations = clampi(new_value,1,16)
-
-
-#region easing
-@export_category("Easing")
-
-## If true, easing is appied;
-@export var use_easing: bool = false:
-	set(new_value):
-		use_easing = new_value
-		fix_easing()
-
-## Easing Resource;
-## Defines easing behaviour
-@export var easing: SoupySecondOrderEasing: 
-	set(new_value):
-		if !(new_value is SoupySecondOrderEasing):
-			easing = null
-			return
-		easing = new_value.duplicate(true)
-		
-		if !target_node:
-			return
-		fix_easing()
-#endregion
 
 var _base_point: Vector2
 var _target_point: Vector2
@@ -55,11 +34,7 @@ var _joint_points: PackedVector2Array
 var _limb_lengths: PackedFloat32Array
 
 
-func _ready() -> void:
-	fix_easing()
-
-
-func _process(delta) -> void:
+func process_loop(delta) -> void:
 	if !(
 			enabled 
 			and target_node 
@@ -73,13 +48,18 @@ func _process(delta) -> void:
 
 ## make and apply IK calculations
 func handle_ik(delta: float) -> void:
-	#print_debug("Easing State:" + str(easing.state))
-	#print_debug("Target Point:" + str(_target_point))
 	_initialize_calculation_variables(delta)
+	if pole_node:
+		handle_pole()
 	for i:int in iterations:
 		_backward_pass()
 		_forward_pass()
 	_apply_chain_to_bones()
+
+func handle_pole() -> void:
+	var pole_vector: Vector2 = (pole_node.global_position - _base_point).normalized()
+	for i:int in range(1,_joint_points.size()):
+		_joint_points[i] = _joint_points[i-1] + pole_vector * _limb_lengths[i-1]
 
 
 ## [not intended for access]
@@ -87,10 +67,23 @@ func handle_ik(delta: float) -> void:
 func _backward_pass() -> void:
 	_joint_points[-1] = _target_point
 	for i: int in range(_joint_points.size() - 1, 0, -1):
-		
+		var this_bone:Bone2D = bone_nodes[i-1] 
 		var a:Vector2 = _joint_points[i]
 		var b:Vector2 = _joint_points[i - 1]
 		var angle:float = a.angle_to_point(b)
+		
+		if (i < _joint_points.size() - 1):
+			angle = _mod_stack.apply_rotation_constraints(
+					this_bone, 
+					wrapf(
+							angle \
+							- this_bone.get_bone_angle() \
+							- this_bone.get_parent().global_rotation,
+							-PI, PI
+						)
+				) \
+				+ this_bone.get_bone_angle() \
+				+ this_bone.get_parent().global_rotation
 		
 		_joint_points[i - 1] = a + Vector2(_limb_lengths[i - 1], 0).rotated(angle)
 
@@ -100,23 +93,10 @@ func _backward_pass() -> void:
 func _forward_pass() -> void:
 	_joint_points[0] = _base_point
 	for i: int in range(_joint_points.size() - 1):
-		var this_bone:Bone2D = bone_nodes[i]
 		
 		var a:Vector2 = _joint_points[i]
 		var b:Vector2 = _joint_points[i + 1]
 		var angle:float = a.angle_to_point(b)
-		
-		angle = _mod_stack.apply_rotation_constraints(
-				this_bone, 
-				wrapf(
-						angle \
-						- this_bone.get_bone_angle() \
-						- this_bone.get_parent().global_rotation,
-						-PI, PI
-					)
-			) \
-			+ this_bone.get_bone_angle() \
-			+ this_bone.get_parent().global_rotation
 		
 		_joint_points[i + 1] = a + Vector2(_limb_lengths[i], 0).rotated(angle)
 
@@ -127,9 +107,6 @@ func _initialize_calculation_variables(delta: float) -> void:
 	_base_point = bone_nodes[0].global_position
 	
 	_target_point = target_node.global_position
-	if easing and use_easing:
-		easing.update(delta, target_node.global_position - _base_point)
-		_target_point = easing.state+_base_point
 	
 	#region Joint points and lengths
 	_joint_points.clear()
@@ -149,6 +126,7 @@ func _initialize_calculation_variables(delta: float) -> void:
 	#endregion
 
 
+
 ## [not intended for access]
 ## Writes the virtual chain data to the bone nodes
 func _apply_chain_to_bones() -> void:
@@ -166,14 +144,3 @@ func _apply_chain_to_bones() -> void:
 					) 
 					
 			)
-
-
-## Resets easing value to the target value. prevents jerks on initialization.
-## ...except it doesnt and I have to fix it :sob:
-## Note to self: It seems that Easing State is relative to origin point, whereas target point is global
-func fix_easing():
-	if !(easing and target_node and is_inside_tree()):
-		return
-	await get_tree().process_frame
-	easing.initialize_variables(target_node.global_position)
-	_target_point = target_node.global_position
