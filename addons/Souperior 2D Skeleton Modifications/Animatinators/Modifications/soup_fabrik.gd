@@ -42,6 +42,7 @@ func process_loop(delta) -> void:
 			and _parent_enable_check()
 		):
 		return
+	_scale_orient = sign(bone_nodes[0].global_transform.determinant())
 	
 	handle_ik(delta)
 
@@ -51,10 +52,11 @@ func handle_ik(delta: float) -> void:
 	_initialize_calculation_variables(delta)
 	if pole_node:
 		handle_pole()
-	for i:int in iterations:
+	for i: int in iterations:
 		_backward_pass()
 		_forward_pass()
 	_apply_chain_to_bones()
+
 
 func handle_pole() -> void:
 	var pole_vector: Vector2 = (pole_node.global_position - _base_point).normalized()
@@ -71,20 +73,6 @@ func _backward_pass() -> void:
 		var a:Vector2 = _joint_points[i]
 		var b:Vector2 = _joint_points[i - 1]
 		var angle:float = a.angle_to_point(b)
-		
-		if (i < _joint_points.size() - 1):
-			angle = _mod_stack.apply_rotation_constraints(
-					this_bone, 
-					wrapf(
-							angle \
-							- this_bone.get_bone_angle() \
-							- this_bone.get_parent().global_rotation,
-							-PI, PI
-						)
-				) \
-				+ this_bone.get_bone_angle() \
-				+ this_bone.get_parent().global_rotation
-		
 		_joint_points[i - 1] = a + Vector2(_limb_lengths[i - 1], 0).rotated(angle)
 
 
@@ -128,19 +116,12 @@ func _initialize_calculation_variables(delta: float) -> void:
 
 
 ## [not intended for access]
-## Writes the virtual chain data to the bone nodes
+## Writes the point chain data to bone node positions
 func _apply_chain_to_bones() -> void:
 	for i:int in bone_nodes.size():
-		_mod_stack.apply_bone_rotation_mod(
-				bone_nodes[i],
-				rotation_global_to_local(
-						(
-							_joint_points[i].angle_to_point(
+		bone_nodes[i].global_rotation = \
+						_joint_points[i].angle_to_point(
 									_joint_points[i + 1]
-								) 
-						) * sign(bone_nodes[i].global_scale.y)
-						- bone_nodes[i].get_bone_angle(),
-						bone_nodes[i].get_parent()
-					) 
-					
-			)
+								) \
+						- bone_nodes[i].get_bone_angle() * _scale_orient
+		

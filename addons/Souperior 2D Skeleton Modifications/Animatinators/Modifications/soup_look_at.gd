@@ -36,6 +36,7 @@ func process_loop(delta) -> void:
 			and _parent_enable_check()
 		):
 		return
+	_scale_orient = sign(bone_node.global_transform.determinant())
 	_handle_look_at(delta)
 
 
@@ -47,12 +48,15 @@ func _handle_look_at(delta) -> void:
 	var skeleton: Skeleton2D = _mod_stack.skeleton
 	var target_vector: Vector2 = target_node.global_position - bone_node.global_position
 	
-	var result_rotation = \
-	rotation_global_to_local(
-			target_vector.angle() \
-			* sign(bone_node.global_scale.y)\
-			- bone_node.get_bone_angle(),
-			bone_node.get_parent()
-		) + angle_offset
+	bone_node.global_rotation = target_vector.angle() \
+			- bone_node.get_bone_angle() + angle_offset * _scale_orient
 	
-	var fixed_rotation: float = _mod_stack.apply_bone_rotation_mod(bone_node,result_rotation)
+	#var result_rotation = \
+	#rotation_global_to_local(
+			#target_vector.angle() \
+			#* sign(bone_node.global_scale.y)\
+			#- bone_node.get_bone_angle(),
+			#bone_node.get_parent()
+		#) + angle_offset
+	
+	#var fixed_rotation: float = _mod_stack.apply_bone_rotation_mod(bone_node,result_rotation)

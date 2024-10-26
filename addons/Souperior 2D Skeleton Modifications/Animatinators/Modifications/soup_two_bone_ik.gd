@@ -15,7 +15,11 @@ extends SoupMod
 @export var enabled: bool = false
 
 ## Flips the bend direction.
-@export var flip_bend_direction: bool = false
+@export var flip_bend_direction: bool = false:
+	set(value):
+		flip_bend_direction = value
+		_bend_direction_coefficient = (int(!flip_bend_direction)*2 - 1)
+
 
 ## softness slows down the bones as the chain straightens;
 ## With 0 softness, IK bones may move very quickly just before the target goes out of range, 
@@ -52,6 +56,9 @@ var _first_bone_vector: Vector2
 var _second_bone_vector: Vector2
 
 
+var _bend_direction_coefficient: int = 1
+
+
 func process_loop(delta) -> void:
 	if !(
 			enabled 
@@ -62,39 +69,19 @@ func process_loop(delta) -> void:
 		):
 		return
 	
+	_scale_orient = sign(joint_one_bone_node.global_transform.determinant())
+	_target_vector = _calculate_target_vector()
+	_first_bone_vector = _vectorize_first_bone()
+	_second_bone_vector = _vectorize_second_bone()
+	
 	_handle_ik(delta)
 
 
 ## [not intended for access]
 ## Handles the modification.
 func _handle_ik(delta: float) -> void:
-	if !(_mod_stack is SoupStack):
-		return
-	var skeleton: Skeleton2D = _mod_stack.skeleton
-	_target_vector = _calculate_target_vector()
-	var distance: float = _target_vector.length()
-	
-	_first_bone_vector = _vectorize_first_bone()
-	_second_bone_vector = _vectorize_second_bone()
-	
-	#region Angle calculation modifiers
-	var bend_direction_coefficient: int = (int(!flip_bend_direction)*2 - 1)
-	#endregion
-	
-	#initializing calculation result variables
-	var bone_rotation: float = (_target_vector.angle() \
-	- joint_one_bone_node.get_parent().global_rotation) \
-	* sign(joint_one_bone_node.global_scale.y) \
-	+ bend_direction_coefficient * _calculate_first_joint_rotation() \
-	- _first_bone_vector.angle()
-	
-	var fixed_rotation: float = _mod_stack.apply_bone_rotation_mod(joint_one_bone_node,bone_rotation)
-	#region handling second joint
-	bone_rotation = _calculate_second_joint_rotation()\
-	* sign(joint_one_bone_node.global_scale.y) \
-	- _second_bone_vector.angle()
-	fixed_rotation = _mod_stack.apply_bone_rotation_mod(joint_two_bone_node,bone_rotation)
-	#endregion
+	joint_one_bone_node.global_rotation = _calculate_first_joint_rotation()
+	joint_two_bone_node.global_rotation = _calculate_second_joint_rotation() 
 
 
 func _vectorize_first_bone() -> Vector2:
@@ -112,16 +99,21 @@ func _vectorize_second_bone() -> Vector2:
 ## [not intended for access]
 ## Handles additional calculations to account for softness.
 func _calculate_target_vector() -> Vector2:
-	var raw_vector: Vector2 = target_node.global_position - joint_one_bone_node.global_position
-	var bone_length_difference: float = abs(_first_bone_vector.length() - _second_bone_vector.length())
+	var raw_vector: Vector2 = target_node.global_position \
+							- joint_one_bone_node.global_position
+	var bone_length_difference: float = abs(_first_bone_vector.length() \
+										- _second_bone_vector.length())
 	
-	var full_length: float \
-	= (_first_bone_vector.length() + _second_bone_vector.length()) \
-	- bone_length_difference
-	var distance_ratio: float = (raw_vector.length()-bone_length_difference)/full_length
+	var full_length: float = \
+			(_first_bone_vector.length() + _second_bone_vector.length()) \
+			- bone_length_difference
+	var distance_ratio: float = \
+			(raw_vector.length() - bone_length_difference) / full_length
 	var result_vector: Vector2 = raw_vector
 	if softness>0 and distance_ratio<(1+softness) and distance_ratio>(1-softness):
-		result_vector=result_vector.normalized() * (bone_length_difference + full_length * _calculate_softness_result(distance_ratio))
+		result_vector = result_vector.normalized() \
+				* (bone_length_difference \
+				+ full_length * _calculate_softness_result(distance_ratio))
 	return result_vector
 
 
@@ -148,24 +140,31 @@ func _calculate_first_joint_rotation() -> float:
 		* int(
 				_first_bone_vector.length() < \
 				_second_bone_vector.length()
-			)
+			) + _target_vector.angle()
 	else:
 		return acos(
-				_cos_from_sides(
-					_first_bone_vector.length(),
-					_target_vector.length(),
-					_second_bone_vector.length()
-				)
-			)
+					_cos_from_sides(
+						_first_bone_vector.length(),
+						_target_vector.length(),
+						_second_bone_vector.length()
+					)
+				) * _bend_direction_coefficient * _scale_orient + (
+			target_node.global_position 
+			- joint_one_bone_node.global_position
+		).angle() \
+		- _first_bone_vector.angle()\
+		+ PI * int (_scale_orient < 0)
 
 
 ## [not intended for access]
 ## Applies mathemagic to the second joint
 func _calculate_second_joint_rotation() -> float:
 	return (
-			target_node.global_position 
-			- joint_two_bone_node.global_position
-		).angle() - joint_one_bone_node.global_rotation 
+				target_node.global_position 
+				- joint_two_bone_node.global_position
+			).angle() \
+			- _second_bone_vector.angle() \
+			+ PI * int (_scale_orient < 0)
 
 
 ## Checks if the distance to the target node is reachable with the current setup.

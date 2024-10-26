@@ -17,6 +17,11 @@ extends Node
 		set_process(ik_process_mode == 0)
 		set_physics_process(ik_process_mode == 1)
 
+
+
+var _scale_orient: int = 1
+
+
 func _enter_tree() -> void:
 	_mod_sub_stack = get_parent()
 	_mod_stack = _find_stack()
@@ -34,32 +39,6 @@ func _physics_process(delta) -> void:
 
 func process_loop(_delta):
 	pass
-
-
-## Returns [position] relative to the [parent_node] from [global_pos].
-func position_global_to_local(global_pos: Vector2, parent_node: Node2D) -> Vector2:
-	return (global_pos - parent_node.global_position)\
-			.rotated( -parent_node.global_rotation) \
-			/ parent_node.global_scale
-
-
-## Returns [rotation] relative to the [parent_node] from [global_rot].
-func rotation_global_to_local(global_rot: float, parent_node: Node2D) -> float:
-	return global_rot - parent_node.global_rotation \
-			* sign(parent_node.global_scale.y)
-
-
-## Returns [global_position] from [position] relative to the [parent_node].
-func position_local_to_global(position: Vector2, parent_node: Node2D) -> Vector2:
-	return (position * parent_node.global_scale)\
-			.rotated(parent_node.global_rotation)\
-	 		+ parent_node.global_position
-
-
-## Returns [global_rotation] from [rotation] relative to the [parent_node].
-func rotation_local_to_global(rotation: float, parent_node: Node2D) -> float:
-	return rotation + parent_node.global_rotation \
-			* sign(parent_node.global_scale.y)
 
 
 ## Fetches the modification stack this node belongs to.
