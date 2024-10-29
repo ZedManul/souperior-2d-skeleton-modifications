@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjiivsejtrcpo"
-path="res://.godot/imported/icon_sub_stack.png-fcadc5b67ddb69da1b79d2eba92de9d4.ctex"
+uid="uid://ddv2e1jp3g6ve"
+path="res://.godot/imported/icon_fabrik.png-1ffc35721b449696bdc2ecaa24bd047a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Icons/icon_sub_stack.png"
-dest_files=["res://.godot/imported/icon_sub_stack.png-fcadc5b67ddb69da1b79d2eba92de9d4.ctex"]
+source_file="res://addons/souperior_2d_skeleton_modifications/animatinators/modifications/icons/icon_fabrik.png"
+dest_files=["res://.godot/imported/icon_fabrik.png-1ffc35721b449696bdc2ecaa24bd047a.ctex"]
 
 [params]
 

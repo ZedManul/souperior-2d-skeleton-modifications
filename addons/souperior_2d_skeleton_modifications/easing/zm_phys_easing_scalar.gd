@@ -1,6 +1,6 @@
 @tool
-@icon("icon_easing.png")
-class_name SoupySecondOrderEasing
+@icon("icon_easing_vec2.png")
+class_name ZMPhysEasingScalar
 extends Resource
 ## A custom easing resource; uses physics approximation to produce smooth change.
 
@@ -35,9 +35,9 @@ extends Resource
 		_compute_constants(frequency,damping,reaction)
 #endregion
 
-var ip: Vector2 # Previous Input
-var state: Vector2 # State
-var sd: Vector2 # State Derivative
+var last_state: float # Previous Input
+var state: float # State
+var state_change: float # State Derivative
 # Dynamics constants
 var k1: float
 var k2: float
@@ -48,13 +48,13 @@ func _compute_constants(f: float, z: float, r: float) -> void:
 	k1 = z / (PI * f)
 	k2 = 1.0 / ((TAU * f)*(TAU * f))
 	k3 = r * z / (TAU * f)
-func initialize_variables(i0: Vector2) -> void:
-	ip = i0
+func initialize_variables(i0: float) -> void:
+	last_state = i0
 	state = i0
-	sd = Vector2.ZERO
-func update(delta: float, i: Vector2) -> void:
-	var id: Vector2 = (i-ip) / delta # Input velocity estimation
-	ip = i
+	state_change = 0
+func update(delta: float, i: float) -> void:
+	var id: float = (i-last_state) / delta # Input velocity estimation
+	last_state = i
 	var k2_stable: float = maxf(k2, maxf(delta*delta/2.0 + delta*k1/2.0, delta*k1))
-	state = state + sd * delta # Integrate position by velocity
-	sd = sd + delta * (i + k3 * id - state - k1 * sd) / k2_stable
+	state = state + state_change * delta # Integrate position by velocity
+	state_change = state_change + delta * (i + k3 * id - state - k1 * state_change) / k2_stable

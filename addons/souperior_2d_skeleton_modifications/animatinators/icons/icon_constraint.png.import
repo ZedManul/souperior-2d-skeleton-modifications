@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d2hg7ptgtj5ew"
-path="res://.godot/imported/icon_constraint.png-a8c93ee56b69afccfc770e0ddb9b724f.ctex"
+path="res://.godot/imported/icon_constraint.png-e5d9345d623d440595bf90757b366077.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Icons/icon_constraint.png"
-dest_files=["res://.godot/imported/icon_constraint.png-a8c93ee56b69afccfc770e0ddb9b724f.ctex"]
+source_file="res://addons/souperior_2d_skeleton_modifications/animatinators/icons/icon_constraint.png"
+dest_files=["res://.godot/imported/icon_constraint.png-e5d9345d623d440595bf90757b366077.ctex"]
 
 [params]
 

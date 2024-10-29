@@ -15,7 +15,7 @@ class_name SoupTarget extends Marker2D
 		set_process(ik_process_mode == 0)
 		set_physics_process(ik_process_mode == 1)
 
-@export var easing: SoupySecondOrderEasing:
+@export var easing: ZMPhysEasingVec2:
 	set(value):
 		easing = value.duplicate(true)
 		
@@ -34,5 +34,6 @@ func process_loop(delta) -> void:
 	if (easing == null):
 		target_node.global_position = global_position
 		return
+	
 	easing.update(delta, global_position)
 	target_node.global_position = easing.state

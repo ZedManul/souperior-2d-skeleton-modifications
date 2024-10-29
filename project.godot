@@ -24,7 +24,7 @@ window/stretch/scale_mode="integer"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Souperior 2D Skeleton Modifications/plugin.cfg")
+enabled=PackedStringArray("res://addons/souperior_2d_skeleton_modifications/plugin.cfg")
 
 [filesystem]
 

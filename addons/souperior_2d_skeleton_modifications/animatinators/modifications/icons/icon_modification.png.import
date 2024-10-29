@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8p4h3hl5fro2"
-path="res://.godot/imported/icon_jiggle.png-d4a0b4e7be76fe9b2b7cc3f79ea7a218.ctex"
+uid="uid://cfh2vegnlynn"
+path="res://.godot/imported/icon_modification.png-7f935457eff5ea6e063dc01893b9bce7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Souperior 2D Skeleton Modifications/Animatinators/Modifications/Icons/icon_jiggle.png"
-dest_files=["res://.godot/imported/icon_jiggle.png-d4a0b4e7be76fe9b2b7cc3f79ea7a218.ctex"]
+source_file="res://addons/souperior_2d_skeleton_modifications/animatinators/modifications/icons/icon_modification.png"
+dest_files=["res://.godot/imported/icon_modification.png-7f935457eff5ea6e063dc01893b9bce7.ctex"]
 
 [params]
 
