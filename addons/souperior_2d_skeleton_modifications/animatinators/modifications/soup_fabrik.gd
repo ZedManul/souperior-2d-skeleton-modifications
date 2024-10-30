@@ -68,6 +68,10 @@ var _joint_points: PackedVector2Array
 var _limb_lengths: PackedFloat32Array
 
 
+func _ready() -> void:
+		_fill_easing_stack(easing)
+
+
 func process_loop(delta) -> void:
 	if !(
 			enabled 

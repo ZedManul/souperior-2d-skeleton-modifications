@@ -12,37 +12,37 @@
 [ext_resource type="Script" path="res://addons/souperior_2d_skeleton_modifications/easing/zm_phys_easing_scalar.gd" id="10_nu133"]
 [ext_resource type="Script" path="res://addons/souperior_2d_skeleton_modifications/easing/zm_phys_easing_vec2.gd" id="11_wgbvm"]
 
-[sub_resource type="Resource" id="Resource_y3flv"]
+[sub_resource type="Resource" id="Resource_3fiek"]
 script = ExtResource("10_8sakp")
 frequency = 4.001
 damping = 0.2
 reaction = 5.0
 
-[sub_resource type="Resource" id="Resource_cbha4"]
+[sub_resource type="Resource" id="Resource_s4ls3"]
 script = ExtResource("10_8sakp")
 frequency = 1.001
 damping = 0.25
 reaction = -1.0
 
-[sub_resource type="Resource" id="Resource_fyu0n"]
+[sub_resource type="Resource" id="Resource_ixt80"]
 script = ExtResource("10_nu133")
 frequency = 1.0
 damping = 1.0
 reaction = 1.0
 
-[sub_resource type="Resource" id="Resource_ha52c"]
+[sub_resource type="Resource" id="Resource_5p2dv"]
 script = ExtResource("10_nu133")
 frequency = 1.0
 damping = 1.0
 reaction = 1.0
 
-[sub_resource type="Resource" id="Resource_ilwux"]
+[sub_resource type="Resource" id="Resource_b3w56"]
 script = ExtResource("10_8sakp")
 frequency = 1.0
 damping = 0.5
 reaction = 3.0
 
-[sub_resource type="Resource" id="Resource_d1ugf"]
+[sub_resource type="Resource" id="Resource_2pedy"]
 script = ExtResource("11_wgbvm")
 frequency = 1.0
 damping = 1.0
@@ -51,13 +51,13 @@ reaction = 1.0
 [node name="SoupIKDemo" type="Node2D"]
 
 [node name="TailTarget" type="Marker2D" parent="."]
-position = Vector2(201, 28)
+position = Vector2(196, 31)
 
 [node name="TailPole" type="Marker2D" parent="TailTarget"]
-position = Vector2(-79, 73)
+position = Vector2(-111, 91)
 
 [node name="HeadLookatTarget" type="Marker2D" parent="."]
-position = Vector2(300, 76)
+position = Vector2(289, 68)
 
 [node name="LegLIKTarget" type="Marker2D" parent="."]
 position = Vector2(202, 125)
@@ -79,15 +79,15 @@ metadata/_edit_group_ = true
 
 [node name="FootR" type="Sprite2D" parent="Sprites/LegR"]
 position = Vector2(212.184, 117.373)
-scale = Vector2(0.999977, 0.999977)
+scale = Vector2(0.999976, 0.999976)
 texture = ExtResource("1_0ipcv")
 centered = false
 region_enabled = true
 region_rect = Rect2(97, 2, 22, 14)
 
 [node name="LegRUpper" type="Sprite2D" parent="Sprites/LegR"]
-position = Vector2(244.212, 89.6245)
-rotation = 2.73104
+position = Vector2(238.897, 77.2397)
+rotation = 2.38041
 scale = Vector2(0.999996, 0.999996)
 texture = ExtResource("1_0ipcv")
 centered = false
@@ -95,9 +95,9 @@ region_enabled = true
 region_rect = Rect2(1, 1, 43, 14)
 
 [node name="LegRLower" type="Sprite2D" parent="Sprites/LegR"]
-position = Vector2(208.789, 91.6566)
-rotation = 1.10371
-scale = Vector2(0.999992, 0.999992)
+position = Vector2(208.763, 91.6653)
+rotation = 1.10287
+scale = Vector2(0.999991, 0.999991)
 texture = ExtResource("1_0ipcv")
 centered = false
 region_enabled = true
@@ -106,8 +106,8 @@ region_rect = Rect2(54, 3, 38, 10)
 [node name="Tail" type="Node2D" parent="Sprites"]
 
 [node name="Tail5" type="Sprite2D" parent="Sprites/Tail"]
-position = Vector2(196.182, 16.19)
-rotation = 2.1781
+position = Vector2(190.981, 31.047)
+rotation = 2.20137
 scale = Vector2(0.999878, 0.999878)
 texture = ExtResource("1_0ipcv")
 centered = false
@@ -115,8 +115,8 @@ region_enabled = true
 region_rect = Rect2(32, 19, 27, 10)
 
 [node name="Tail4" type="Sprite2D" parent="Sprites/Tail"]
-position = Vector2(181.629, 35.4266)
-rotation = 2.02747
+position = Vector2(176.004, 49.8379)
+rotation = 2.02561
 scale = Vector2(0.999889, 0.999889)
 texture = ExtResource("1_0ipcv")
 centered = false
@@ -124,8 +124,8 @@ region_enabled = true
 region_rect = Rect2(61, 20, 20, 8)
 
 [node name="Tail3" type="Sprite2D" parent="Sprites/Tail"]
-position = Vector2(173.228, 49.1899)
-rotation = 1.3232
+position = Vector2(167.667, 63.6851)
+rotation = 1.34039
 scale = Vector2(0.999932, 0.999932)
 texture = ExtResource("1_0ipcv")
 centered = false
@@ -133,8 +133,8 @@ region_enabled = true
 region_rect = Rect2(61, 20, 20, 8)
 
 [node name="Tail2" type="Sprite2D" parent="Sprites/Tail"]
-position = Vector2(175.323, 64.5863)
-rotation = 0.460287
+position = Vector2(165.673, 79.2254)
+rotation = -0.248841
 scale = Vector2(0.999937, 0.999937)
 texture = ExtResource("1_0ipcv")
 centered = false
@@ -142,8 +142,8 @@ region_enabled = true
 region_rect = Rect2(83, 19, 24, 10)
 
 [node name="Tail1" type="Sprite2D" parent="Sprites/Tail"]
-position = Vector2(193.656, 74.068)
-rotation = 0.0235981
+position = Vector2(187.379, 73.2782)
+rotation = -0.308662
 scale = Vector2(0.999956, 0.999956)
 texture = ExtResource("1_0ipcv")
 centered = false
@@ -153,7 +153,7 @@ region_rect = Rect2(83, 19, 24, 10)
 [node name="Body" type="Node2D" parent="Sprites"]
 
 [node name="Antenna1" type="Sprite2D" parent="Sprites/Body"]
-position = Vector2(233.128, 65.0016)
+position = Vector2(227.128, 56.0016)
 rotation = 0.0255783
 texture = ExtResource("1_0ipcv")
 centered = false
@@ -161,7 +161,7 @@ region_enabled = true
 region_rect = Rect2(4, 24, 1, 5)
 
 [node name="Antenna2" type="Sprite2D" parent="Sprites/Body"]
-position = Vector2(216.281, 59.0036)
+position = Vector2(210.281, 50.0036)
 rotation = 0.0255776
 scale = Vector2(0.999999, 0.999999)
 texture = ExtResource("1_0ipcv")
@@ -170,7 +170,7 @@ region_enabled = true
 region_rect = Rect2(7, 18, 1, 11)
 
 [node name="Antenna3" type="Sprite2D" parent="Sprites/Body"]
-position = Vector2(229.128, 65.0016)
+position = Vector2(223.128, 56.0016)
 rotation = 0.0255783
 texture = ExtResource("1_0ipcv")
 centered = false
@@ -178,7 +178,7 @@ region_enabled = true
 region_rect = Rect2(4, 24, 1, 5)
 
 [node name="Antenna4" type="Sprite2D" parent="Sprites/Body"]
-position = Vector2(229.409, 54.0052)
+position = Vector2(223.409, 45.0052)
 rotation = 0.0255783
 texture = ExtResource("1_0ipcv")
 centered = false
@@ -186,16 +186,16 @@ region_enabled = true
 region_rect = Rect2(7, 18, 1, 11)
 
 [node name="Body" type="Sprite2D" parent="Sprites/Body"]
-position = Vector2(210, 70)
+position = Vector2(204, 61)
 texture = ExtResource("1_0ipcv")
 centered = false
 region_enabled = true
 region_rect = Rect2(4, 36, 32, 24)
 
 [node name="Head" type="Sprite2D" parent="Sprites/Body"]
-position = Vector2(226.005, 75.2059)
-rotation = -0.139768
-scale = Vector2(0.999981, 0.999981)
+position = Vector2(220.044, 66.1553)
+rotation = -0.134166
+scale = Vector2(0.99998, 0.99998)
 texture = ExtResource("1_0ipcv")
 centered = false
 region_enabled = true
@@ -204,8 +204,8 @@ region_rect = Rect2(10, 18, 16, 16)
 [node name="LegL" type="Node2D" parent="Sprites"]
 
 [node name="LegLLower" type="Sprite2D" parent="Sprites/LegL"]
-position = Vector2(187.937, 90.1789)
-rotation = 1.23775
+position = Vector2(187.06, 90.3517)
+rotation = 1.21097
 scale = Vector2(0.999991, 0.999991)
 texture = ExtResource("1_0ipcv")
 centered = false
@@ -213,7 +213,8 @@ region_enabled = true
 region_rect = Rect2(54, 3, 38, 10)
 
 [node name="FootL" type="Sprite2D" parent="Sprites/LegL"]
-position = Vector2(187, 117)
+position = Vector2(186.999, 116.999)
+rotation = -3.5972e-05
 scale = Vector2(0.999983, 0.999983)
 texture = ExtResource("1_0ipcv")
 centered = false
@@ -221,8 +222,8 @@ region_enabled = true
 region_rect = Rect2(97, 2, 22, 14)
 
 [node name="LegLUpper" type="Sprite2D" parent="Sprites/LegL"]
-position = Vector2(222.963, 90.2034)
-rotation = 2.79415
+position = Vector2(217.857, 77.9185)
+rotation = 2.44854
 scale = Vector2(0.999995, 0.999995)
 texture = ExtResource("1_0ipcv")
 centered = false
@@ -230,7 +231,7 @@ region_enabled = true
 region_rect = Rect2(1, 1, 43, 14)
 
 [node name="DemoSkelly" type="Skeleton2D" parent="."]
-position = Vector2(231, 84)
+position = Vector2(225, 75)
 
 [node name="SoupStack" type="Node" parent="DemoSkelly"]
 script = ExtResource("2_0c065")
@@ -244,7 +245,7 @@ target_node = NodePath("../../../../HeadLookatTarget")
 enabled = true
 bone_node = NodePath("../../../Body/Head")
 ease_rotation = true
-easing = SubResource("Resource_y3flv")
+easing = SubResource("Resource_3fiek")
 
 [node name="SoupFABRIK" type="Node" parent="DemoSkelly/SoupStack/Body" node_paths=PackedStringArray("target_node", "pole_node", "bone_nodes")]
 script = ExtResource("8_35ngn")
@@ -254,7 +255,7 @@ enabled = true
 bone_nodes = [NodePath("../../../Body/Tail1"), NodePath("../../../Body/Tail1/Tail2"), NodePath("../../../Body/Tail1/Tail2/Tail3"), NodePath("../../../Body/Tail1/Tail2/Tail3/Tail4"), NodePath("../../../Body/Tail1/Tail2/Tail3/Tail4/Tail5")]
 iterations = 4
 ease_rotation = true
-easing = SubResource("Resource_cbha4")
+easing = SubResource("Resource_s4ls3")
 
 [node name="LegL" type="Node" parent="DemoSkelly/SoupStack"]
 script = ExtResource("3_mc6wm")
@@ -308,8 +309,8 @@ position = Vector2(12.0416, 0.0132039)
 
 [node name="Head" type="Bone2D" parent="DemoSkelly/Body"]
 position = Vector2(12.0416, 0.013203)
-rotation = -0.139768
-scale = Vector2(0.999981, 0.999981)
+rotation = -0.134166
+scale = Vector2(0.99998, 0.99998)
 rest = Transform2D(1, 0, 0, 1, 12, 0)
 auto_calculate_length_and_angle = false
 length = 8.0
@@ -378,7 +379,7 @@ remote_path = NodePath("../../../../../Sprites/Body/Antenna4")
 
 [node name="LegLUpper" type="Bone2D" parent="DemoSkelly/Body"]
 position = Vector2(-9, 4)
-rotation = 1.22392
+rotation = 0.878311
 scale = Vector2(0.999995, 0.999995)
 rest = Transform2D(0.999999, 0, 0, 0.999999, -9, 4)
 
@@ -389,7 +390,7 @@ remote_path = NodePath("../../../../Sprites/LegL/LegLUpper")
 
 [node name="LegLLower" type="Bone2D" parent="DemoSkelly/Body/LegLUpper"]
 position = Vector2(0, 31)
-rotation = -1.55696
+rotation = -1.23813
 scale = Vector2(0.999996, 0.999996)
 rest = Transform2D(0.999999, 0, 0, 0.999999, 0, 31)
 
@@ -400,7 +401,7 @@ remote_path = NodePath("../../../../../Sprites/LegL/LegLLower")
 
 [node name="FootL" type="Bone2D" parent="DemoSkelly/Body/LegLUpper/LegLLower"]
 position = Vector2(0, 28.0001)
-rotation = 0.333036
+rotation = 0.359783
 scale = Vector2(0.999992, 0.999992)
 rest = Transform2D(1, 0, 0, 1, 0, 28.0001)
 auto_calculate_length_and_angle = false
@@ -413,7 +414,7 @@ remote_path = NodePath("../../../../../../Sprites/LegL/FootL")
 
 [node name="LegRUpper" type="Bone2D" parent="DemoSkelly/Body"]
 position = Vector2(12, 4)
-rotation = 1.16025
+rotation = 0.809618
 scale = Vector2(0.999996, 0.999996)
 rest = Transform2D(1, 0, 0, 1, 12, 4)
 
@@ -424,8 +425,8 @@ remote_path = NodePath("../../../../Sprites/LegR/LegRUpper")
 
 [node name="LegRLower" type="Bone2D" parent="DemoSkelly/Body/LegRUpper"]
 position = Vector2(0, 31)
-rotation = -1.62733
-scale = Vector2(0.999996, 0.999996)
+rotation = -1.27753
+scale = Vector2(0.999995, 0.999995)
 rest = Transform2D(1, 0, 0, 1, 0, 31)
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="DemoSkelly/Body/LegRUpper/LegRLower"]
@@ -435,7 +436,7 @@ remote_path = NodePath("../../../../../Sprites/LegR/LegRLower")
 
 [node name="FootR" type="Bone2D" parent="DemoSkelly/Body/LegRUpper/LegRLower"]
 position = Vector2(0, 28)
-rotation = 0.467084
+rotation = 0.467916
 scale = Vector2(0.999985, 0.999985)
 rest = Transform2D(0.999999, 0, 0, 0.999999, 0, 28)
 auto_calculate_length_and_angle = false
@@ -448,7 +449,7 @@ remote_path = NodePath("../../../../../../Sprites/LegR/FootR")
 
 [node name="Tail1" type="Bone2D" parent="DemoSkelly/Body"]
 position = Vector2(-5, -3)
-rotation = -0.5
+rotation = -0.83226
 scale = Vector2(0.999956, 0.999956)
 rest = Transform2D(1, 0, 0, 1, -5, -3)
 
@@ -459,7 +460,7 @@ remote_path = NodePath("../../../../Sprites/Tail/Tail1")
 
 [node name="Tail2" type="Bone2D" parent="DemoSkelly/Body/Tail1"]
 position = Vector2(-21, -11)
-rotation = 0.436689
+rotation = 0.0598215
 scale = Vector2(0.999981, 0.999981)
 rest = Transform2D(1, 0, 0, 1, -21, -11)
 
@@ -470,7 +471,7 @@ remote_path = NodePath("../../../../../Sprites/Tail/Tail2")
 
 [node name="Tail3" type="Bone2D" parent="DemoSkelly/Body/Tail1/Tail2"]
 position = Vector2(-20, -11)
-rotation = 0.862916
+rotation = 1.58923
 scale = Vector2(0.999995, 0.999995)
 rest = Transform2D(1, 0, 0, 1, -20, -11)
 
@@ -481,7 +482,7 @@ remote_path = NodePath("../../../../../../Sprites/Tail/Tail3")
 
 [node name="Tail4" type="Bone2D" parent="DemoSkelly/Body/Tail1/Tail2/Tail3"]
 position = Vector2(-16, -10)
-rotation = 0.70427
+rotation = 0.685212
 scale = Vector2(0.999957, 0.999957)
 rest = Transform2D(1, 0, 0, 1, -16, -10)
 
@@ -492,8 +493,8 @@ remote_path = NodePath("../../../../../../../Sprites/Tail/Tail4")
 
 [node name="Tail5" type="Bone2D" parent="DemoSkelly/Body/Tail1/Tail2/Tail3/Tail4"]
 position = Vector2(-16, -9)
-rotation = 0.150623
-scale = Vector2(0.99999, 0.99999)
+rotation = 0.175768
+scale = Vector2(0.999989, 0.999989)
 rest = Transform2D(1, 0, 0, 1, -16, -9)
 auto_calculate_length_and_angle = false
 length = 26.0
@@ -508,9 +509,9 @@ remote_path = NodePath("../../../../../../../../Sprites/Tail/Tail5")
 position = Vector2(16, 27)
 script = ExtResource("9_13uo3")
 target_node = NodePath("Marker2D2")
-easing_x = SubResource("Resource_fyu0n")
-easing_y = SubResource("Resource_ha52c")
-easing_a = SubResource("Resource_ilwux")
+easing_x = SubResource("Resource_ixt80")
+easing_y = SubResource("Resource_5p2dv")
+easing_a = SubResource("Resource_b3w56")
 
 [node name="Marker2D2" type="Marker2D" parent="Marker2D"]
 
@@ -519,6 +520,6 @@ position = Vector2(169, 18)
 script = ExtResource("9_ygtet")
 target_node = NodePath("Marker2D2")
 enabled = true
-easing = SubResource("Resource_d1ugf")
+easing = SubResource("Resource_2pedy")
 
 [node name="Marker2D2" type="Marker2D" parent="SoupTarget2"]

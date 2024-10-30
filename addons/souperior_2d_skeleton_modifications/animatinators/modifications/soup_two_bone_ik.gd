@@ -106,6 +106,10 @@ var _second_bone_vector: Vector2
 
 var _bend_direction_coefficient: int = 1
 
+func _ready() -> void:
+		_bone_one_easing = easing
+		_bone_two_easing = easing
+
 func process_loop(delta) -> void:
 	if !(
 			enabled 
