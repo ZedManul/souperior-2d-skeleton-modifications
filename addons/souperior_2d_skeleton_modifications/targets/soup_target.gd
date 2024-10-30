@@ -17,8 +17,10 @@ class_name SoupTarget extends Marker2D
 
 @export var easing: ZMPhysEasingVec2:
 	set(value):
+		if value == null:
+			easing = null
+			return
 		easing = value.duplicate(true)
-		
 		easing.initialize_variables(global_position)
 
 func _process(delta) -> void:

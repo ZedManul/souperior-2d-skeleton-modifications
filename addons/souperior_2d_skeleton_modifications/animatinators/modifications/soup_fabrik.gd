@@ -28,6 +28,40 @@ extends SoupMod
 	set(new_value):
 		iterations = clampi(new_value,1,16)
 
+@export_category("Easing")
+
+@export var ease_rotation: bool = false
+
+@export var easing: ZMPhysEasingAngular:
+	set(value):
+		if value == null:
+			easing = null
+			_fill_easing_stack(null)
+			return
+		
+		easing = value.duplicate(true)
+		easing.initialize_variables((_target_point - _base_point).angle())
+		if !easing.constants_changed.is_connected(_on_easing_constants_changed):
+			easing.constants_changed.connect(_on_easing_constants_changed)
+		_fill_easing_stack(easing)
+
+func _on_easing_constants_changed(_k1: float, _k2: float, _k3: float) -> void: 
+	_update_easing_stack_constants(easing)
+
+var _easing_stack: Array[ZMPhysEasingAngular]
+
+func _fill_easing_stack(value: ZMPhysEasingAngular) -> void:
+	_easing_stack.resize(bone_nodes.size())
+	for i: int in range(bone_nodes.size()):
+		_easing_stack[i] = value.duplicate(true)
+		_easing_stack[i].initialize_variables(bone_nodes[i].global_rotation)
+
+func _update_easing_stack_constants(value: ZMPhysEasingAngular) -> void:
+	for i: ZMPhysEasingAngular in _easing_stack:
+		i.k1 = value.k1
+		i.k2 = value.k2
+		i.k3 = value.k3
+
 var _base_point: Vector2
 var _target_point: Vector2
 var _joint_points: PackedVector2Array
@@ -55,7 +89,7 @@ func handle_ik(delta: float) -> void:
 	for i: int in iterations:
 		_backward_pass()
 		_forward_pass()
-	_apply_chain_to_bones()
+	_apply_chain_to_bones(delta)
 
 
 func handle_pole() -> void:
@@ -117,11 +151,16 @@ func _initialize_calculation_variables(delta: float) -> void:
 
 ## [not intended for access]
 ## Writes the point chain data to bone node positions
-func _apply_chain_to_bones() -> void:
+func _apply_chain_to_bones(delta) -> void:
 	for i:int in bone_nodes.size():
-		bone_nodes[i].global_rotation = \
+		var target_rotation =  \
 						_joint_points[i].angle_to_point(
 									_joint_points[i + 1]
 								) \
 						- bone_nodes[i].get_bone_angle() * _scale_orient
+		if _easing_stack.size() > i:
+			if _easing_stack[i] != null and ease_rotation:
+				_easing_stack[i].update(delta, target_rotation)
+				target_rotation = _easing_stack[i].state
+		bone_nodes[i].global_rotation = target_rotation
 		

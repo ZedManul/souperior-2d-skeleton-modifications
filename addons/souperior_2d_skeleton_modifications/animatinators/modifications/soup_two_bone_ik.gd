@@ -28,6 +28,7 @@ extends SoupMod
 	set(new_value):
 		softness=clampf(new_value,0,1)
 
+#region bone export
 @export_category("Bones")
 
 ## Bone node which will be modified to act as the first joint.
@@ -41,7 +42,55 @@ extends SoupMod
 ## (OPTIONAL) A child node of the second node marking the end of the chain;
 ## Without a chain tip, the modification instead will use second bone's length and angle.
 @export var chain_tip: Node2D = null
+#endregion
 
+#region easing export
+@export_category("Easing")
+
+@export var ease_rotation: bool = false
+
+@export var easing: ZMPhysEasingAngular:
+	set(value):
+		if value == null:
+			easing = null
+			_bone_one_easing = null
+			_bone_two_easing = null
+			return
+		
+		easing = value.duplicate(true)
+		easing.initialize_variables(_target_vector.angle())
+		if !easing.constants_changed.is_connected(_on_easing_constants_changed):
+			easing.constants_changed.connect(_on_easing_constants_changed)
+		_bone_one_easing = easing
+		_bone_two_easing = easing
+
+func _on_easing_constants_changed(_k1: float, _k2: float, _k3: float) -> void: 
+	_bone_one_easing.k1 = _k1
+	_bone_one_easing.k2 = _k2
+	_bone_one_easing.k3 = _k3
+	_bone_two_easing.k1 = _k1
+	_bone_two_easing.k2 = _k2
+	_bone_two_easing.k3 = _k3
+
+
+
+var _bone_one_easing: ZMPhysEasingAngular:
+	set(value):
+		if value == null:
+			_bone_one_easing = null
+			return
+		_bone_one_easing = value.duplicate(true)
+		_bone_one_easing.initialize_variables(_first_bone_vector.angle())
+
+
+var _bone_two_easing: ZMPhysEasingAngular:
+	set(value):
+		if value == null:
+			_bone_two_easing = null
+			return
+		_bone_two_easing = value.duplicate(true)
+		_bone_two_easing.initialize_variables(_second_bone_vector.angle())
+#endregion
 
 ## [not intended for access]
 ## Used for calculations.
@@ -55,9 +104,7 @@ var _first_bone_vector: Vector2
 ## Used for calculations.
 var _second_bone_vector: Vector2
 
-
 var _bend_direction_coefficient: int = 1
-
 
 func process_loop(delta) -> void:
 	if !(
@@ -80,8 +127,17 @@ func process_loop(delta) -> void:
 ## [not intended for access]
 ## Handles the modification.
 func _handle_ik(delta: float) -> void:
-	joint_one_bone_node.global_rotation = _calculate_first_joint_rotation()
-	joint_two_bone_node.global_rotation = _calculate_second_joint_rotation() 
+	var target_rotation = _calculate_first_joint_rotation()
+	if _bone_one_easing != null and ease_rotation:
+		_bone_one_easing.update(delta, target_rotation)
+		target_rotation = _bone_one_easing.state
+	joint_one_bone_node.global_rotation = target_rotation
+	
+	target_rotation = _calculate_second_joint_rotation() 
+	if _bone_two_easing != null and ease_rotation:
+		_bone_two_easing.update(delta, target_rotation)
+		target_rotation = _bone_two_easing.state
+	joint_two_bone_node.global_rotation = target_rotation
 
 
 func _vectorize_first_bone() -> Vector2:

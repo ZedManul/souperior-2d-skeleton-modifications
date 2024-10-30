@@ -3,6 +3,9 @@
 class_name SoupLookAt
 extends SoupMod
 
+
+
+
 ## "Souperior" modification for Skeleton2D; Points bone angle at the target.
 
 ## Target node for the modification;
@@ -14,19 +17,31 @@ extends SoupMod
 @export var enabled: bool = false
 
 ## Offset angle from target, in radians.
-var angle_offset: float = 0
 
 ## Offset angle from target, in degrees; used for export.
 @export_range(-180,180,0.001,"or_greater", "or_less") \
 		 var angle_offset_degrees: float = 0:
 	set(new_value):
 		angle_offset_degrees = wrapf(new_value,-180,180)
-		angle_offset = deg_to_rad(angle_offset_degrees)
-
-@export_category("Bones")
+		_angle_offset = deg_to_rad(angle_offset_degrees)
 
 ## The to-be-modified bone node.
 @export var bone_node: Bone2D
+
+@export var ease_rotation: bool = false
+
+## Easing
+@export var easing: ZMPhysEasingAngular:
+	set(value):
+		if value == null:
+			easing = null
+			return
+		easing = value.duplicate(true)
+		easing.initialize_variables(_target_vector.angle())
+
+
+var _angle_offset: float = 0
+var _target_vector: Vector2 = Vector2.RIGHT
 
 func process_loop(delta) -> void:
 	if !(
@@ -46,17 +61,12 @@ func _handle_look_at(delta) -> void:
 	if !(_mod_stack is SoupStack):
 		return
 	var skeleton: Skeleton2D = _mod_stack.skeleton
-	var target_vector: Vector2 = target_node.global_position - bone_node.global_position
+	_target_vector = target_node.global_position - bone_node.global_position
 	
-	bone_node.global_rotation = target_vector.angle() \
-			- bone_node.get_bone_angle() + angle_offset * _scale_orient
+	var target_rotation = _target_vector.angle() \
+			- bone_node.get_bone_angle() + _angle_offset * _scale_orient
+	if easing != null and ease_rotation:
+		easing.update(delta, target_rotation)
+		target_rotation = easing.state
+	bone_node.global_rotation = target_rotation
 	
-	#var result_rotation = \
-	#rotation_global_to_local(
-			#target_vector.angle() \
-			#* sign(bone_node.global_scale.y)\
-			#- bone_node.get_bone_angle(),
-			#bone_node.get_parent()
-		#) + angle_offset
-	
-	#var fixed_rotation: float = _mod_stack.apply_bone_rotation_mod(bone_node,result_rotation)

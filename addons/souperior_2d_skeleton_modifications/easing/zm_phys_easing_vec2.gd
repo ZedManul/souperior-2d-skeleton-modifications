@@ -4,6 +4,8 @@ class_name ZMPhysEasingVec2
 extends Resource
 ## A custom easing resource; uses physics approximation to produce smooth change.
 
+signal constants_changed(_k1: float, _k2: float, _k3: float)
+
 #region Export Variables
 ## Easing frequency:  
 ## 
@@ -48,6 +50,8 @@ func _compute_constants(f: float, z: float, r: float) -> void:
 	k1 = z / (PI * f)
 	k2 = 1.0 / ((TAU * f)*(TAU * f))
 	k3 = r * z / (TAU * f)
+	constants_changed.emit(k1,k2,k3)
+
 func initialize_variables(i0: Vector2) -> void:
 	last_state = i0
 	state = i0
