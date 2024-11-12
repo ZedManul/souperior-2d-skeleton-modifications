@@ -1,10 +1,7 @@
 @tool
-@icon("Icons/icon_look_at.png")
+@icon("icons/icon_look_at.png")
 class_name SoupLookAt
 extends SoupMod
-
-
-
 
 ## "Souperior" modification for Skeleton2D; Points bone angle at the target.
 
@@ -33,7 +30,7 @@ extends SoupMod
 ## Easing
 @export var easing: ZMPhysEasingAngular:
 	set(value):
-		if value == null:
+		if not value is ZMPhysEasingAngular:
 			easing = null
 			return
 		easing = value.duplicate(true)
@@ -58,9 +55,6 @@ func process_loop(delta) -> void:
 ## [not intended for access]
 ## Handles the modification.
 func _handle_look_at(delta) -> void:
-	if !(_mod_stack is SoupStack):
-		return
-	var skeleton: Skeleton2D = _mod_stack.skeleton
 	_target_vector = target_node.global_position - bone_node.global_position
 	
 	var target_rotation = _target_vector.angle() \

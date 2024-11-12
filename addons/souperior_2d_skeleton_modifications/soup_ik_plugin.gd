@@ -12,12 +12,9 @@ func _enter_tree():
 	#endregion
 	
 	#region Load Misc
-	add_custom_type("SoupStack", "Node", 
-			preload("animatinators/soup_stack.gd"), 
-			preload("animatinators/icons/icon_stack.png"))
-	add_custom_type("SoupSubStack", "Node", 
-			preload("animatinators/soup_sub_stack.gd"), 
-			preload("animatinators/icons/icon_sub_stack.png"))
+	add_custom_type("SoupGroup", "Node", 
+			preload("animatinators/soup_group.gd"), 
+			preload("animatinators/icons/icon_group.png"))
 	#endregion
 	
 	#region Load modifications
@@ -43,8 +40,7 @@ func _exit_tree():
 	
 	#region Unload Misc
 	remove_custom_type("SoupBoneEnhancer")
-	remove_custom_type("SoupSubStack")
-	remove_custom_type("SoupStack")
+	remove_custom_type("SoupGroup")
 	#endregion
 	
 	#region Unload easing

@@ -1,25 +1,47 @@
 @tool
-@icon("Icons/icon_fabrik.png")
+@icon("icons/icon_fabrik.png")
 class_name SoupFABRIK
 extends SoupMod
-## "Souperior" modification for Skeleton2D; Reaches for the target with a chain of bones;
-## You can constraint the bone angles in this chain, but the behaviour may be unintuitive.
+## "Souperior" modification for Skeleton2D; Reaches for the target with a chain of bones
 
 ## Target node for the modification;
 ## The bone is pointed towards this;
-## To avoid unintended behaviour, make sure this node is NOT a child of a to-be-modified bone.
+## To avoid unintended behaviour, make sure this node is NOT a child of the chain base.
 @export var target_node: Node2D
 
 ## Pole node for the modification;
 ## The chain tries to angle towards this;
-## To avoid unintended behaviour, make sure this node is NOT a child of a to-be-modified bone.
+## To avoid unintended behaviour, make sure this node is NOT a child of the chain base.
 @export var pole_node: Node2D
 
 ## If true, the modification is calculated and applied.
 @export var enabled: bool = false
 
-## The to-be-modified bone nodes.
-@export var bone_nodes: Array[Bone2D]
+
+## The start of the chain
+@export var chain_base: Bone2D:
+	set(value):
+		chain_base = value
+		_get_bone_nodes()
+
+## End of the chain 
+@export var chain_tip: Bone2D:
+	set(value):
+		chain_tip = value
+		_get_bone_nodes()
+
+var _bone_nodes: Array[Bone2D]
+
+func _get_bone_nodes() -> void:
+	_bone_nodes.clear()
+	if chain_base and chain_tip: 
+		var i: Node = chain_tip
+		while i is Bone2D:
+			_bone_nodes.push_front(i)
+			if i == chain_base: return
+			i = i.get_parent()
+	_bone_nodes.clear()
+
 
 ## How many passes the FABRIK does PER FRAME;
 ## This should work just fine at 1, but if you feel like the chain moves to the target too slow, you can increase it;
@@ -34,7 +56,7 @@ extends SoupMod
 
 @export var easing: ZMPhysEasingAngular:
 	set(value):
-		if value == null:
+		if not value is ZMPhysEasingAngular:
 			easing = null
 			_fill_easing_stack(null)
 			return
@@ -51,16 +73,21 @@ func _on_easing_constants_changed(_k1: float, _k2: float, _k3: float) -> void:
 var _easing_stack: Array[ZMPhysEasingAngular]
 
 func _fill_easing_stack(value: ZMPhysEasingAngular) -> void:
-	_easing_stack.resize(bone_nodes.size())
-	for i: int in range(bone_nodes.size()):
+	_easing_stack.resize(_bone_nodes.size())
+	for i: int in range(_bone_nodes.size()):
+		if value == null:
+			_easing_stack[i] = null
+			continue
 		_easing_stack[i] = value.duplicate(true)
-		_easing_stack[i].initialize_variables(bone_nodes[i].global_rotation)
+		_easing_stack[i].initialize_variables(_bone_nodes[i].global_rotation)
 
 func _update_easing_stack_constants(value: ZMPhysEasingAngular) -> void:
 	for i: ZMPhysEasingAngular in _easing_stack:
 		i.k1 = value.k1
 		i.k2 = value.k2
 		i.k3 = value.k3
+		if value is ZMPhysEasingAngularG:
+			i.gravity = value.gravity;
 
 var _base_point: Vector2
 var _target_point: Vector2
@@ -76,11 +103,11 @@ func process_loop(delta) -> void:
 	if !(
 			enabled 
 			and target_node 
-			and bone_nodes.size()>0
+			and _bone_nodes.size()>0
 			and _parent_enable_check()
 		):
 		return
-	_scale_orient = sign(bone_nodes[0].global_transform.determinant())
+	_scale_orient = sign(_bone_nodes[0].global_transform.determinant())
 	
 	handle_ik(delta)
 
@@ -96,6 +123,7 @@ func handle_ik(delta: float) -> void:
 	_apply_chain_to_bones(delta)
 
 
+## If pole node is set, orient all the virtual bones towards it
 func handle_pole() -> void:
 	var pole_vector: Vector2 = (pole_node.global_position - _base_point).normalized()
 	for i:int in range(1,_joint_points.size()):
@@ -107,7 +135,7 @@ func handle_pole() -> void:
 func _backward_pass() -> void:
 	_joint_points[-1] = _target_point
 	for i: int in range(_joint_points.size() - 1, 0, -1):
-		var this_bone:Bone2D = bone_nodes[i-1] 
+		var this_bone:Bone2D = _bone_nodes[i-1] 
 		var a:Vector2 = _joint_points[i]
 		var b:Vector2 = _joint_points[i - 1]
 		var angle:float = a.angle_to_point(b)
@@ -130,41 +158,39 @@ func _forward_pass() -> void:
 ## [Not intended for access]
 ## Charging up the mathemagical ritual
 func _initialize_calculation_variables(delta: float) -> void:
-	_base_point = bone_nodes[0].global_position
+	_base_point = _bone_nodes[0].global_position
 	
 	_target_point = target_node.global_position
 	
 	#region Joint points and lengths
 	_joint_points.clear()
 	_limb_lengths.clear()
-	for i: Bone2D in bone_nodes:
+	for i: Bone2D in _bone_nodes:
 		_joint_points.append(i.global_position)
 		_limb_lengths.append(i.get_length())
 	
 	# calculate the chain tip
 	_joint_points.append(
-			bone_nodes[-1].global_position \
+			_bone_nodes[-1].global_position \
 			+ Vector2.from_angle(
-					bone_nodes[-1].global_rotation \
-					- bone_nodes[-1].get_bone_angle()
-				) * bone_nodes[-1].get_length()
+					_bone_nodes[-1].global_rotation \
+					- _bone_nodes[-1].get_bone_angle()
+				) * _bone_nodes[-1].get_length()
 		)
 	#endregion
-
 
 
 ## [not intended for access]
 ## Writes the point chain data to bone node positions
 func _apply_chain_to_bones(delta) -> void:
-	for i:int in bone_nodes.size():
+	for i:int in _bone_nodes.size():
 		var target_rotation =  \
 						_joint_points[i].angle_to_point(
 									_joint_points[i + 1]
-								) \
-						- bone_nodes[i].get_bone_angle() * _scale_orient
+								)
 		if _easing_stack.size() > i:
 			if _easing_stack[i] != null and ease_rotation:
 				_easing_stack[i].update(delta, target_rotation)
 				target_rotation = _easing_stack[i].state
-		bone_nodes[i].global_rotation = target_rotation
-		
+		_bone_nodes[i].global_rotation = target_rotation \
+						- _bone_nodes[i].get_bone_angle() * _scale_orient

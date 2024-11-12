@@ -1,5 +1,5 @@
 @tool
-@icon("Icons/icon_two_bone_ik.png")
+@icon("icons/icon_two_bone_ik.png")
 class_name SoupTwoBoneIK
 extends SoupMod
 
@@ -51,7 +51,7 @@ extends SoupMod
 
 @export var easing: ZMPhysEasingAngular:
 	set(value):
-		if value == null:
+		if not value is ZMPhysEasingAngular:
 			easing = null
 			_bone_one_easing = null
 			_bone_two_easing = null
