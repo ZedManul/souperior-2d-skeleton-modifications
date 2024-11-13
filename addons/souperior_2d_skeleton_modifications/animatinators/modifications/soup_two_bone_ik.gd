@@ -51,45 +51,41 @@ extends SoupMod
 
 @export var easing: ZMPhysEasingAngular:
 	set(value):
-		if not value is ZMPhysEasingAngular:
+		if !value:
 			easing = null
 			_bone_one_easing = null
 			_bone_two_easing = null
 			return
 		
-		easing = value.duplicate(true)
-		easing.initialize_variables(_target_vector.angle())
-		if !easing.constants_changed.is_connected(_on_easing_constants_changed):
-			easing.constants_changed.connect(_on_easing_constants_changed)
+		easing = value.duplicate()
+		easing.force_set(_target_vector.angle())
 		_bone_one_easing = easing
 		_bone_two_easing = easing
+		easing.parameter_resource_changed.connect(_on_parameter_resource_changed)
 
-func _on_easing_constants_changed(_k1: float, _k2: float, _k3: float) -> void: 
-	_bone_one_easing.k1 = _k1
-	_bone_one_easing.k2 = _k2
-	_bone_one_easing.k3 = _k3
-	_bone_two_easing.k1 = _k1
-	_bone_two_easing.k2 = _k2
-	_bone_two_easing.k3 = _k3
+
+func _on_parameter_resource_changed(params: ZMPhysEasingParams) -> void: 
+	_bone_one_easing.easing_params = params
+	_bone_two_easing.easing_params = params
+	_bone_one_easing.force_set(_first_bone_vector.angle())
+	_bone_two_easing.force_set(_second_bone_vector.angle())
 
 
 
 var _bone_one_easing: ZMPhysEasingAngular:
 	set(value):
-		if value == null:
+		if !value:
 			_bone_one_easing = null
 			return
-		_bone_one_easing = value.duplicate(true)
-		_bone_one_easing.initialize_variables(_first_bone_vector.angle())
+		_bone_one_easing = value.duplicate()
 
 
 var _bone_two_easing: ZMPhysEasingAngular:
 	set(value):
-		if value == null:
+		if !value:
 			_bone_two_easing = null
 			return
-		_bone_two_easing = value.duplicate(true)
-		_bone_two_easing.initialize_variables(_second_bone_vector.angle())
+		_bone_two_easing = value.duplicate()
 #endregion
 
 ## [not intended for access]

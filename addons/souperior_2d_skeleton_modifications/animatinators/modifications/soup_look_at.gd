@@ -30,11 +30,11 @@ extends SoupMod
 ## Easing
 @export var easing: ZMPhysEasingAngular:
 	set(value):
-		if not value is ZMPhysEasingAngular:
+		if !value:
 			easing = null
 			return
-		easing = value.duplicate(true)
-		easing.initialize_variables(_target_vector.angle())
+		easing = value.duplicate()
+		easing.force_set(_target_vector.angle())
 
 
 var _angle_offset: float = 0

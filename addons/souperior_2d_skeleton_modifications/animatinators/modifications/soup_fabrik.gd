@@ -61,14 +61,10 @@ func _get_bone_nodes() -> void:
 			_fill_easing_stack(null)
 			return
 		
-		easing = value.duplicate(true)
-		easing.initialize_variables((_target_point - _base_point).angle())
-		if !easing.constants_changed.is_connected(_on_easing_constants_changed):
-			easing.constants_changed.connect(_on_easing_constants_changed)
+		easing = value.duplicate()
+		easing.force_set((_target_point - _base_point).angle())
+		easing.parameter_resource_changed.connect(_on_parameter_resource_changed)
 		_fill_easing_stack(easing)
-
-func _on_easing_constants_changed(_k1: float, _k2: float, _k3: float) -> void: 
-	_update_easing_stack_constants(easing)
 
 var _easing_stack: Array[ZMPhysEasingAngular]
 
@@ -78,16 +74,12 @@ func _fill_easing_stack(value: ZMPhysEasingAngular) -> void:
 		if value == null:
 			_easing_stack[i] = null
 			continue
-		_easing_stack[i] = value.duplicate(true)
-		_easing_stack[i].initialize_variables(_bone_nodes[i].global_rotation)
+		_easing_stack[i] = value.duplicate()
+		_easing_stack[i].force_set(_bone_nodes[i].global_rotation)
 
-func _update_easing_stack_constants(value: ZMPhysEasingAngular) -> void:
+func _on_parameter_resource_changed(params: ZMPhysEasingParams) -> void: 
 	for i: ZMPhysEasingAngular in _easing_stack:
-		i.k1 = value.k1
-		i.k2 = value.k2
-		i.k3 = value.k3
-		if value is ZMPhysEasingAngularG:
-			i.gravity = value.gravity;
+		i.easing_params = params
 
 var _base_point: Vector2
 var _target_point: Vector2

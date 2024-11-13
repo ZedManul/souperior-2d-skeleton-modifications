@@ -20,8 +20,8 @@ class_name SoupTarget extends Marker2D
 		if value == null:
 			easing = null
 			return
-		easing = value.duplicate(true)
-		easing.initialize_variables(global_position)
+		easing = value.duplicate()
+		easing.force_set(global_position)
 
 func _process(delta) -> void:
 	process_loop(delta)
