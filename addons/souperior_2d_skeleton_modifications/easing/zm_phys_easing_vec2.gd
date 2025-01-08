@@ -4,29 +4,6 @@ class_name ZMPhysEasingVec2
 extends Resource
 ## A custom easing resource; uses physics approximation to produce smooth change.
 
-#@export var easing_params: ZMPhysEasingParams
-#
-#var state: Vector2 # State
-#var state_change: Vector2 # State Derivative
-#var last_state: Vector2 # Last State 
-#var last_state_change: Vector2 # Last State Derivative 
-#
-#
-#
-#func update(delta: float, i: Vector2) -> void:
-	#var k1: float = easing_params.k1
-	#var k2: float = easing_params.k2
-	#var k3: float = easing_params.k3
-	#var id: Vector2 = (i - last_state) / delta # Input velocity estimation
-	#var k2_stable: float = maxf(k2, maxf(delta*delta/2.0 + delta*k1/2.0, delta*k1))
-	#
-	#last_state = i
-	#last_state_change = state_change
-	#state = state + (state_change + last_state_change) / 2 * delta # Integrate position by velocity
-	#state_change = state_change + delta * (easing_params.gravity\
-				#+ i + k3 * id - state - k1 * state_change) / k2_stable
-
-
 signal parameter_resource_changed(parameter_resource: ZMPhysEasingParams)
 
 @export var easing_params: ZMPhysEasingParams:

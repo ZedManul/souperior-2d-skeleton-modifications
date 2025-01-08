@@ -19,9 +19,9 @@ extends SoupMod
 
 
 ## The start of the chain
-@export var chain_base: Bone2D:
+@export var chain_root: Bone2D:
 	set(value):
-		chain_base = value
+		chain_root = value
 		_get_bone_nodes()
 
 ## End of the chain 
@@ -32,15 +32,7 @@ extends SoupMod
 
 var _bone_nodes: Array[Bone2D]
 
-func _get_bone_nodes() -> void:
-	_bone_nodes.clear()
-	if chain_base and chain_tip: 
-		var i: Node = chain_tip
-		while i is Bone2D:
-			_bone_nodes.push_front(i)
-			if i == chain_base: return
-			i = i.get_parent()
-	_bone_nodes.clear()
+
 
 
 ## How many passes the FABRIK does PER FRAME;
@@ -108,7 +100,7 @@ func process_loop(delta) -> void:
 func handle_ik(delta: float) -> void:
 	_initialize_calculation_variables(delta)
 	if pole_node:
-		handle_pole()
+		_handle_pole()
 	for i: int in iterations:
 		_backward_pass()
 		_forward_pass()
@@ -116,7 +108,7 @@ func handle_ik(delta: float) -> void:
 
 
 ## If pole node is set, orient all the virtual bones towards it
-func handle_pole() -> void:
+func _handle_pole() -> void:
 	var pole_vector: Vector2 = (pole_node.global_position - _base_point).normalized()
 	for i:int in range(1,_joint_points.size()):
 		_joint_points[i] = _joint_points[i-1] + pole_vector * _limb_lengths[i-1]
@@ -186,3 +178,14 @@ func _apply_chain_to_bones(delta) -> void:
 				target_rotation = _easing_stack[i].state
 		_bone_nodes[i].global_rotation = target_rotation \
 						- _bone_nodes[i].get_bone_angle() * _scale_orient
+
+
+func _get_bone_nodes() -> void:
+	_bone_nodes.clear()
+	if chain_root and chain_tip: 
+		var i: Node = chain_tip
+		while i is Bone2D:
+			_bone_nodes.push_front(i)
+			if i == chain_root: return
+			i = i.get_parent()
+	_bone_nodes.clear()

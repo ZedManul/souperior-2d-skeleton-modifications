@@ -30,15 +30,7 @@ class_name ZMPhysEasingParams extends Resource
 		_compute_constants(frequency,damping,reaction)
 #endregion
 
-@export var gravity: Vector2 = Vector2.ZERO:
-	set(value):
-		gravity = value
-		gravity_force = gravity.length()  * PI / 180.0
-		gravity_direction = gravity.angle()
-
-var gravity_force: float = 0
-
-var gravity_direction: float = PI/2
+@export var gravity: Vector2 = Vector2.ZERO#:
 
 
 var k1: float

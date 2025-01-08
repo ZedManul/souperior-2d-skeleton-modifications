@@ -58,7 +58,7 @@ func _handle_look_at(delta) -> void:
 	_target_vector = target_node.global_position - bone_node.global_position
 	
 	var target_rotation = _target_vector.angle() \
-			- bone_node.get_bone_angle() + _angle_offset * _scale_orient
+			- (bone_node.get_bone_angle() - _angle_offset) * _scale_orient
 	if easing != null and ease_rotation:
 		easing.update(delta, target_rotation)
 		target_rotation = easing.state

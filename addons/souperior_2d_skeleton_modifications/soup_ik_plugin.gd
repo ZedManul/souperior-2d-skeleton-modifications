@@ -6,9 +6,6 @@ func _enter_tree():
 	add_custom_type("ZMPhysEasingVec2", "Resource", 
 			preload("easing/zm_phys_easing_vec2.gd"), 
 			preload("easing/icon_easing_vec2.png"))
-	add_custom_type("ZMSecondOrdereasingG", "Resource", 
-			preload("easing/zm_phys_easing_vec2_g.gd"), 
-			preload("easing/icon_easing_vec2.png"))
 	#endregion
 	
 	#region Load Misc

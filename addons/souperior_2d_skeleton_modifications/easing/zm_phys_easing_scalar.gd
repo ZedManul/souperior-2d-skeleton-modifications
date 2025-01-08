@@ -34,9 +34,6 @@ func force_set(i: float) -> void:
 	last_state_change = 0
 	input = i
 	input_change = 0
-	#print_debug("STATE:", state, " STATE_CHANGE:", state_change,
-					#" LAST_STATE:", last_state, " LAST_STATE_CHANGE:", last_state_change, 
-					#" INPUT:", input, " INPUT_CHANGE:", input_change)
 	
 
 func _calculate_stable_k2(delta: float) -> void:

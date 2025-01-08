@@ -4,7 +4,6 @@ class_name ZMPhysEasingWrapped
 extends ZMPhysEasingScalar
 ## A custom easing resource; uses physics approximation to produce smooth change.
 
-#region Export Variables
 @export var range_lower: float = -PI
 @export var range_upper: float =  PI
 
