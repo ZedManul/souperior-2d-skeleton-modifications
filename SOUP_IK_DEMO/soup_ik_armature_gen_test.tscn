@@ -1,0 +1,212 @@
+[gd_scene load_steps=3 format=3 uid="uid://d04d8ocoy1v4x"]
+
+[ext_resource type="Script" path="res://addons/soupik/utility/armature_generator.gd" id="1_nopwf"]
+[ext_resource type="Texture2D" uid="uid://xw3jo41h3y76" path="res://SOUP_IK_DEMO/soup_ik_demo.png" id="2_ygfp6"]
+
+[node name="SoupIkArmatureGenTest" type="Node2D"]
+
+[node name="ArmatureGenerator" type="Node" parent="." node_paths=PackedStringArray("skeleton", "sprite_root")]
+script = ExtResource("1_nopwf")
+skeleton = NodePath("../Skelly")
+sprite_root = NodePath("../Sprites")
+
+[node name="Sprites" type="Node" parent="."]
+
+[node name="ArmL" type="Node2D" parent="Sprites"]
+modulate = Color(0.67, 0.536, 0.6298, 1)
+position = Vector2(-2, -14)
+rotation = -1.57079
+
+[node name="ForeArmL" type="Sprite2D" parent="Sprites/ArmL"]
+position = Vector2(1.00002, 11)
+rotation = 1.57079
+texture = ExtResource("2_ygfp6")
+centered = false
+offset = Vector2(-2, -2)
+region_enabled = true
+region_rect = Rect2(1, 47, 20, 5)
+
+[node name="HandL" type="Sprite2D" parent="Sprites/ArmL"]
+position = Vector2(1.00006, 26)
+rotation = 1.57079
+texture = ExtResource("2_ygfp6")
+centered = false
+offset = Vector2(-2, -5)
+region_enabled = true
+region_rect = Rect2(38, 14, 7, 7)
+
+[node name="ArmL" type="Sprite2D" parent="Sprites/ArmL"]
+position = Vector2(-9.53674e-07, 0)
+rotation = 1.57079
+texture = ExtResource("2_ygfp6")
+centered = false
+offset = Vector2(-3, -3)
+flip_h = true
+region_enabled = true
+region_rect = Rect2(1, 39, 18, 6)
+
+[node name="LegL" type="Node2D" parent="Sprites"]
+modulate = Color(0.67, 0.536, 0.6298, 1)
+position = Vector2(0, 5)
+
+[node name="HipL" type="Sprite2D" parent="Sprites/LegL"]
+rotation = 1.57079
+texture = ExtResource("2_ygfp6")
+centered = false
+offset = Vector2(-3, -3)
+region_enabled = true
+region_rect = Rect2(1, 31, 16, 6)
+
+[node name="CalveL" type="Sprite2D" parent="Sprites/LegL"]
+position = Vector2(0, 11)
+rotation = 1.57079
+texture = ExtResource("2_ygfp6")
+centered = false
+offset = Vector2(-3, -3)
+region_enabled = true
+region_rect = Rect2(0, 23, 25, 6)
+
+[node name="Head" type="Node2D" parent="Sprites"]
+position = Vector2(-4, -16)
+
+[node name="Neck5" type="Sprite2D" parent="Sprites/Head"]
+position = Vector2(-0.999977, 1.90735e-05)
+texture = ExtResource("2_ygfp6")
+centered = false
+offset = Vector2(-3, -2)
+region_enabled = true
+region_rect = Rect2(27, 22, 5, 4)
+
+[node name="Neck4" type="Sprite2D" parent="Sprites/Head"]
+position = Vector2(-3.99998, 1.90735e-05)
+texture = ExtResource("2_ygfp6")
+centered = false
+offset = Vector2(-3, -2)
+region_enabled = true
+region_rect = Rect2(27, 22, 5, 4)
+
+[node name="Neck3" type="Sprite2D" parent="Sprites/Head"]
+position = Vector2(-6.99998, 1.90735e-05)
+texture = ExtResource("2_ygfp6")
+centered = false
+offset = Vector2(-3, -2)
+region_enabled = true
+region_rect = Rect2(27, 22, 5, 4)
+
+[node name="Neck2" type="Sprite2D" parent="Sprites/Head"]
+position = Vector2(-9.99998, 1.90735e-05)
+texture = ExtResource("2_ygfp6")
+centered = false
+offset = Vector2(-3, -2)
+region_enabled = true
+region_rect = Rect2(27, 22, 5, 4)
+
+[node name="Neck1" type="Sprite2D" parent="Sprites/Head"]
+position = Vector2(-13, 1.90735e-05)
+texture = ExtResource("2_ygfp6")
+centered = false
+offset = Vector2(-3, -2)
+region_enabled = true
+region_rect = Rect2(27, 22, 5, 4)
+
+[node name="Neck0" type="Sprite2D" parent="Sprites/Head"]
+position = Vector2(-16, 1.90735e-05)
+texture = ExtResource("2_ygfp6")
+centered = false
+offset = Vector2(-3, -2)
+region_enabled = true
+region_rect = Rect2(27, 22, 5, 4)
+
+[node name="Head" type="Sprite2D" parent="Sprites/Head"]
+position = Vector2(-20, 1.90735e-05)
+rotation = 3.14159
+texture = ExtResource("2_ygfp6")
+centered = false
+offset = Vector2(-4, -5)
+region_enabled = true
+region_rect = Rect2(21, 31, 10, 10)
+
+[node name="Body" type="Node2D" parent="Sprites"]
+
+[node name="Spine" type="Sprite2D" parent="Sprites/Body"]
+position = Vector2(0, -2)
+rotation = -1.5708
+texture = ExtResource("2_ygfp6")
+centered = false
+offset = Vector2(-2, -2)
+region_enabled = true
+region_rect = Rect2(1, 17, 15, 4)
+
+[node name="Torso" type="Sprite2D" parent="Sprites/Body"]
+position = Vector2(-1, -12)
+texture = ExtResource("2_ygfp6")
+centered = false
+offset = Vector2(-4, -8)
+region_enabled = true
+region_rect = Rect2(23, 43, 11, 13)
+
+[node name="Pelvis" type="Sprite2D" parent="Sprites/Body"]
+texture = ExtResource("2_ygfp6")
+centered = false
+offset = Vector2(-4, -5)
+region_enabled = true
+region_rect = Rect2(36, 43, 9, 12)
+
+[node name="LegR" type="Node2D" parent="Sprites"]
+position = Vector2(0, 5)
+
+[node name="HipR" type="Sprite2D" parent="Sprites/LegR"]
+rotation = 1.57079
+texture = ExtResource("2_ygfp6")
+centered = false
+offset = Vector2(-3, -3)
+region_enabled = true
+region_rect = Rect2(1, 31, 16, 6)
+
+[node name="CalveR" type="Sprite2D" parent="Sprites/LegR"]
+position = Vector2(0, 11)
+rotation = 1.57079
+texture = ExtResource("2_ygfp6")
+centered = false
+offset = Vector2(-3, -3)
+region_enabled = true
+region_rect = Rect2(0, 23, 25, 6)
+
+[node name="ArmR" type="Node2D" parent="Sprites"]
+position = Vector2(-2, -14)
+rotation = -1.57079
+
+[node name="ForeArmR" type="Sprite2D" parent="Sprites/ArmR"]
+position = Vector2(1.00002, 11)
+rotation = 1.57079
+texture = ExtResource("2_ygfp6")
+centered = false
+offset = Vector2(-2, -2)
+region_enabled = true
+region_rect = Rect2(1, 47, 20, 5)
+
+[node name="HandR" type="Sprite2D" parent="Sprites/ArmR"]
+position = Vector2(1.00006, 26)
+rotation = 1.57079
+texture = ExtResource("2_ygfp6")
+centered = false
+offset = Vector2(-2, -3)
+region_enabled = true
+region_rect = Rect2(18, 14, 8, 6)
+
+[node name="ArmR" type="Sprite2D" parent="Sprites/ArmR"]
+position = Vector2(-9.53674e-07, 0)
+rotation = 1.57079
+texture = ExtResource("2_ygfp6")
+centered = false
+offset = Vector2(-3, -3)
+flip_h = true
+region_enabled = true
+region_rect = Rect2(1, 39, 18, 6)
+
+[node name="Skelly" type="Skeleton2D" parent="."]
+position = Vector2(-3, -5)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
