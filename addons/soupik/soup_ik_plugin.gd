@@ -38,9 +38,6 @@ func _enter_tree() -> void:
 	add_custom_type("SoupLookAt", "Node", 
 			preload("modifications/soup_look_at.gd"), 
 			preload("icons/icon_look_at.png"))
-	add_custom_type("SoupJiggle", "Node", 
-			preload("modifications/soup_jiggle.gd"), 
-			preload("icons/icon_jiggle.png"))
 	#endregion
 	
 	

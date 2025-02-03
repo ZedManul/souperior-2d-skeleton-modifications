@@ -52,53 +52,7 @@ extends SoupMod
 			update_configuration_warnings()
 #endregion
 
-#region easing export
-@export_category("Easing")
 
-@export var ease_rotation: bool = false: 
-	set(value):
-		ease_rotation = value
-		if Engine.is_editor_hint():
-			update_configuration_warnings()
-
-@export var easing: ZMPhysEasingAngular:
-	set(value):
-		if !value:
-			easing = null
-		else:
-			easing = value.duplicate()
-			easing.force_set(_target_vector.angle())
-			easing.parameter_resource_changed.connect(_on_parameter_resource_changed)
-		_bone_one_easing = easing
-		_bone_two_easing = easing
-		
-		if Engine.is_editor_hint():
-			update_configuration_warnings()
-
-
-func _on_parameter_resource_changed(params: ZMPhysEasingParams) -> void: 
-	_bone_one_easing.easing_params = params
-	_bone_two_easing.easing_params = params
-	_bone_one_easing.force_set(_first_bone_vector.angle())
-	_bone_two_easing.force_set(_second_bone_vector.angle())
-
-
-
-var _bone_one_easing: ZMPhysEasingAngular:
-	set(value):
-		if !value:
-			_bone_one_easing = null
-			return
-		_bone_one_easing = value.duplicate()
-
-
-var _bone_two_easing: ZMPhysEasingAngular:
-	set(value):
-		if !value:
-			_bone_two_easing = null
-			return
-		_bone_two_easing = value.duplicate()
-#endregion
 
 ## [not intended for access]
 ## Used for calculations.
@@ -123,14 +77,9 @@ func _get_configuration_warnings():
 		warn_msg.append("Second bone not set!")
 	if !target_node: 
 		warn_msg.append("Target node not set!")
-	if ease_rotation && !easing: 
-		warn_msg.append("Easing enabled, but the resource is not set!")
 	return warn_msg
 
 
-func _ready() -> void:
-		_bone_one_easing = easing
-		_bone_two_easing = easing
 
 func process_loop(delta) -> void:
 	if !(
@@ -153,17 +102,9 @@ func process_loop(delta) -> void:
 ## [not intended for access]
 ## Handles the modification.
 func _handle_ik(delta: float) -> void:
-	var target_rotation = _calculate_first_joint_rotation()
-	if _bone_one_easing != null and ease_rotation:
-		_bone_one_easing.update(delta, target_rotation)
-		target_rotation = _bone_one_easing.state
-	joint_one_bone_node.global_rotation = target_rotation
+	joint_one_bone_node.global_rotation = _calculate_first_joint_rotation()
 	
-	target_rotation = _calculate_second_joint_rotation() 
-	if _bone_two_easing != null and ease_rotation:
-		_bone_two_easing.update(delta, target_rotation)
-		target_rotation = _bone_two_easing.state
-	joint_two_bone_node.global_rotation = target_rotation
+	joint_two_bone_node.global_rotation = _calculate_second_joint_rotation() 
 
 
 func _vectorize_first_bone() -> Vector2:
@@ -242,8 +183,7 @@ func _calculate_second_joint_rotation() -> float:
 				target_node.global_position 
 				- joint_two_bone_node.global_position
 			).angle() \
-			- _second_bone_vector.angle()#\
-			#+ PI * int (_scale_orient < 0) 
+			- _second_bone_vector.angle()
 
 
 ## Checks if the distance to the target node is reachable with the current setup.

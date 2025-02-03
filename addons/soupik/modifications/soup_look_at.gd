@@ -36,28 +36,9 @@ extends SoupMod
 @export_enum("LOOK_AT", "MIMIC_ANGLE") var look_at_mode: int = 0
 
 
-@export var ease_rotation: bool = false: 
-	set(value):
-		ease_rotation = value
-		if Engine.is_editor_hint():
-			update_configuration_warnings()
-
-## Easing
-@export var easing: ZMPhysEasingAngular:
-	set(value):
-		if !value:
-			easing = null
-		else:
-			easing = value.duplicate()
-			easing.force_set(_target_vector.angle())
-		
-		if Engine.is_editor_hint():
-			update_configuration_warnings()
-
 
 var _angle_offset: float = 0
 var _target_vector: Vector2 = Vector2.RIGHT
-
 
 func _get_configuration_warnings():
 	var warn_msg: Array[String] = []
@@ -65,8 +46,6 @@ func _get_configuration_warnings():
 		warn_msg.append("Bone not set!")
 	if !target_node: 
 		warn_msg.append("Target node not set!")
-	if ease_rotation && !easing: 
-		warn_msg.append("Easing enabled, but the resource is not set!")
 	return warn_msg
 
 
@@ -85,14 +64,10 @@ func process_loop(delta) -> void:
 ## [not intended for access]
 ## Handles the modification.
 func _handle_look_at(delta) -> void:
+	
 	var target_rotation = target_node.global_rotation
 	if look_at_mode == 0:
 		_target_vector = target_node.global_position - bone_node.global_position
 		target_rotation = _target_vector.angle() \
 			- (bone_node.get_bone_angle() - _angle_offset) * _scale_orient
-			
-	if easing != null and ease_rotation:
-		easing.update(delta, target_rotation)
-		target_rotation = easing.state
 	bone_node.global_rotation = target_rotation
-	

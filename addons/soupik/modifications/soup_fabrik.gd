@@ -13,15 +13,6 @@ extends SoupMod
 		if Engine.is_editor_hint():
 			update_configuration_warnings()
 
-## 
-@export var determenistic: bool = false
-
-## Offset angle from target, in degrees; used for export.
-@export_range(-180,180,0.001,"or_greater", "or_less") \
-		 var bias_offset_degrees: float = 0:
-	set(new_value):
-		bias_offset_degrees = wrapf(new_value,-180,180)
-		_bias_offset = deg_to_rad(bias_offset_degrees)
 
 ## If true, the modification is calculated and applied.
 @export var enabled: bool = false
@@ -43,6 +34,17 @@ extends SoupMod
 		if Engine.is_editor_hint():
 			update_configuration_warnings()
 
+## 
+@export var determenistic: bool = false
+
+## Offset angle from target, in degrees; used for export.
+@export_range(-180,180,0.001,"or_greater", "or_less") \
+		 var bias_offset_degrees: float = 0:
+	set(new_value):
+		bias_offset_degrees = wrapf(new_value,-180,180)
+		_bias_offset = deg_to_rad(bias_offset_degrees)
+
+
 var _bone_nodes: Array[Bone2D]
 var _bias_offset: float = 0
 
@@ -55,46 +57,10 @@ var _bias_offset: float = 0
 	set(new_value):
 		iterations = clampi(new_value,1,16)
 
-@export_category("Easing")
-
-@export var ease_rotation: bool = false: 
-	set(value):
-		ease_rotation = value
-		if Engine.is_editor_hint():
-			update_configuration_warnings()
-
-@export var easing: ZMPhysEasingAngular:
-	set(value):
-		if not value is ZMPhysEasingAngular:
-			easing = null
-		else:
-			easing = value.duplicate()
-			easing.force_set((_target_point - _base_point).angle())
-			easing.parameter_resource_changed.connect(_on_parameter_resource_changed)
-		_fill_easing_stack(easing)
-		if Engine.is_editor_hint():
-			update_configuration_warnings()
-
-var _easing_stack: Array[ZMPhysEasingAngular]
-
-func _fill_easing_stack(value: ZMPhysEasingAngular) -> void:
-	_easing_stack.resize(_bone_nodes.size())
-	for i: int in range(_bone_nodes.size()):
-		if value == null:
-			_easing_stack[i] = null
-			continue
-		_easing_stack[i] = value.duplicate()
-		_easing_stack[i].force_set(_bone_nodes[i].global_rotation)
-
-func _on_parameter_resource_changed(params: ZMPhysEasingParams) -> void: 
-	for i: ZMPhysEasingAngular in _easing_stack:
-		i.easing_params = params
-
 var _base_point: Vector2
 var _target_point: Vector2
 var _joint_points: PackedVector2Array
 var _limb_lengths: PackedFloat32Array
-
 
 func _get_configuration_warnings():
 	var warn_msg: Array[String] = []
@@ -104,13 +70,7 @@ func _get_configuration_warnings():
 		warn_msg.append("Chain tip not set!")
 	if !target_node: 
 		warn_msg.append("Target node not set!")
-	if ease_rotation && !easing: 
-		warn_msg.append("Easing enabled, but the resource is not set!")
 	return warn_msg
-
-
-func _ready() -> void:
-		_fill_easing_stack(easing)
 
 
 func process_loop(delta) -> void:
@@ -202,10 +162,6 @@ func _apply_chain_to_bones(delta) -> void:
 						_joint_points[i].angle_to_point(
 									_joint_points[i + 1]
 								)
-		if _easing_stack.size() > i:
-			if _easing_stack[i] != null and ease_rotation:
-				_easing_stack[i].update(delta, target_rotation)
-				target_rotation = _easing_stack[i].state
 		_bone_nodes[i].global_rotation = target_rotation \
 						- _bone_nodes[i].get_bone_angle() * _scale_orient
 

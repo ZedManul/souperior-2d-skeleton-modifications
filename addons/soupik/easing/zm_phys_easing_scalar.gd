@@ -35,7 +35,6 @@ func force_set(i: float) -> void:
 	last_state_change = 0
 	input = i
 	input_change = 0
-	
 
 func _calculate_stable_k2(delta: float) -> void:
 	k2_stable = maxf(
