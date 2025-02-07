@@ -81,7 +81,7 @@ func _get_configuration_warnings():
 
 
 
-func process_loop(delta) -> void:
+func _process_loop(delta) -> void:
 	if !(
 			enabled 
 			and target_node 
@@ -102,9 +102,17 @@ func process_loop(delta) -> void:
 ## [not intended for access]
 ## Handles the modification.
 func _handle_ik(delta: float) -> void:
-	joint_one_bone_node.global_rotation = _calculate_first_joint_rotation()
+	var target_rotation: float = _calculate_first_joint_rotation()
+	if joint_one_bone_node is SoupBone2D:
+		joint_one_bone_node.set_target_rotation(target_rotation)
+	else: 
+		joint_one_bone_node.global_rotation = target_rotation
 	
-	joint_two_bone_node.global_rotation = _calculate_second_joint_rotation() 
+	target_rotation = _calculate_second_joint_rotation()
+	if joint_two_bone_node is SoupBone2D:
+		joint_two_bone_node.set_target_rotation(target_rotation)
+	else: 
+		joint_two_bone_node.global_rotation = target_rotation
 
 
 func _vectorize_first_bone() -> Vector2:

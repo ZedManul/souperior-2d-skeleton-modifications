@@ -8,11 +8,16 @@ extends Node
 ## The modification sub-stack this node belongs to.
 @onready var _mod_group: Node = get_parent()
 
-@export_enum("PROCESS", "PHYSICS_PROCESS") var ik_process_mode: int = 0:
+enum ProcessMode {
+	PROCESS,
+	PHYSICS_PROCESS
+}
+
+@export_enum("Process", "Physics Process") var ik_process_mode: int = ProcessMode.PROCESS:
 	set(value):
 		ik_process_mode = value
-		set_process(ik_process_mode == 0)
-		set_physics_process(ik_process_mode == 1)
+		set_process(ik_process_mode == ProcessMode.PROCESS)
+		set_physics_process(ik_process_mode == ProcessMode.PROCESS)
 
 
 
@@ -24,14 +29,14 @@ func _enter_tree() -> void:
 
 
 func _process(delta) -> void:
-	process_loop(delta)
+	_process_loop(delta)
 
 
 func _physics_process(delta) -> void:
-	process_loop(delta)
+	_process_loop(delta)
 
 
-func process_loop(_delta):
+func _process_loop(_delta):
 	pass
 
 

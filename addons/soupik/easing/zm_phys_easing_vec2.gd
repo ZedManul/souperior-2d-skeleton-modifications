@@ -13,7 +13,7 @@ signal parameter_resource_changed(parameter_resource: ZMPhysEasingParams)
 
 var state: Vector2 
 var state_change: Vector2
-var last_state: Vector2
+var prev_input: Vector2
 var last_state_change: Vector2 
 var input: Vector2 
 var input_change: Vector2 = Vector2.ZERO 
@@ -30,7 +30,7 @@ func update(delta: float, i: Vector2) -> Vector2:
 func force_set(i: Vector2) -> void:
 	state = i
 	state_change = Vector2.ZERO
-	last_state = i
+	prev_input = i
 	last_state_change = Vector2.ZERO
 	input = i
 	input_change = Vector2.ZERO
@@ -47,8 +47,8 @@ func _calculate_stable_k2(delta: float) -> void:
 
 func _apply_state_change(delta: float, i: Vector2) -> void:
 	input = i
-	input_change = (input - last_state) / delta 
-	last_state = input
+	input_change = (input - prev_input) / delta 
+	prev_input = input
 	state = state + (state_change + last_state_change) / 2 * delta # Integrate position by velocity
 
 func _calculate_state_change(delta: float) -> void:

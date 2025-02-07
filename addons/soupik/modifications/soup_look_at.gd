@@ -49,7 +49,7 @@ func _get_configuration_warnings():
 	return warn_msg
 
 
-func process_loop(delta) -> void:
+func _process_loop(delta) -> void:
 	if !(
 			enabled 
 			and target_node 
@@ -70,4 +70,8 @@ func _handle_look_at(delta) -> void:
 		_target_vector = target_node.global_position - bone_node.global_position
 		target_rotation = _target_vector.angle() \
 			- (bone_node.get_bone_angle() - _angle_offset) * _scale_orient
-	bone_node.global_rotation = target_rotation
+	if bone_node is SoupBone2D: 
+		bone_node.set_target_rotation(target_rotation)
+	else:
+		bone_node.global_rotation = target_rotation
+	

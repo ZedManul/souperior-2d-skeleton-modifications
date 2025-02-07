@@ -73,7 +73,7 @@ func _get_configuration_warnings():
 	return warn_msg
 
 
-func process_loop(delta) -> void:
+func _process_loop(delta) -> void:
 	if !(
 			enabled 
 			and target_node 
@@ -162,8 +162,11 @@ func _apply_chain_to_bones(delta) -> void:
 						_joint_points[i].angle_to_point(
 									_joint_points[i + 1]
 								)
-		_bone_nodes[i].global_rotation = target_rotation \
-						- _bone_nodes[i].get_bone_angle() * _scale_orient
+		target_rotation -= _bone_nodes[i].get_bone_angle() * _scale_orient
+		if _bone_nodes[i] is SoupBone2D:
+			_bone_nodes[i].set_target_rotation(target_rotation)
+		else:
+			_bone_nodes[i].global_rotation = target_rotation
 
 
 func _get_bone_nodes() -> void:

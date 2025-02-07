@@ -5,9 +5,9 @@ var armature_generator_control
 
 func _enter_tree() -> void:
 	#region Load easing
-	add_custom_type("ZMPhysEasingParams", "Resource", 
-			preload("easing/zm_phys_easing_parameters.gd"), 
-			preload("icons/easing/icon_easing_params.png")) ## TODO: Add icon
+	add_custom_type("ZMPhysEasingParams", "Resource",
+			preload("resources/zm_easing_params.gd"), 
+			preload("icons/icon_easing_params.png"))
 	add_custom_type("ZMPhysEasingScalar", "Resource", 
 			preload("easing/zm_phys_easing_scalar.gd"), 
 			preload("icons/easing/icon_easing_vec2.png")) ## TODO: Add icon
@@ -16,7 +16,7 @@ func _enter_tree() -> void:
 			preload("icons/easing/icon_easing_wrapped.png")) ## TODO: Add icon
 	add_custom_type("ZMPhysEasingAngular", "Resource", 
 			preload("easing/zm_phys_easing_angular.gd"), 
-			preload("icons/easing/icon_easing_angular.png")) ## TODO: Add icon
+			preload("icons/icon_easing_angular.png")) ## TODO: Add icon
 	add_custom_type("ZMPhysEasingVec2", "Resource", 
 			preload("easing/zm_phys_easing_vec2.gd"), 
 			preload("icons/easing/icon_easing_vec2.png"))

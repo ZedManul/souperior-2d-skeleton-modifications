@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://y2cjxwshgdg1"
-path="res://.godot/imported/icon_easing_params.png-c77eda052e93a7e64b9ce335d2ca5220.ctex"
+uid="uid://blj0gue4mf41d"
+path="res://.godot/imported/icon_easing_angular.png-f8eafdc8ca3602805f8deef04055b1d6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/soupik/icons/easing/icon_easing_params.png"
-dest_files=["res://.godot/imported/icon_easing_params.png-c77eda052e93a7e64b9ce335d2ca5220.ctex"]
+source_file="res://addons/soupik/icons/icon_easing_angular.png"
+dest_files=["res://.godot/imported/icon_easing_angular.png-f8eafdc8ca3602805f8deef04055b1d6.ctex"]
 
 [params]
 
