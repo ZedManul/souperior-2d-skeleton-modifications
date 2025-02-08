@@ -66,6 +66,22 @@ var angle_gizmo_poly: PackedVector2Array = PackedVector2Array([
 #endregion
 
 
+func _get_configuration_warnings():
+	var warn_msg: Array[String] = []
+	if transform_mode == TransformMode.RECORDING_TARGET:
+		warn_msg.append("IK wont be applied while Recording Target")
+	if ease_position and !position_easing_params:
+		warn_msg.append("Position Easing Parameters not set!")
+	if ease_rotation:
+		if !rotation_easing_params:
+			warn_msg.append("Rosition Easing Parameters not set!")
+		elif !rotation_easing_params.params:
+			warn_msg.append("Rosition Easing Parameters not set!")
+	if !constraint_data and (limit_position or limit_rotation):
+		warn_msg.append("Constraint Data not set!")
+	return warn_msg
+
+
 func _enter_tree() -> void:
 	target_rotation = rotation
 	target_position = position

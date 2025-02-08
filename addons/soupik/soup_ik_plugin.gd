@@ -4,28 +4,28 @@ extends EditorPlugin
 var armature_generator_control
 
 func _enter_tree() -> void:
-	#region Load easing
+	#region Load Resources
 	add_custom_type("ZMPhysEasingParams", "Resource",
 			preload("resources/zm_easing_params.gd"), 
 			preload("icons/icon_easing_params.png"))
-	add_custom_type("ZMPhysEasingScalar", "Resource", 
-			preload("easing/zm_phys_easing_scalar.gd"), 
-			preload("icons/easing/icon_easing_vec2.png")) ## TODO: Add icon
-	add_custom_type("ZMPhysEasingWrapped", "Resource", 
-			preload("easing/zm_phys_easing_wrapped.gd"), 
-			preload("icons/easing/icon_easing_wrapped.png")) ## TODO: Add icon
-	add_custom_type("ZMPhysEasingAngular", "Resource", 
-			preload("easing/zm_phys_easing_angular.gd"), 
-			preload("icons/icon_easing_angular.png")) ## TODO: Add icon
-	add_custom_type("ZMPhysEasingVec2", "Resource", 
-			preload("easing/zm_phys_easing_vec2.gd"), 
-			preload("icons/easing/icon_easing_vec2.png"))
+	
+	add_custom_type("ZMPhysEasingRotationalParams", "Resource",
+			preload("resources/zm_easing_rotational_params.gd"), 
+			preload("icons/icon_easing_angular.png"))
+			
+	add_custom_type("ZMConstraintData", "Resource",
+			preload("resources/zm_constraint_data.gd"), 
+			preload("icons/icon_modification.png"))
 	#endregion
 	
 	#region Load Misc
 	add_custom_type("SoupGroup", "Node", 
 			preload("modifications/soup_group.gd"), 
 			preload("icons/icon_modification_group.png"))
+	
+	add_custom_type("SoupBone2D", "Bone2D", 
+			preload("utility/soup_bone.gd"), 
+			preload("icons/icon_soup_bone.png"))
 	#endregion
 	
 	#region Load modifications
@@ -59,18 +59,15 @@ func _exit_tree():
 	remove_custom_type("SoupTwoBoneIK")
 	remove_custom_type("SoupLookAt")
 	remove_custom_type("SoupStayAt")
-	remove_custom_type("SoupyModification")
 	#endregion
 	
 	#region Unload Misc
-	remove_custom_type("SoupBoneEnhancer")
+	remove_custom_type("SoupBone2D")
 	remove_custom_type("SoupGroup")
 	#endregion
 	
-	#region Unload easing
-	remove_custom_type("ZMPhysEasingVec2")
-	remove_custom_type("ZMPhysEasingAngular")
-	remove_custom_type("ZMPhysEasingWrapped")
-	remove_custom_type("ZMPhysEasingScalar")
-	remove_custom_type("ZMPhysEasingEasingParams")
+	#region Unload Resources
+	remove_custom_type("ZMPhysEasingParams")
+	remove_custom_type("ZMPhysEasingRotationalParams")
+	remove_custom_type("ZMConstraintData")
 	#endregion 

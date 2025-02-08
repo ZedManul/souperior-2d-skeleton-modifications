@@ -36,31 +36,14 @@ Here's how it *should* go:
 >>Modifications on "child" bones 
 (i.e. modifications on body/spine, then modifications on arm, then modifications on hand)
 >Order when modifying the same bone:
->>StayAt's first
->>everything else after
 
 
 Skeletons are, alas, still a bit buggy, and weird edgecases arise when shifting nodes around.
 If something seems to be broken, try reloading your project.
 Skeletons are weird like that.
 
-There is now support for custom easing motion on all modifications!
-I am quite happy with how the system turned out,
-and I will likely make it a separate plugin later on.
-
 Soupy Nodes are entirely separate from the inbuilt skeleton modifications, 
 and applying both at the same time to one bone may be a bad idea.
 
 The system also relies on bone angle and length, so make sure to
 disable "auto calculate" on bones that dont have any further child bones.
-
-
-TODO:
-	->Rework Easing to be tied to special target nodes, rather than baked into the IK itself
-	 DONE!->This starts with removing easing options for all the current mods
-	->Make the target stuff now
-	->Fix the way the easing is handled while am at it :P
-	 DONE!->BONUS: Pole Target for FABRIK (Suddenly done????)
-	->Add processing mode options (both for targets and ik)
-	->Add a script which automagically generates skeletal rig based on a branch with sprite nodes.
-	

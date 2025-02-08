@@ -24,7 +24,7 @@ extends SoupMod
 		 var angle_offset_degrees: float = 0:
 	set(new_value):
 		angle_offset_degrees = wrapf(new_value,-180,180)
-		_angle_offset = deg_to_rad(angle_offset_degrees)
+		angle_offset = deg_to_rad(angle_offset_degrees)
 
 ## The to-be-modified bone node.
 @export var bone_node: Bone2D: 
@@ -37,8 +37,8 @@ extends SoupMod
 
 
 
-var _angle_offset: float = 0
-var _target_vector: Vector2 = Vector2.RIGHT
+var angle_offset: float = 0
+var target_vector: Vector2 = Vector2.RIGHT
 
 func _get_configuration_warnings():
 	var warn_msg: Array[String] = []
@@ -54,22 +54,22 @@ func _process_loop(delta) -> void:
 			enabled 
 			and target_node 
 			and bone_node 
-			and _parent_enable_check()
+			and parent_enable_check()
 		):
 		return
-	_scale_orient = sign(bone_node.global_transform.determinant())
-	_handle_look_at(delta)
+	scale_orient = sign(bone_node.global_transform.determinant())
+	handle_look_at(delta)
 
 
 ## [not intended for access]
 ## Handles the modification.
-func _handle_look_at(delta) -> void:
+func handle_look_at(delta) -> void:
 	
 	var target_rotation = target_node.global_rotation
 	if look_at_mode == 0:
-		_target_vector = target_node.global_position - bone_node.global_position
-		target_rotation = _target_vector.angle() \
-			- (bone_node.get_bone_angle() - _angle_offset) * _scale_orient
+		target_vector = target_node.global_position - bone_node.global_position
+		target_rotation = target_vector.angle() \
+			- (bone_node.get_bone_angle() - angle_offset) * scale_orient
 	if bone_node is SoupBone2D: 
 		bone_node.set_target_rotation(target_rotation)
 	else:

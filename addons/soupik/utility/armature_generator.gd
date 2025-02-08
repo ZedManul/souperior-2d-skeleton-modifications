@@ -5,7 +5,7 @@ extends Node
 
 @export var skeleton: Skeleton2D: 
 	set(value):
-		sprite_root = value
+		skeleton = value
 		if Engine.is_editor_hint():
 			update_configuration_warnings()
 
@@ -14,6 +14,8 @@ extends Node
 		sprite_root = value
 		if Engine.is_editor_hint():
 			update_configuration_warnings()
+
+@export_enum("Bone2D", "SoupBone2D") var bone_type: int = 0
 
 @export_group("Bone Naming")
 @export var bone_prefix: String = ""
@@ -49,7 +51,11 @@ func generate_armature() -> void:
 	print_debug("Growing New Bones...")
 	for i: Node2D in sprite_list:
 		var bone_name = bone_prefix + i.name + bone_suffix
-		var bone_node = Bone2D.new()
+		var bone_node: Bone2D
+		if bone_type == 0:
+			bone_node = Bone2D.new()
+		else:
+			bone_node = SoupBone2D.new()
 		bone_node.set_autocalculate_length_and_angle(false)
 		bone_node.rest = Transform2D.IDENTITY
 		skeleton.add_child.call_deferred(bone_node)

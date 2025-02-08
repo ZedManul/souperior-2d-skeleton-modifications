@@ -22,7 +22,7 @@ extends SoupMod
 @export var flip_bend_direction: bool = false:
 	set(value):
 		flip_bend_direction = value
-		_bend_direction_coefficient = (int(!flip_bend_direction)*2 - 1)
+		bend_direction_coefficient = (int(!flip_bend_direction)*2 - 1)
 
 
 ## softness slows down the bones as the chain straightens;
@@ -56,17 +56,17 @@ extends SoupMod
 
 ## [not intended for access]
 ## Used for calculations.
-var _target_vector: Vector2
+var target_vector: Vector2
 
 ## [not intended for access]
 ## Used for calculations.
-var _first_bone_vector: Vector2
+var first_bone_vector: Vector2
 
 ## [not intended for access]
 ## Used for calculations.
-var _second_bone_vector: Vector2
+var second_bone_vector: Vector2
 
-var _bend_direction_coefficient: int = 1
+var bend_direction_coefficient: int = 1
 
 
 func _get_configuration_warnings():
@@ -87,53 +87,53 @@ func _process_loop(delta) -> void:
 			and target_node 
 			and joint_one_bone_node
 			and joint_two_bone_node
-			and _parent_enable_check()
+			and parent_enable_check()
 		):
 		return
 	
-	_scale_orient = sign(joint_one_bone_node.global_transform.determinant())
-	_target_vector = _calculate_target_vector()
-	_first_bone_vector = _vectorize_first_bone()
-	_second_bone_vector = _vectorize_second_bone()
+	scale_orient = sign(joint_one_bone_node.global_transform.determinant())
+	target_vector = calculate_target_vector()
+	first_bone_vector = vectorize_first_bone()
+	second_bone_vector = vectorize_second_bone()
 	
-	_handle_ik(delta)
+	handle_ik(delta)
 
 
 ## [not intended for access]
 ## Handles the modification.
-func _handle_ik(delta: float) -> void:
-	var target_rotation: float = _calculate_first_joint_rotation()
+func handle_ik(delta: float) -> void:
+	var target_rotation: float = calculate_first_joint_rotation()
 	if joint_one_bone_node is SoupBone2D:
 		joint_one_bone_node.set_target_rotation(target_rotation)
 	else: 
 		joint_one_bone_node.global_rotation = target_rotation
 	
-	target_rotation = _calculate_second_joint_rotation()
+	target_rotation = calculate_second_joint_rotation()
 	if joint_two_bone_node is SoupBone2D:
 		joint_two_bone_node.set_target_rotation(target_rotation)
 	else: 
 		joint_two_bone_node.global_rotation = target_rotation
 
 
-func _vectorize_first_bone() -> Vector2:
+func vectorize_first_bone() -> Vector2:
 	return joint_two_bone_node.position * (joint_one_bone_node.global_scale)
 
-func _vectorize_second_bone() -> Vector2:
+func vectorize_second_bone() -> Vector2:
 	return Vector2(
 			joint_two_bone_node.get_length(),
 			0
-			).rotated(joint_two_bone_node.get_bone_angle() * _scale_orient) * abs(joint_two_bone_node.global_scale)
+			).rotated(joint_two_bone_node.get_bone_angle() * scale_orient) * abs(joint_two_bone_node.global_scale)
 
 ## [not intended for access]
 ## Handles additional calculations to account for softness.
-func _calculate_target_vector() -> Vector2:
+func calculate_target_vector() -> Vector2:
 	var raw_vector: Vector2 = target_node.global_position \
 							- joint_one_bone_node.global_position
-	var bone_length_difference: float = abs(_first_bone_vector.length() \
-										- _second_bone_vector.length())
+	var bone_length_difference: float = abs(first_bone_vector.length() \
+										- second_bone_vector.length())
 	
 	var full_length: float = \
-			(_first_bone_vector.length() + _second_bone_vector.length()) \
+			(first_bone_vector.length() + second_bone_vector.length()) \
 			- bone_length_difference
 	var distance_ratio: float = \
 			(raw_vector.length() - bone_length_difference) / full_length
@@ -162,42 +162,41 @@ func _cos_from_sides(a: float, b: float, c: float) -> float:
 
 ## [not intended for access]
 ## Applies mathemagic to the first joint.
-func _calculate_first_joint_rotation() -> float:
-	if _length_check():
+func calculate_first_joint_rotation() -> float:
+	if length_check():
 		return PI \
 		* int(
-				_first_bone_vector.length() < \
-				_second_bone_vector.length()
-			) + _target_vector.angle()
+				first_bone_vector.length() < \
+				second_bone_vector.length()
+			) + target_vector.angle()
 	else:
 		return acos(
 					_cos_from_sides(
-						_first_bone_vector.length(),
-						_target_vector.length(),
-						_second_bone_vector.length()
+						first_bone_vector.length(),
+						target_vector.length(),
+						second_bone_vector.length()
 					)
-				) * _bend_direction_coefficient * _scale_orient + (
+				) * bend_direction_coefficient * scale_orient + (
 			target_node.global_position 
 			- joint_one_bone_node.global_position
 		).angle() \
-		- _first_bone_vector.angle()#\
-		#+ PI * int (_scale_orient < 0)
+		- first_bone_vector.angle()
 
 
 ## [not intended for access]
 ## Applies mathemagic to the second joint
-func _calculate_second_joint_rotation() -> float:
+func calculate_second_joint_rotation() -> float:
 	return (
 				target_node.global_position 
 				- joint_two_bone_node.global_position
 			).angle() \
-			- _second_bone_vector.angle()
+			- second_bone_vector.angle()
 
 
 ## Checks if the distance to the target node is reachable with the current setup.
-func _length_check() -> bool:
-	return (_target_vector.length()<0.001) or _target_vector.length() < \
+func length_check() -> bool:
+	return (target_vector.length()<0.001) or target_vector.length() < \
 	abs(
-			_first_bone_vector.length() \
-			- _second_bone_vector.length()
+			first_bone_vector.length() \
+			- second_bone_vector.length()
 		)

@@ -1,4 +1,5 @@
 @tool
+@icon("res://addons/soupik/icons/icon_modification.png")
 class_name ZMConstraintData extends Resource
 @export_group("Rotation")
 @export_range(-180,180, 0.5) var rotation_direction_degrees: float = 0:

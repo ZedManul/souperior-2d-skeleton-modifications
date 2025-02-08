@@ -6,7 +6,7 @@ extends Node
 ## Does nothing by itself; dont put this in your tree.
 
 ## The modification sub-stack this node belongs to.
-@onready var _mod_group: Node = get_parent()
+@onready var mod_group: Node = get_parent()
 
 enum ProcessMode {
 	PROCESS,
@@ -21,11 +21,11 @@ enum ProcessMode {
 
 
 
-var _scale_orient: int = 1
+var scale_orient: int = 1
 
 
 func _enter_tree() -> void:
-	_mod_group = get_parent()
+	mod_group = get_parent()
 
 
 func _process(delta) -> void:
@@ -43,10 +43,10 @@ func _process_loop(_delta):
 
 
 ## Checks if parent stack structures are enabled.
-func _parent_enable_check() -> bool:
-	if (_mod_group is SoupGroup):
-		return (_mod_group.enabled
-				and _mod_group.parent_enabled
+func parent_enable_check() -> bool:
+	if (mod_group is SoupGroup):
+		return (mod_group.enabled
+				and mod_group.parent_enabled
 				)
 	else:
 		return true

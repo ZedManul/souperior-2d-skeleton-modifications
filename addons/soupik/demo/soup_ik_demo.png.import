@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://xw3jo41h3y76"
-path="res://.godot/imported/soup_ik_demo.png-0d1b2a43214c9fb98fbfa1e872d045fe.ctex"
+path="res://.godot/imported/soup_ik_demo.png-61f66790a2f9741c67b68a56070d70a2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://soup_ik_demo/soup_ik_demo.png"
-dest_files=["res://.godot/imported/soup_ik_demo.png-0d1b2a43214c9fb98fbfa1e872d045fe.ctex"]
+source_file="res://addons/soupik/demo/soup_ik_demo.png"
+dest_files=["res://.godot/imported/soup_ik_demo.png-61f66790a2f9741c67b68a56070d70a2.ctex"]
 
 [params]
 

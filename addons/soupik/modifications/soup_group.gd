@@ -22,11 +22,11 @@ var parent_enabled: bool = true:
 
 
 func _enter_tree() -> void:
-	var daddy = get_parent()
-	if daddy is SoupGroup:
-		parent_enabled = daddy.enabled and daddy.parent_enabled
+	var parent = get_parent()
+	if parent is SoupGroup:
+		parent_enabled = parent.enabled and parent.parent_enabled
 
 func _ready() -> void:
-	var daddy = get_parent()
-	if daddy is SoupGroup:
-		parent_enabled = daddy.enabled and daddy.parent_enabled
+	var parent = get_parent()
+	if parent is SoupGroup:
+		parent_enabled = parent.enabled and parent.parent_enabled
