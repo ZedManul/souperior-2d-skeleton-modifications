@@ -3,6 +3,8 @@
 class_name ArmatureGenerator
 extends Node
 
+@export_tool_button("Generate", "ToolBoneSelect") var gen_function = generate_armature
+
 @export var skeleton: Skeleton2D: 
 	set(value):
 		skeleton = value

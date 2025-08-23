@@ -1,7 +1,6 @@
 @tool
 extends EditorPlugin
 
-var armature_generator_control
 
 func _enter_tree() -> void:
 	#region Load Resources
@@ -22,13 +21,12 @@ func _enter_tree() -> void:
 	add_custom_type("SoupGroup", "Node", 
 			preload("modifications/soup_group.gd"), 
 			preload("icons/icon_modification_group.png"))
-	
-	add_custom_type("SoupBone2D", "Bone2D", 
-			preload("utility/soup_bone.gd"), 
-			preload("icons/icon_soup_bone.png"))
 	#endregion
 	
 	#region Load modifications
+	add_custom_type("SoupBone2D", "Bone2D", 
+			preload("modifications/soup_bone.gd"), 
+			preload("icons/icon_soup_bone.png"))
 	add_custom_type("SoupFABRIK", "Node", 
 			preload("modifications/soup_fabrik.gd"), 
 			preload("icons/icon_fabrik.png"))
@@ -38,31 +36,29 @@ func _enter_tree() -> void:
 	add_custom_type("SoupLookAt", "Node", 
 			preload("modifications/soup_look_at.gd"), 
 			preload("icons/icon_look_at.png"))
+	add_custom_type("SoupStayAt", "Node", 
+			preload("modifications/soup_stay_at.gd"), 
+			preload("icons/icon_stay_at.png"))
 	#endregion
 	
 	
 	
 	add_custom_type("SoupArmatureGenerator", "Node", 
 			preload("utility/armature_generator.gd"), 
-			preload("icons/icon_armature_gen.png")) ## TODO: Add icon
-	armature_generator_control = preload(
-		"res://addons/soupik/utility/buttons/generate_armature_button.gd"
-		).new()
-	add_inspector_plugin(armature_generator_control)
+			preload("icons/icon_armature_gen.png")) 
 
 func _exit_tree():
 	
-	remove_inspector_plugin(armature_generator_control)
 	
 	#region Unload modifications
 	remove_custom_type("SoupFABRIK")
 	remove_custom_type("SoupTwoBoneIK")
 	remove_custom_type("SoupLookAt")
 	remove_custom_type("SoupStayAt")
+	remove_custom_type("SoupBone2D")
 	#endregion
 	
 	#region Unload Misc
-	remove_custom_type("SoupBone2D")
 	remove_custom_type("SoupGroup")
 	#endregion
 	

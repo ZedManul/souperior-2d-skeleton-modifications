@@ -120,7 +120,7 @@ func _process_loop(delta: float) -> void:
 func init_position() -> void:
 	position = target_position
 	prev_global_pos = global_position
-	prev_global_target_pos = globalify(target_position)
+	prev_global_target_pos = globalify_position(target_position)
 
 
 func init_rotation() -> void:
@@ -130,7 +130,7 @@ func init_rotation() -> void:
 
 
 func update_prev_states() -> void:
-	prev_global_target_pos = globalify(target_position)
+	prev_global_target_pos = globalify_position(target_position)
 	prev_global_pos = global_position
 	
 	prev_global_target_rotat = globalify_rotat(target_rotation)
@@ -155,7 +155,7 @@ func handle_position_change(delta: float) -> void:
 
 func handle_position_easing(delta: float) -> void:
 	var stable_k2: float = position_easing_params.calculate_stable_k2(delta)
-	var global_target_pos: Vector2 = globalify(target_position)
+	var global_target_pos: Vector2 = globalify_position(target_position)
 	var global_target_pos_change: Vector2 = (global_target_pos - prev_global_target_pos) / delta
 	global_position += (global_pos_change + prev_global_pos_change) / 2 * delta
 	
@@ -192,7 +192,7 @@ func handle_rotation_easing(delta: float) -> void:
 	
 	var extra_force: Vector2 = (prev_global_pos - global_position) * rotation_easing_params.velocity_effect * delta
 	var force_sum: Vector2 = extra_force + rotation_easing_params.params.gravity * PI / 180.0 
-	var force_orient: float = angle_diff(force_sum.angle(),global_rotation)
+	var force_orient: float = angle_diff(force_sum.angle(),angle_wrap(global_rotation + offset_angle))
 	var force_effect: float = force_orient * abs(sin(force_orient)) * force_sum.length()
 	
 	if limit_rotation:
@@ -234,12 +234,23 @@ func constraint_rotation(angle: float) -> float:
 func set_target_rotation(i: float) -> void:
 	target_rotation = localify_rotat(i)
 
+
+func set_target_position(i: Vector2) -> void:
+	target_position = localify_position(i)
+
+
 #region Helper Functions
-func globalify(i: Vector2) -> Vector2:
+func globalify_position(i: Vector2) -> Vector2:
 	var ref: Node = get_parent()
 	if not (ref is Node2D):
 		return i
 	return (i * ref.global_scale).rotated(ref.global_rotation) + ref.global_position
+
+func localify_position(i: Vector2) -> Vector2:
+	var ref: Node = get_parent()
+	if not (ref is Node2D):
+		return i
+	return (i-ref.global_position).rotated(-ref.global_rotation) / ref.global_scale
 
 
 func globalify_rotat(i: float) -> float:

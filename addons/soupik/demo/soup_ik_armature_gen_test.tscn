@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://d04d8ocoy1v4x"]
 
-[ext_resource type="Script" path="res://addons/soupik/utility/armature_generator.gd" id="1_nopwf"]
+[ext_resource type="Script" uid="uid://cy0qv0iwwsonv" path="res://addons/soupik/utility/armature_generator.gd" id="1_nopwf"]
 [ext_resource type="Texture2D" uid="uid://xw3jo41h3y76" path="res://addons/soupik/demo/soup_ik_demo.png" id="2_ygfp6"]
 
 [node name="SoupIkArmatureGenTest" type="Node2D"]
@@ -9,7 +9,6 @@
 script = ExtResource("1_nopwf")
 skeleton = NodePath("../Skelly")
 sprite_root = NodePath("../Sprites")
-bone_type = null
 
 [node name="Sprites" type="Node" parent="."]
 
