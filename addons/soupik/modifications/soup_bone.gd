@@ -105,7 +105,7 @@ func _process_loop(delta: float) -> void:
 		queue_redraw()
 	if !is_node_ready():
 		await ready
-	offset_angle = get_bone_angle() * sign(global_transform.determinant())
+	offset_angle = get_bone_angle()
 	match transform_mode:
 		TransformMode.IK:
 			handle_position_change(delta)
