@@ -1,7 +1,7 @@
 @tool
 @icon("res://addons/soupik/icons/icon_modification.png")
 class_name SoupMod
-extends Node
+extends Node2D
 ## Base node for "Souperior" modifications;
 ## Does nothing by itself; dont put this in your tree.
 

@@ -37,8 +37,8 @@ extends SoupMod
 
 
 
-var angle_offset: float = 0
-var target_vector: Vector2 = Vector2.RIGHT
+@export_storage var angle_offset: float = 0
+@export_storage var target_vector: Vector2 = Vector2.RIGHT
 
 func _get_configuration_warnings():
 	var warn_msg: Array[String] = []
@@ -65,7 +65,7 @@ func _process_loop(delta) -> void:
 ## Handles the modification.
 func handle_look_at(delta) -> void:
 	
-	var target_rotation = target_node.global_rotation
+	var target_rotation = target_node.global_rotation - angle_offset
 	if look_at_mode == 0:
 		target_vector = target_node.global_position - bone_node.global_position
 		target_rotation = target_vector.angle() \

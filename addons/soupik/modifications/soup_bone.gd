@@ -12,6 +12,7 @@ enum TransformMode {
 	RECORDING_TARGET
 }
 
+
 @export_enum("IK", "Manual", "Recording Target") var transform_mode: int = TransformMode.RECORDING_TARGET
 
 @export var target_rotation: float = 0.0:
@@ -80,11 +81,6 @@ func _get_configuration_warnings():
 	if !constraint_data and (limit_position or limit_rotation):
 		warn_msg.append("Constraint Data not set!")
 	return warn_msg
-
-
-func _enter_tree() -> void:
-	target_rotation = rotation
-	target_position = position
 
 
 func _ready() -> void:
@@ -191,7 +187,7 @@ func handle_rotation_easing(delta: float) -> void:
 	
 	
 	var extra_force: Vector2 = (prev_global_pos - global_position) * rotation_easing_params.velocity_effect * delta
-	var force_sum: Vector2 = extra_force + rotation_easing_params.params.gravity * PI / 180.0 
+	var force_sum: Vector2 = extra_force + rotation_easing_params.params.gravity * delta * PI / 180.0 
 	var force_orient: float = angle_diff(force_sum.angle(),angle_wrap(global_rotation + offset_angle))
 	var force_effect: float = force_orient * abs(sin(force_orient)) * force_sum.length()
 	
@@ -203,7 +199,7 @@ func handle_rotation_easing(delta: float) -> void:
 			angle_diff(global_target_rotat, global_rotation) - \
 			rotation_easing_params.params.k1 * global_rotat_change + \
 			rotation_easing_params.params.k3 * global_target_rotat_change
-		) / stable_k2	
+		) / stable_k2
 	
 	prev_global_rotat_change = global_rotat_change
 

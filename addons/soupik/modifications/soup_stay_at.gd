@@ -27,7 +27,7 @@ extends SoupMod
 
 
 
-var target_position: Vector2 = Vector2.ZERO
+@export_storage var target_position: Vector2 = Vector2.ZERO
 
 func _get_configuration_warnings():
 	var warn_msg: Array[String] = []

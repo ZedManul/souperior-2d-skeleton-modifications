@@ -33,6 +33,7 @@ class_name ZMPhysEasingParams extends Resource
 
 @export var gravity: Vector2 = Vector2.ZERO
 
+@export var ease_locally: bool = false
 
 var k1: float
 var k2: float
