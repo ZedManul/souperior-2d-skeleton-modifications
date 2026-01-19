@@ -17,11 +17,6 @@ func _enter_tree() -> void:
 			preload("icons/icon_modification.png"))
 	#endregion
 	
-	#region Load Misc
-	add_custom_type("SoupGroup", "Node", 
-			preload("modifications/soup_group.gd"), 
-			preload("icons/icon_modification_group.png"))
-	#endregion
 	
 	#region Load modifications
 	add_custom_type("SoupBone2D", "Bone2D", 
@@ -36,8 +31,8 @@ func _enter_tree() -> void:
 	add_custom_type("SoupLookAt", "Node", 
 			preload("modifications/soup_look_at.gd"), 
 			preload("icons/icon_look_at.png"))
-	add_custom_type("SoupStayAt", "Node", 
-			preload("modifications/soup_stay_at.gd"), 
+	add_custom_type("SoupBoneControl", "Node", 
+			preload("modifications/soup_bone_control.gd"), 
 			preload("icons/icon_stay_at.png"))
 	#endregion
 	
@@ -54,13 +49,10 @@ func _exit_tree():
 	remove_custom_type("SoupFABRIK")
 	remove_custom_type("SoupTwoBoneIK")
 	remove_custom_type("SoupLookAt")
-	remove_custom_type("SoupStayAt")
+	remove_custom_type("SoupBoneControl")
 	remove_custom_type("SoupBone2D")
 	#endregion
 	
-	#region Unload Misc
-	remove_custom_type("SoupGroup")
-	#endregion
 	
 	#region Unload Resources
 	remove_custom_type("ZMPhysEasingParams")

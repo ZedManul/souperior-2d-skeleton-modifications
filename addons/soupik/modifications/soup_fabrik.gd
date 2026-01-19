@@ -2,20 +2,7 @@
 @icon("res://addons/soupik/icons/icon_fabrik.png")
 class_name SoupFABRIK
 extends SoupMod
-## "Souperior" modification for Skeleton2D; Reaches for the target with a chain of bones
-
-## Target node for the modification;
-## The bone is pointed towards this;
-## To avoid unintended behaviour, make sure this node is NOT a child of the chain base.
-@export var target_node: Node2D: 
-	set(value):
-		target_node = value
-		if Engine.is_editor_hint():
-			update_configuration_warnings()
-
-
-## If true, the modification is calculated and applied.
-@export var enabled: bool = false
+## "Souperior" modification for Skeleton2D; Reaches for at itself or a target with a chain of bones
 
 
 ## The start of the chain
@@ -34,21 +21,8 @@ extends SoupMod
 		if Engine.is_editor_hint():
 			update_configuration_warnings()
 
-## 
-@export var determenistic: bool = false
-
-## Offset angle from target, in degrees; used for export.
-@export_range(-180,180,0.001,"or_greater", "or_less") \
-		 var bias_offset_degrees: float = 0:
-	set(new_value):
-		bias_offset_degrees = wrapf(new_value,-180,180)
-		bias_offset = deg_to_rad(bias_offset_degrees)
-
-
-var bone_nodes: Array[Bone2D]
-var bias_offset: float = 0
-
-
+## Optional target node; otherwise targets the IK node itself
+@export var target_node: Node2D
 
 ## How many passes the FABRIK does PER FRAME;
 ## This should work just fine at 1, but if you feel like the chain moves to the target too slow, you can increase it;
@@ -57,8 +31,16 @@ var bias_offset: float = 0
 	set(new_value):
 		iterations = clampi(new_value,1,16)
 
+@export_group("Deterministic")
+## Whether or not the result position should depend on previous position
+@export_custom(PROPERTY_HINT_GROUP_ENABLE, "") var determenistic: bool = false
+@export_range(-180, 180, 0.1, "radians_as_degrees") var bias_offset: float = 0.0
+@export var bias_rotation_reference: Node2D
+
+
+
+var bone_nodes: Array[Bone2D]
 var base_point: Vector2
-var target_point: Vector2
 var joint_points: PackedVector2Array
 var limb_lengths: PackedFloat32Array
 
@@ -68,38 +50,38 @@ func _get_configuration_warnings():
 		warn_msg.append("Chain root not set!")
 	if !chain_tip:
 		warn_msg.append("Chain tip not set!")
-	if !target_node: 
-		warn_msg.append("Target node not set!")
 	return warn_msg
 
 
 func _process_loop(delta) -> void:
 	if !(
-			enabled 
-			and target_node 
-			and bone_nodes.size()>0
-			and parent_enable_check()
+			bone_nodes.size()>0
+			and enable_check()
 		):
 		return
 	scale_orient = sign(bone_nodes[0].global_transform.determinant())
-	
 	handle_ik(delta)
 
 
 ## make and apply IK calculations
 func handle_ik(delta: float) -> void:
-	initialize_calculation_variables(delta)
-	if determenistic:
-		handle_pole()
+	_initialize_calculation_variables(delta)
+	_preposition()
 	for i: int in iterations:
 		backward_pass()
 		forward_pass()
 	apply_chain_to_bones(delta)
 
 
-## If pole node is set, orient all the virtual bones towards it
-func handle_pole() -> void:
-	var pole_vector: Vector2 = Vector2.from_angle(target_node.global_rotation + bias_offset * scale_orient)
+##  if deterministic, put chain into known state before calculating
+func _preposition() -> void:
+	if !determenistic: return
+	var pole_vector: Vector2 = Vector2.from_angle(global_rotation + bias_offset * scale_orient)
+	if target_node:
+		pole_vector = Vector2.from_angle(target_node.global_rotation + bias_offset * scale_orient)
+	if bias_rotation_reference:
+		pole_vector = Vector2.from_angle(bias_rotation_reference.global_rotation + bias_offset * scale_orient)
+	
 	for i:int in range(1,joint_points.size()):
 		joint_points[i] = joint_points[i-1] + pole_vector * limb_lengths[i-1]
 
@@ -107,7 +89,10 @@ func handle_pole() -> void:
 ## [not intended for access]
 ## first half of mathemagic happens here
 func backward_pass() -> void:
-	joint_points[-1] = target_point
+	joint_points[-1] = global_position
+	if target_node:
+		joint_points[-1] = target_node.global_position
+	
 	for i: int in range(joint_points.size() - 1, 0, -1):
 		var this_bone:Bone2D = bone_nodes[i-1] 
 		var a:Vector2 = joint_points[i]
@@ -131,10 +116,8 @@ func forward_pass() -> void:
 
 ## [Not intended for access]
 ## Charging up the mathemagical ritual
-func initialize_calculation_variables(delta: float) -> void:
+func _initialize_calculation_variables(delta: float) -> void:
 	base_point = bone_nodes[0].global_position
-	
-	target_point = target_node.global_position
 	
 	#region Joint points and lengths
 	joint_points.clear()
@@ -157,6 +140,7 @@ func initialize_calculation_variables(delta: float) -> void:
 ## [not intended for access]
 ## Writes the point chain data to bone node positions
 func apply_chain_to_bones(delta) -> void:
+	var _strength = get_inherited_strength()
 	for i:int in bone_nodes.size():
 		var target_rotation =  \
 						joint_points[i].angle_to_point(
@@ -164,9 +148,9 @@ func apply_chain_to_bones(delta) -> void:
 								)
 		target_rotation -= bone_nodes[i].get_bone_angle() * scale_orient
 		if bone_nodes[i] is SoupBone2D:
-			bone_nodes[i].set_target_rotation(target_rotation)
+			bone_nodes[i].set_target_rotation(lerp_angle(bone_nodes[i].angle_to_global(bone_nodes[i].target_rotation), target_rotation, _strength))
 		else:
-			bone_nodes[i].global_rotation = target_rotation
+			bone_nodes[i].global_rotation = lerp_angle(bone_nodes[i].global_rotation, target_rotation, _strength)
 
 
 func get_bone_nodes() -> void:

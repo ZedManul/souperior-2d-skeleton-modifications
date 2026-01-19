@@ -13,9 +13,12 @@ enum TransformMode {
 }
 
 
-@export_enum("IK", "Manual", "Recording Target") var transform_mode: int = TransformMode.RECORDING_TARGET
+@export_enum("IK", "Manual", "Recording Target") var transform_mode: int = TransformMode.RECORDING_TARGET:
+	set(value):
+		transform_mode = value
+		update_configuration_warnings()
 
-@export var target_rotation: float = 0.0:
+@export_range(-180, 180, 0.1, "radians_as_degrees") var target_rotation: float = 0.0:
 	set(value):
 		target_rotation = wrapf(value, -PI, PI)
 @export var target_position: Vector2 = Vector2.ZERO
@@ -83,6 +86,12 @@ func _get_configuration_warnings():
 	return warn_msg
 
 
+#func apply_rest() -> void:
+	#super()
+	#record_target_transform()
+	#
+
+
 func _ready() -> void:
 	init_rotation()
 	init_position()
@@ -101,7 +110,7 @@ func _process_loop(delta: float) -> void:
 		queue_redraw()
 	if !is_node_ready():
 		await ready
-	offset_angle = get_bone_angle() * sign(global_transform.determinant())
+	offset_angle = get_bone_angle() 
 	match transform_mode:
 		TransformMode.IK:
 			handle_position_change(delta)
@@ -116,20 +125,20 @@ func _process_loop(delta: float) -> void:
 func init_position() -> void:
 	position = target_position
 	prev_global_pos = global_position
-	prev_global_target_pos = globalify_position(target_position)
+	prev_global_target_pos = to_global(target_position)
 
 
 func init_rotation() -> void:
 	rotation = target_rotation
 	prev_global_rotat = global_rotation
-	prev_global_target_rotat = globalify_rotat(target_rotation)
+	prev_global_target_rotat = angle_to_global(target_rotation)
 
 
 func update_prev_states() -> void:
-	prev_global_target_pos = globalify_position(target_position)
+	prev_global_target_pos = to_global(target_position)
 	prev_global_pos = global_position
 	
-	prev_global_target_rotat = globalify_rotat(target_rotation)
+	prev_global_target_rotat = angle_to_global(target_rotation)
 	prev_global_rotat = global_rotation
 
 
@@ -139,7 +148,6 @@ func record_target_transform() -> void:
 
 
 func handle_position_change(delta: float) -> void:
-	global_position = prev_global_pos ## Pinning global position
 	if limit_position:
 		target_position = constraint_position(target_position)
 	if !ease_position:
@@ -151,7 +159,7 @@ func handle_position_change(delta: float) -> void:
 
 func handle_position_easing(delta: float) -> void:
 	var stable_k2: float = position_easing_params.calculate_stable_k2(delta)
-	var global_target_pos: Vector2 = globalify_position(target_position)
+	var global_target_pos: Vector2 = to_global(target_position)
 	var global_target_pos_change: Vector2 = (global_target_pos - prev_global_target_pos) / delta
 	global_position += (global_pos_change + prev_global_pos_change) / 2 * delta
 	
@@ -167,7 +175,7 @@ func handle_position_easing(delta: float) -> void:
 
 
 func handle_rotation_change(delta: float) -> void:
-	global_rotation = angle_wrap(prev_global_rotat)
+	global_rotation = angle_wrap(global_rotation)
 	if limit_rotation:
 		target_rotation = constraint_rotation(target_rotation + offset_angle) - offset_angle
 	if !ease_rotation or !rotation_easing_params:
@@ -180,7 +188,7 @@ func handle_rotation_change(delta: float) -> void:
 
 func handle_rotation_easing(delta: float) -> void:
 	var stable_k2: float = rotation_easing_params.params.calculate_stable_k2(delta)
-	var global_target_rotat: float = globalify_rotat(target_rotation)
+	var global_target_rotat: float = angle_to_global(target_rotation)
 	var global_target_rotat_change: float = angle_diff(global_target_rotat, prev_global_target_rotat) / delta 
 	global_rotation += (global_rotat_change + prev_global_rotat_change) / 2 * delta
 	global_rotation = angle_wrap(global_rotation)
@@ -228,28 +236,15 @@ func constraint_rotation(angle: float) -> float:
 
 
 func set_target_rotation(i: float) -> void:
-	target_rotation = localify_rotat(i)
+	target_rotation = angle_to_local(i)
 
 
 func set_target_position(i: Vector2) -> void:
-	target_position = localify_position(i)
+	target_position = get_parent().to_local(i)
 
 
 #region Helper Functions
-func globalify_position(i: Vector2) -> Vector2:
-	var ref: Node = get_parent()
-	if not (ref is Node2D):
-		return i
-	return (i * ref.global_scale).rotated(ref.global_rotation) + ref.global_position
-
-func localify_position(i: Vector2) -> Vector2:
-	var ref: Node = get_parent()
-	if not (ref is Node2D):
-		return i
-	return (i-ref.global_position).rotated(-ref.global_rotation) / ref.global_scale
-
-
-func globalify_rotat(i: float) -> float:
+func angle_to_global(i: float) -> float:
 	var ref: Node = get_parent()
 	if not (ref is Node2D):
 		return i
@@ -257,7 +252,7 @@ func globalify_rotat(i: float) -> float:
 	return (v * ref.global_scale).angle() + ref.global_rotation
 
 
-func localify_rotat(i: float) -> float:
+func angle_to_local(i: float) -> float:
 	var ref: Node = get_parent()
 	if not (ref is Node2D):
 		return i
