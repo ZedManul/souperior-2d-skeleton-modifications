@@ -51,5 +51,9 @@ func handle_look_at(delta) -> void:
 		bone_node.set_target_rotation(lerp_angle(bone_node.angle_to_global(bone_node.target_rotation), target_rotation, _strength))
 	else:
 		bone_node.global_rotation = lerp_angle(bone_node.global_rotation, target_rotation, _strength)
-	
-	
+
+
+func _draw_gizmo() -> void:
+	if target_node: draw_set_transform(to_local(target_node.global_position),target_node.global_rotation+global_rotation)
+	draw_strength(0.5)
+	draw_target()

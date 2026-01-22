@@ -98,6 +98,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		queue_redraw()
 	_process_loop(delta)
 
 
@@ -106,8 +108,6 @@ func _physics_process(delta: float) -> void:
 
 
 func _process_loop(delta: float) -> void:
-	if Engine.is_editor_hint():
-		queue_redraw()
 	if !is_node_ready():
 		await ready
 	offset_angle = get_bone_angle() 
@@ -297,11 +297,11 @@ func _draw() -> void:
 					offset - position +\
 					(constraint_data.proportions * Vector2.DOWN).rotated(rotation_offset),
 					Color.LIME, size/40)
-			draw_ellipse(offset - position,
+			_draw_ellipse(offset - position,
 					constraint_data.proportions, 
 					rotation_offset, 
 					Color.BLACK, size/20, 16)
-			draw_ellipse(offset - position,
+			_draw_ellipse(offset - position,
 					constraint_data.proportions, 
 					rotation_offset, 
 					Color.DARK_ORANGE, size/40, 16)
@@ -333,7 +333,7 @@ func draw_angle_indicator(angle: float, full_scale: float, y_scale: float):
 	draw_colored_polygon(poly, Color.ORANGE)
 
 
-func draw_ellipse(offset: Vector2, proportions: Vector2, angle: float, color: Color, width: float, segment_count: int) -> void:
+func _draw_ellipse(offset: Vector2, proportions: Vector2, angle: float, color: Color, width: float, segment_count: int) -> void:
 	var poly: PackedVector2Array
 	for i: int in segment_count+1:
 		var this_vec: Vector2 = Vector2.from_angle(2*PI * i / segment_count)

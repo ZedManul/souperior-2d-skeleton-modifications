@@ -162,3 +162,9 @@ func get_bone_nodes() -> void:
 			if i == chain_root: return
 			i = i.get_parent()
 	bone_nodes.clear()
+
+
+func _draw_gizmo() -> void:
+	if target_node: draw_set_transform(to_local(target_node.global_position),target_node.global_rotation+global_rotation)
+	draw_strength(0.5)
+	draw_target()

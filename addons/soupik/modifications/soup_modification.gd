@@ -13,7 +13,6 @@ extends Node2D
 	set(value):
 		strength = clampf(value,0.0,1.0)
 
-
 enum ProcessMode {
 	PROCESS,
 	PHYSICS_PROCESS
@@ -25,9 +24,14 @@ enum ProcessMode {
 		set_process(ik_process_mode == ProcessMode.PROCESS)
 		set_physics_process(ik_process_mode == ProcessMode.PHYSICS_PROCESS)
 
+@export_group("Gizmo")
+@export_custom(PROPERTY_HINT_GROUP_ENABLE, "") var draw_gizmo: bool = false
+@export_range(0.0, 100.0, 0.5, "or_greater", "suffix:px") var gizmo_size: float = 10.0
+
 var scale_orient: int = 1
 
 func _process(delta) -> void:
+	if Engine.is_editor_hint() : queue_redraw()
 	_process_loop(delta)
 
 
@@ -52,3 +56,31 @@ func get_inherited_strength() -> float:
 	if (mod_group is SoupMod):
 		return strength * mod_group.get_inherited_strength()
 	return strength
+
+
+func _draw() -> void:
+	if !draw_gizmo: return
+	_draw_gizmo()
+
+func _draw_gizmo() -> void:
+	draw_strength(1.0)
+
+func draw_strength(scale: float) -> void:
+	var _str:= get_inherited_strength()
+	draw_arc(Vector2.ZERO,gizmo_size * scale,0.0,_str*TAU,7,Color.BLACK,gizmo_size/10.0)
+	var colr = Color.DARK_RED
+	if enable_check(): colr = Color.GREEN_YELLOW
+	draw_arc(Vector2.ZERO,gizmo_size * scale,0.0,_str*TAU,7,colr,gizmo_size/20.0)
+
+func draw_target() -> void:
+	var target_gizmo_poly_quarter: PackedVector2Array = [Vector2(1.0,0.0),Vector2(0.2,0.1),Vector2(0.0,0.0),Vector2(0.2,-0.1)]
+	
+	for q: float in range(4.0):
+		var poly: PackedVector2Array
+		var out_poly: PackedVector2Array
+		for i:Vector2 in target_gizmo_poly_quarter:
+			var this_vec = (i * gizmo_size).rotated(q*PI/2.0)*(1-q/8)
+			poly.append(this_vec * Vector2(0.8, 0.8)+Vector2(gizmo_size/20.0,0).rotated(q*PI/2.0))
+			out_poly.append(this_vec)
+		draw_colored_polygon(out_poly, Color.BLACK)
+		draw_colored_polygon(poly, Color.AQUA)
