@@ -55,5 +55,5 @@ func handle_look_at(delta) -> void:
 
 func _draw_gizmo() -> void:
 	if target_node: draw_set_transform(to_local(target_node.global_position),target_node.global_rotation+global_rotation)
-	draw_strength(0.5)
+	draw_strength(strength_gizmo_scale)
 	draw_target()

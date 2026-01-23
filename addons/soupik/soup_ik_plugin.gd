@@ -22,16 +22,16 @@ func _enter_tree() -> void:
 	add_custom_type("SoupBone2D", "Bone2D", 
 			preload("modifications/soup_bone.gd"), 
 			preload("icons/icon_soup_bone.png"))
-	add_custom_type("SoupFABRIK", "Node", 
+	add_custom_type("SoupFABRIK", "Node2D", 
 			preload("modifications/soup_fabrik.gd"), 
 			preload("icons/icon_fabrik.png"))
-	add_custom_type("SoupTwoBoneIK", "Node", 
+	add_custom_type("SoupTwoBoneIK", "Node2D", 
 			preload("modifications/soup_two_bone_ik.gd"), 
 			preload("icons/icon_two_bone_ik.png"))
-	add_custom_type("SoupLookAt", "Node", 
+	add_custom_type("SoupLookAt", "Node2D", 
 			preload("modifications/soup_look_at.gd"), 
 			preload("icons/icon_look_at.png"))
-	add_custom_type("SoupBoneControl", "Node", 
+	add_custom_type("SoupBoneControl", "Node2D", 
 			preload("modifications/soup_bone_control.gd"), 
 			preload("icons/icon_stay_at.png"))
 	#endregion
