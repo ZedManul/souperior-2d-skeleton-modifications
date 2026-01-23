@@ -38,7 +38,7 @@ func _enter_tree() -> void:
 	
 	
 	
-	add_custom_type("SoupArmatureGenerator", "Node", 
+	add_custom_type("SoupArmatureGenerator", "EditorPlugin", 
 			preload("utility/armature_generator.gd"), 
 			preload("icons/icon_armature_gen.png")) 
 

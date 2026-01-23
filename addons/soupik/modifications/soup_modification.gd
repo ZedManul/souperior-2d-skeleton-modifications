@@ -6,7 +6,7 @@ extends Node2D
 ## Does nothing by itself, but can be used for organisation to toggle groups of modifications at once.
 
 ## If false, this modification and its children in the tree will not be applied.
-@export var enabled: bool = false
+@export var enabled: bool = true
 
 ## How much the modification affects the skeleton. Useful for transitions in animation or mixing multiple modifications.
 ## If you want to mix multiple modifications, the modification which is processed first must be enabled and have full strength,

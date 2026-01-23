@@ -1,16 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://d04d8ocoy1v4x"]
+[gd_scene load_steps=6 format=3 uid="uid://d04d8ocoy1v4x"]
 
+[ext_resource type="Script" uid="uid://clgwtw4irp0fp" path="res://addons/soupik/modifications/soup_modification.gd" id="1_8i3y8"]
 [ext_resource type="Script" uid="uid://cy0qv0iwwsonv" path="res://addons/soupik/utility/armature_generator.gd" id="1_nopwf"]
+[ext_resource type="Script" uid="uid://b5uiivwxcoics" path="res://addons/soupik/modifications/soup_bone_control.gd" id="2_r56qh"]
 [ext_resource type="Texture2D" uid="uid://xw3jo41h3y76" path="res://addons/soupik/demo/soup_ik_demo.png" id="2_ygfp6"]
+[ext_resource type="Texture2D" uid="uid://br3b8opek061w" path="res://addons/soupik/demo/soup_ik_demo_hands.png" id="3_fdufk"]
 
 [node name="SoupIkArmatureGenTest" type="Node2D"]
 
-[node name="ArmatureGenerator" type="Node" parent="." node_paths=PackedStringArray("skeleton", "sprite_root")]
-script = ExtResource("1_nopwf")
-skeleton = NodePath("../Skelly")
-sprite_root = NodePath("../Sprites")
+[node name="SoupMod" type="Node2D" parent="."]
+script = ExtResource("1_8i3y8")
+metadata/_custom_type_script = "uid://clgwtw4irp0fp"
 
-[node name="Sprites" type="Node" parent="."]
+[node name="Sprites" type="Node2D" parent="."]
 
 [node name="ArmL" type="Node2D" parent="Sprites"]
 modulate = Color(0.67, 0.536, 0.6298, 1)
@@ -27,16 +29,17 @@ region_enabled = true
 region_rect = Rect2(1, 47, 20, 5)
 
 [node name="HandL" type="Sprite2D" parent="Sprites/ArmL"]
-position = Vector2(1.00006, 26)
-rotation = 1.57079
-texture = ExtResource("2_ygfp6")
+position = Vector2(0.87811756, 27.097328)
+rotation = 1.5707941
+texture = ExtResource("3_fdufk")
 centered = false
-offset = Vector2(-2, -5)
+offset = Vector2(-4.0973396, -7.1220484)
+hframes = 3
 region_enabled = true
-region_rect = Rect2(38, 14, 7, 7)
+region_rect = Rect2(0, 12, 42, 12)
 
 [node name="ArmL" type="Sprite2D" parent="Sprites/ArmL"]
-position = Vector2(-9.53674e-07, 0)
+position = Vector2(-9.536743e-07, 0)
 rotation = 1.57079
 texture = ExtResource("2_ygfp6")
 centered = false
@@ -70,7 +73,7 @@ region_rect = Rect2(0, 23, 25, 6)
 position = Vector2(-4, -16)
 
 [node name="Neck5" type="Sprite2D" parent="Sprites/Head"]
-position = Vector2(-0.999977, 1.90735e-05)
+position = Vector2(-0.9999771, 1.9073486e-05)
 texture = ExtResource("2_ygfp6")
 centered = false
 offset = Vector2(-3, -2)
@@ -78,7 +81,7 @@ region_enabled = true
 region_rect = Rect2(27, 22, 5, 4)
 
 [node name="Neck4" type="Sprite2D" parent="Sprites/Head"]
-position = Vector2(-3.99998, 1.90735e-05)
+position = Vector2(-3.99998, 1.9073486e-05)
 texture = ExtResource("2_ygfp6")
 centered = false
 offset = Vector2(-3, -2)
@@ -86,7 +89,7 @@ region_enabled = true
 region_rect = Rect2(27, 22, 5, 4)
 
 [node name="Neck3" type="Sprite2D" parent="Sprites/Head"]
-position = Vector2(-6.99998, 1.90735e-05)
+position = Vector2(-6.99998, 1.9073486e-05)
 texture = ExtResource("2_ygfp6")
 centered = false
 offset = Vector2(-3, -2)
@@ -94,7 +97,7 @@ region_enabled = true
 region_rect = Rect2(27, 22, 5, 4)
 
 [node name="Neck2" type="Sprite2D" parent="Sprites/Head"]
-position = Vector2(-9.99998, 1.90735e-05)
+position = Vector2(-9.99998, 1.9073486e-05)
 texture = ExtResource("2_ygfp6")
 centered = false
 offset = Vector2(-3, -2)
@@ -102,7 +105,7 @@ region_enabled = true
 region_rect = Rect2(27, 22, 5, 4)
 
 [node name="Neck1" type="Sprite2D" parent="Sprites/Head"]
-position = Vector2(-13, 1.90735e-05)
+position = Vector2(-13, 1.9073486e-05)
 texture = ExtResource("2_ygfp6")
 centered = false
 offset = Vector2(-3, -2)
@@ -110,7 +113,7 @@ region_enabled = true
 region_rect = Rect2(27, 22, 5, 4)
 
 [node name="Neck0" type="Sprite2D" parent="Sprites/Head"]
-position = Vector2(-16, 1.90735e-05)
+position = Vector2(-16, 1.9073486e-05)
 texture = ExtResource("2_ygfp6")
 centered = false
 offset = Vector2(-3, -2)
@@ -118,7 +121,7 @@ region_enabled = true
 region_rect = Rect2(27, 22, 5, 4)
 
 [node name="Head" type="Sprite2D" parent="Sprites/Head"]
-position = Vector2(-20, 1.90735e-05)
+position = Vector2(-20, 1.9073486e-05)
 rotation = 3.14159
 texture = ExtResource("2_ygfp6")
 centered = false
@@ -150,7 +153,7 @@ texture = ExtResource("2_ygfp6")
 centered = false
 offset = Vector2(-4, -5)
 region_enabled = true
-region_rect = Rect2(36, 43, 9, 12)
+region_rect = Rect2(36, 51, 9, 12)
 
 [node name="LegR" type="Node2D" parent="Sprites"]
 position = Vector2(0, 5)
@@ -186,16 +189,17 @@ region_enabled = true
 region_rect = Rect2(1, 47, 20, 5)
 
 [node name="HandR" type="Sprite2D" parent="Sprites/ArmR"]
-position = Vector2(1.00006, 26)
-rotation = 1.57079
-texture = ExtResource("2_ygfp6")
+position = Vector2(1.0001631, 26.999992)
+rotation = 1.5707941
+texture = ExtResource("3_fdufk")
 centered = false
-offset = Vector2(-2, -3)
+offset = Vector2(-4, -7)
+hframes = 2
 region_enabled = true
-region_rect = Rect2(18, 14, 8, 6)
+region_rect = Rect2(0, 0, 28, 12)
 
 [node name="ArmR" type="Sprite2D" parent="Sprites/ArmR"]
-position = Vector2(-9.53674e-07, 0)
+position = Vector2(-9.536743e-07, 0)
 rotation = 1.57079
 texture = ExtResource("2_ygfp6")
 centered = false
@@ -207,6 +211,13 @@ region_rect = Rect2(1, 39, 18, 6)
 [node name="Skelly" type="Skeleton2D" parent="."]
 position = Vector2(-3, -5)
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="ArmatureGenerator" type="EditorPlugin" parent="." node_paths=PackedStringArray("skeleton", "sprite_root", "rig_node")]
+script = ExtResource("1_nopwf")
+skeleton = NodePath("../Skelly")
+sprite_root = NodePath("../Sprites")
+gen_fk_rig = true
+rig_node = NodePath("../SoupMod")
+current_bone_list = Array[Bone2D]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+current_rt_list = Array[RemoteTransform2D]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+current_fk_list = Array[ExtResource("2_r56qh")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+metadata/_custom_type_script = "uid://cy0qv0iwwsonv"
