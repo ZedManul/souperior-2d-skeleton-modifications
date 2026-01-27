@@ -42,7 +42,7 @@ enum TransformMode {
 @export var constraint_data: ZMConstraintData
 @export var hide_constraint_gizmo: bool = false
 
-var offset_angle: float = get_bone_angle()
+var offset_angle: float = get_bone_angle() 
 
 #region position easing vars
 var prev_global_pos: Vector2 = global_position
@@ -86,12 +86,6 @@ func _get_configuration_warnings():
 	return warn_msg
 
 
-#func apply_rest() -> void:
-	#super()
-	#record_target_transform()
-	#
-
-
 func _ready() -> void:
 	init_rotation()
 	init_position()
@@ -100,6 +94,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		queue_redraw()
+	
 	_process_loop(delta)
 
 
@@ -110,7 +105,7 @@ func _physics_process(delta: float) -> void:
 func _process_loop(delta: float) -> void:
 	if !is_node_ready():
 		await ready
-	offset_angle = get_bone_angle() 
+	offset_angle = get_bone_angle()
 	match transform_mode:
 		TransformMode.IK:
 			handle_position_change(delta)
@@ -122,7 +117,7 @@ func _process_loop(delta: float) -> void:
 	update_prev_states()
 
 
-func init_position() -> void:
+func init_position() -> void:	
 	position = target_position
 	prev_global_pos = global_position
 	prev_global_target_pos = to_global(target_position)
@@ -177,7 +172,7 @@ func handle_position_easing(delta: float) -> void:
 func handle_rotation_change(delta: float) -> void:
 	global_rotation = angle_wrap(global_rotation)
 	if limit_rotation:
-		target_rotation = constraint_rotation(target_rotation + offset_angle) - offset_angle
+		rotation = constraint_rotation(rotation + offset_angle) - offset_angle
 	if !ease_rotation or !rotation_easing_params:
 		rotation = target_rotation
 		return
@@ -194,9 +189,9 @@ func handle_rotation_easing(delta: float) -> void:
 	global_rotation = angle_wrap(global_rotation)
 	
 	
-	var extra_force: Vector2 = (prev_global_pos - global_position) * rotation_easing_params.velocity_effect * delta
+	var extra_force: Vector2 = (prev_global_pos - global_position) * rotation_easing_params.velocity_effect * delta * sign(global_transform.determinant())             
 	var force_sum: Vector2 = extra_force + rotation_easing_params.params.gravity * delta * PI / 180.0 
-	var force_orient: float = angle_diff(force_sum.angle(),angle_wrap(global_rotation + offset_angle))
+	var force_orient: float = angle_diff(force_sum.angle(),angle_wrap(global_rotation + angle_to_global(offset_angle)))
 	var force_effect: float = force_orient * abs(sin(force_orient)) * force_sum.length()
 	
 	if limit_rotation:
@@ -249,7 +244,7 @@ func angle_to_global(i: float) -> float:
 	if not (ref is Node2D):
 		return i
 	var v: Vector2 = Vector2.from_angle(i)
-	return (v * ref.global_scale).angle() + ref.global_rotation
+	return (ref.to_global(v)-ref.global_position).angle()
 
 
 func angle_to_local(i: float) -> float:
