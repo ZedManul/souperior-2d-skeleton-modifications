@@ -64,8 +64,8 @@ func get_inherited_strength() -> float:
 
 
 func _draw() -> void:
-	if !draw_gizmo: return
-	_draw_gizmo()
+	if draw_gizmo and Engine.is_editor_hint():
+		_draw_gizmo()
 
 func _draw_gizmo() -> void:
 	draw_strength(strength_gizmo_scale)
