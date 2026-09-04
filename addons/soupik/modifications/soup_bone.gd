@@ -171,17 +171,17 @@ func handle_position_easing(delta: float) -> void:
 
 func handle_rotation_change(delta: float) -> void:
 	global_rotation = angle_wrap(global_rotation)
+	var easing_valid = ease_rotation && rotation_easing_params && rotation_easing_params.params
+	if !easing_valid: 
+		rotation = target_rotation
 	if limit_rotation:
 		rotation = constraint_rotation(rotation + offset_angle) - offset_angle
-	if !ease_rotation or !rotation_easing_params:
-		rotation = target_rotation
-		return
-	if !rotation_easing_params.params:
-		return
 	handle_rotation_easing(delta)
 
 
 func handle_rotation_easing(delta: float) -> void:
+	if !rotation_easing_params: return
+	if !rotation_easing_params.params: return
 	var stable_k2: float = rotation_easing_params.params.calculate_stable_k2(delta)
 	var global_target_rotat: float = angle_to_global(target_rotation)
 	var global_target_rotat_change: float = angle_diff(global_target_rotat, prev_global_target_rotat) / delta 
