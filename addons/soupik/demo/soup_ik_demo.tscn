@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://b3hj65q36wn2s"]
+[gd_scene format=3 uid="uid://b3hj65q36wn2s"]
 
 [ext_resource type="Script" uid="uid://clgwtw4irp0fp" path="res://addons/soupik/modifications/soup_modification.gd" id="1_6glvv"]
 [ext_resource type="Texture2D" uid="uid://xw3jo41h3y76" path="res://addons/soupik/demo/soup_ik_demo.png" id="1_m1lgk"]
@@ -54,9 +54,9 @@ damping = 0.5
 script = ExtResource("8_7k177")
 params = SubResource("Resource_u21yc")
 
-[node name="SoupIKDemo" type="Node2D"]
+[node name="SoupIKDemo" type="Node2D" unique_id=1424846321]
 
-[node name="Rig" type="Node2D" parent="."]
+[node name="Rig" type="Node2D" parent="." unique_id=917723220]
 z_index = 3
 rotation = 3.1415927
 scale = Vector2(1, -1)
@@ -66,9 +66,9 @@ gizmo_size = 5.0
 strength_gizmo_scale = 1.0
 metadata/_custom_type_script = "uid://clgwtw4irp0fp"
 
-[node name="PelvisFK" type="Node2D" parent="Rig" node_paths=PackedStringArray("bone_node")]
+[node name="PelvisFK" type="Node2D" parent="Rig" unique_id=1387588210 node_paths=PackedStringArray("bone_node")]
 z_index = 3
-position = Vector2(2.0000002, -32)
+position = Vector2(1.0000021, -25)
 rotation = 6.4544888
 script = ExtResource("5_6glvv")
 control_rotation = true
@@ -80,7 +80,7 @@ draw_gizmo = true
 strength_gizmo_scale = 0.2
 metadata/_custom_type_script = "uid://b5uiivwxcoics"
 
-[node name="GunRest" type="Node2D" parent="Rig/PelvisFK" node_paths=PackedStringArray("bone_node")]
+[node name="GunRest" type="Node2D" parent="Rig/PelvisFK" unique_id=1228866956 node_paths=PackedStringArray("bone_node")]
 z_index = 3
 position = Vector2(1.2514348, 0.6587204)
 rotation = 1.8808583
@@ -94,7 +94,7 @@ gizmo_size = 5.0
 strength_gizmo_scale = 1.0
 metadata/_custom_type_script = "uid://b5uiivwxcoics"
 
-[node name="TorsoFK" type="Node2D" parent="Rig/PelvisFK" node_paths=PackedStringArray("bone_node")]
+[node name="TorsoFK" type="Node2D" parent="Rig/PelvisFK" unique_id=1976251175 node_paths=PackedStringArray("bone_node")]
 z_index = 3
 position = Vector2(-4.5277257, -14.439516)
 rotation = 0.024906369
@@ -107,7 +107,7 @@ draw_gizmo = true
 strength_gizmo_scale = 0.0
 metadata/_custom_type_script = "uid://b5uiivwxcoics"
 
-[node name="Spine" type="Node2D" parent="Rig/PelvisFK/TorsoFK" node_paths=PackedStringArray("bone_node", "target_node")]
+[node name="Spine" type="Node2D" parent="Rig/PelvisFK/TorsoFK" unique_id=657868986 node_paths=PackedStringArray("bone_node", "target_node")]
 z_index = 3
 position = Vector2(-1.3232508, 12.010372)
 rotation = 0.020846209
@@ -119,9 +119,9 @@ gizmo_size = 5.0
 strength_gizmo_scale = 1.0
 metadata/_custom_type_script = "uid://b4u1tvhlw4d2g"
 
-[node name="ArmLFK" type="Node2D" parent="Rig/PelvisFK/TorsoFK" node_paths=PackedStringArray("bone_node")]
+[node name="ArmLFK" type="Node2D" parent="Rig/PelvisFK/TorsoFK" unique_id=1525089931 node_paths=PackedStringArray("bone_node")]
 z_index = 3
-position = Vector2(3.2329702, -1.4647408)
+position = Vector2(3.2300239, -1.4665642)
 rotation = 1.2220328
 script = ExtResource("5_6glvv")
 control_rotation = true
@@ -132,9 +132,9 @@ draw_gizmo = true
 strength_gizmo_scale = 0.0
 metadata/_custom_type_script = "uid://b5uiivwxcoics"
 
-[node name="ForeArmLFK" type="Node2D" parent="Rig/PelvisFK/TorsoFK/ArmLFK" node_paths=PackedStringArray("bone_node")]
+[node name="ForeArmLFK" type="Node2D" parent="Rig/PelvisFK/TorsoFK/ArmLFK" unique_id=2115100656 node_paths=PackedStringArray("bone_node")]
 z_index = 3
-position = Vector2(11.152958, -0.9383764)
+position = Vector2(11.1535, -0.9382553)
 rotation = -0.4293213
 script = ExtResource("5_6glvv")
 control_rotation = true
@@ -145,9 +145,9 @@ draw_gizmo = true
 strength_gizmo_scale = 0.0
 metadata/_custom_type_script = "uid://b5uiivwxcoics"
 
-[node name="HandLFK" type="Node2D" parent="Rig/PelvisFK/TorsoFK/ArmLFK/ForeArmLFK" node_paths=PackedStringArray("bone_node")]
+[node name="HandLFK" type="Node2D" parent="Rig/PelvisFK/TorsoFK/ArmLFK/ForeArmLFK" unique_id=188433644 node_paths=PackedStringArray("bone_node")]
 z_index = 3
-position = Vector2(15.853847, -0.15691948)
+position = Vector2(15.856187, -0.15743637)
 rotation = 0.45354676
 script = ExtResource("5_6glvv")
 control_rotation = true
@@ -158,9 +158,9 @@ draw_gizmo = true
 strength_gizmo_scale = 0.0
 metadata/_custom_type_script = "uid://b5uiivwxcoics"
 
-[node name="ArmRFK" type="Node2D" parent="Rig/PelvisFK/TorsoFK" node_paths=PackedStringArray("bone_node")]
+[node name="ArmRFK" type="Node2D" parent="Rig/PelvisFK/TorsoFK" unique_id=444762063 node_paths=PackedStringArray("bone_node")]
 z_index = 3
-position = Vector2(-0.7700691, -2.4700813)
+position = Vector2(-0.77324486, -2.4719734)
 rotation = 1.871782
 script = ExtResource("5_6glvv")
 control_rotation = true
@@ -171,9 +171,9 @@ draw_gizmo = true
 strength_gizmo_scale = 0.0
 metadata/_custom_type_script = "uid://b5uiivwxcoics"
 
-[node name="ForeArmRFK" type="Node2D" parent="Rig/PelvisFK/TorsoFK/ArmRFK" node_paths=PackedStringArray("bone_node")]
+[node name="ForeArmRFK" type="Node2D" parent="Rig/PelvisFK/TorsoFK/ArmRFK" unique_id=835831060 node_paths=PackedStringArray("bone_node")]
 z_index = 3
-position = Vector2(13.241888, -0.9663925)
+position = Vector2(13.240334, -0.9659653)
 rotation = -0.5490326
 script = ExtResource("5_6glvv")
 control_rotation = true
@@ -184,9 +184,9 @@ draw_gizmo = true
 strength_gizmo_scale = 0.0
 metadata/_custom_type_script = "uid://b5uiivwxcoics"
 
-[node name="HandRFK" type="Node2D" parent="Rig/PelvisFK/TorsoFK/ArmRFK/ForeArmRFK" node_paths=PackedStringArray("bone_node")]
+[node name="HandRFK" type="Node2D" parent="Rig/PelvisFK/TorsoFK/ArmRFK/ForeArmRFK" unique_id=1726882443 node_paths=PackedStringArray("bone_node")]
 z_index = 3
-position = Vector2(14.864222, 0.011250019)
+position = Vector2(14.86792, 0.011531353)
 rotation = 0.45354676
 script = ExtResource("5_6glvv")
 control_rotation = true
@@ -197,23 +197,23 @@ draw_gizmo = true
 strength_gizmo_scale = 0.0
 metadata/_custom_type_script = "uid://b5uiivwxcoics"
 
-[node name="GunFK" type="Node2D" parent="Rig/PelvisFK" node_paths=PackedStringArray("bone_node")]
+[node name="GunFK" type="Node2D" parent="Rig/PelvisFK" unique_id=1621247846 node_paths=PackedStringArray("bone_node")]
 z_index = 3
-position = Vector2(8.41503, -21.75287)
-rotation = 6.1670885
+position = Vector2(6.9182615, -24.538492)
+rotation = 6.2534957
 scale = Vector2(0.99999994, 0.99999994)
 script = ExtResource("5_6glvv")
 control_rotation = true
 control_position = true
 bone_node = NodePath("../../../Skelly/GUN")
 target_position = Vector2(13, -35)
-target_rotation = 3.0863862
+target_rotation = 2.999979
 draw_gizmo = true
 gizmo_size = 20.0
 strength_gizmo_scale = 0.2
 metadata/_custom_type_script = "uid://b5uiivwxcoics"
 
-[node name="ArmLGunIK" type="Node2D" parent="Rig/PelvisFK/GunFK" node_paths=PackedStringArray("joint_one_bone_node", "joint_two_bone_node")]
+[node name="ArmLGunIK" type="Node2D" parent="Rig/PelvisFK/GunFK" unique_id=1713356730 node_paths=PackedStringArray("joint_one_bone_node", "joint_two_bone_node")]
 z_index = 3
 position = Vector2(11, 6)
 script = ExtResource("8_vc02x")
@@ -224,19 +224,19 @@ gizmo_size = 5.0
 metadata/_custom_type_script = "uid://bnso0mph1tb11"
 metadata/_edit_group_ = true
 
-[node name="HandL" type="Node2D" parent="Rig/PelvisFK/GunFK/ArmLGunIK" node_paths=PackedStringArray("bone_node")]
+[node name="HandL" type="Node2D" parent="Rig/PelvisFK/GunFK/ArmLGunIK" unique_id=1498828178 node_paths=PackedStringArray("bone_node")]
 z_index = 3
-position = Vector2(1.7166138e-05, -7.6293945e-06)
+position = Vector2(0.0014095306, -0.0019378662)
 script = ExtResource("5_6glvv")
 control_rotation = true
 inherit_bone_position = true
 bone_node = NodePath("../../../../../Skelly/PelvisBone/SpineBone/TorsoBone/ArmLBone/ForeArmLBone/HandLBone")
 target_position = Vector2(13, -35)
-target_rotation = 3.0863862
+target_rotation = 2.999979
 gizmo_size = 5.0
 metadata/_custom_type_script = "uid://b5uiivwxcoics"
 
-[node name="ArmRGunIK" type="Node2D" parent="Rig/PelvisFK/GunFK" node_paths=PackedStringArray("joint_one_bone_node", "joint_two_bone_node")]
+[node name="ArmRGunIK" type="Node2D" parent="Rig/PelvisFK/GunFK" unique_id=1815044433 node_paths=PackedStringArray("joint_one_bone_node", "joint_two_bone_node")]
 z_index = 3
 position = Vector2(-3.000002, 6)
 script = ExtResource("8_vc02x")
@@ -247,21 +247,21 @@ gizmo_size = 5.0
 metadata/_custom_type_script = "uid://bnso0mph1tb11"
 metadata/_edit_group_ = true
 
-[node name="HandR" type="Node2D" parent="Rig/PelvisFK/GunFK/ArmRGunIK" node_paths=PackedStringArray("bone_node")]
+[node name="HandR" type="Node2D" parent="Rig/PelvisFK/GunFK/ArmRGunIK" unique_id=1374619337 node_paths=PackedStringArray("bone_node")]
 z_index = 3
-position = Vector2(0.00060653687, -0.00062179565)
+position = Vector2(0.0015788078, -0.003353119)
 script = ExtResource("5_6glvv")
 control_rotation = true
 inherit_bone_position = true
 bone_node = NodePath("../../../../../Skelly/PelvisBone/SpineBone/TorsoBone/ArmRBone/ForeArmRBone/HandRBone")
 target_position = Vector2(34, -42)
-target_rotation = 3.0863862
+target_rotation = 2.999979
 gizmo_size = 5.0
 metadata/_custom_type_script = "uid://b5uiivwxcoics"
 
-[node name="Neck" type="Node2D" parent="Rig/PelvisFK" node_paths=PackedStringArray("chain_root", "chain_tip", "bias_rotation_reference")]
+[node name="Neck" type="Node2D" parent="Rig/PelvisFK" unique_id=967268887 node_paths=PackedStringArray("chain_root", "chain_tip", "bias_rotation_reference")]
 z_index = 3
-position = Vector2(-0.6611464, -27.28668)
+position = Vector2(1.2721424, -33.710262)
 scale = Vector2(1.0000001, 1.0000001)
 script = ExtResource("8_35ngn")
 chain_root = NodePath("../../../Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone")
@@ -274,16 +274,16 @@ draw_gizmo = true
 gizmo_size = 5.0
 metadata/_custom_type_script = "uid://cpqcq7meh305c"
 
-[node name="Head" type="Node2D" parent="Rig" node_paths=PackedStringArray("bone_node")]
+[node name="Head" type="Node2D" parent="Rig" unique_id=1939975488 node_paths=PackedStringArray("bone_node")]
 z_index = 3
-position = Vector2(37.000004, -63.999996)
+position = Vector2(36.000004, -68)
 scale = Vector2(1.0000001, 1.0000001)
 script = ExtResource("4_yo3p8")
 bone_node = NodePath("../../Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone/Neck3Bone/Neck2Bone/Neck1Bone/Neck0Bone/HeadBone")
 draw_gizmo = true
 metadata/_custom_type_script = "uid://b4u1tvhlw4d2g"
 
-[node name="LegL" type="Node2D" parent="Rig" node_paths=PackedStringArray("joint_one_bone_node", "joint_two_bone_node")]
+[node name="LegL" type="Node2D" parent="Rig" unique_id=798456287 node_paths=PackedStringArray("joint_one_bone_node", "joint_two_bone_node")]
 z_index = 3
 position = Vector2(-15, 0)
 rotation = -0.523598
@@ -295,7 +295,7 @@ draw_gizmo = true
 gizmo_size = 5.0
 metadata/_custom_type_script = "uid://bnso0mph1tb11"
 
-[node name="LegR" type="Node2D" parent="Rig" node_paths=PackedStringArray("joint_one_bone_node", "joint_two_bone_node")]
+[node name="LegR" type="Node2D" parent="Rig" unique_id=1875432200 node_paths=PackedStringArray("joint_one_bone_node", "joint_two_bone_node")]
 z_index = 3
 position = Vector2(12.000001, -4.7683716e-07)
 rotation = -0.523598
@@ -307,11 +307,11 @@ draw_gizmo = true
 gizmo_size = 5.0
 metadata/_custom_type_script = "uid://bnso0mph1tb11"
 
-[node name="Sprites" type="Node2D" parent="."]
+[node name="Sprites" type="Node2D" parent="." unique_id=1068824382]
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="ArmL" type="Node2D" parent="Sprites"]
+[node name="ArmL" type="Node2D" parent="Sprites" unique_id=1412557362]
 modulate = Color(0.53107387, 0.31448963, 0.43183428, 1)
 z_index = -1
 position = Vector2(-2, -14)
@@ -319,21 +319,21 @@ rotation = -1.57079
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="ForeArmL" type="Sprite2D" parent="Sprites/ArmL"]
-position = Vector2(24.87587, -8.203235)
-rotation = -1.156457
-scale = Vector2(0.99999994, -0.99999994)
+[node name="ForeArmL" type="Sprite2D" parent="Sprites/ArmL" unique_id=253902449]
+position = Vector2(17.652454, -6.8918114)
+rotation = -0.9881077
+scale = Vector2(0.99999994, -1)
 texture = ExtResource("1_m1lgk")
 centered = false
 offset = Vector2(-2, -2)
 region_enabled = true
 region_rect = Rect2(1, 47, 20, 5)
 
-[node name="HandL" type="Sprite2D" parent="Sprites/ArmL"]
+[node name="HandL" type="Sprite2D" parent="Sprites/ArmL" unique_id=1302009252]
 z_index = 2
-position = Vector2(31.402039, -22.652391)
-rotation = -1.6260091
-scale = Vector2(1, -1)
+position = Vector2(26.50911, -20.044872)
+rotation = -1.7124162
+scale = Vector2(1.0000001, -0.99999994)
 texture = ExtResource("8_d1pxi")
 centered = false
 offset = Vector2(-3, -7)
@@ -342,9 +342,9 @@ frame = 2
 region_enabled = true
 region_rect = Rect2(0, 12, 42, 12)
 
-[node name="ArmL" type="Sprite2D" parent="Sprites/ArmL"]
-position = Vector2(33.806347, -1.4567053)
-rotation = -2.578552
+[node name="ArmL" type="Sprite2D" parent="Sprites/ArmL" unique_id=1683561332]
+position = Vector2(26.808716, -0.45412874)
+rotation = -2.61272
 scale = Vector2(1.0000001, -1)
 texture = ExtResource("1_m1lgk")
 centered = false
@@ -353,16 +353,16 @@ flip_h = true
 region_enabled = true
 region_rect = Rect2(1, 39, 18, 6)
 
-[node name="LegL" type="Node2D" parent="Sprites"]
+[node name="LegL" type="Node2D" parent="Sprites" unique_id=876183097]
 modulate = Color(0.53107387, 0.31448963, 0.43183428, 1)
 z_index = -1
 position = Vector2(0, 5)
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="HipL" type="Sprite2D" parent="Sprites/LegL"]
-position = Vector2(-3.11839, -31.73225)
-rotation = 1.2695563
+[node name="HipL" type="Sprite2D" parent="Sprites/LegL" unique_id=656783745]
+position = Vector2(-2.118394, -24.73225)
+rotation = 1.8377125
 scale = Vector2(0.9999975, -0.9999975)
 texture = ExtResource("1_m1lgk")
 centered = false
@@ -370,9 +370,9 @@ offset = Vector2(-3, -3)
 region_enabled = true
 region_rect = Rect2(1, 31, 16, 6)
 
-[node name="CalveL" type="Sprite2D" parent="Sprites/LegL"]
-position = Vector2(0.14537644, -21.227623)
-rotation = 0.9168091
+[node name="CalveL" type="Sprite2D" parent="Sprites/LegL" unique_id=758581039]
+position = Vector2(-5.019702, -14.121793)
+rotation = 0.5148014
 scale = Vector2(0.99999535, -0.99999535)
 texture = ExtResource("1_m1lgk")
 centered = false
@@ -380,90 +380,90 @@ offset = Vector2(-3, -3)
 region_enabled = true
 region_rect = Rect2(0, 23, 25, 6)
 
-[node name="Head" type="Node2D" parent="Sprites"]
+[node name="Head" type="Node2D" parent="Sprites" unique_id=1340934072]
 modulate = Color(0.71190935, 0.51678985, 0.6570056, 1)
 position = Vector2(-4, -16)
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="Neck5" type="Sprite2D" parent="Sprites/Head"]
-position = Vector2(7.022011, -35.139114)
-rotation = 2.3015041
-scale = Vector2(0.999997, -0.999997)
+[node name="Neck5" type="Sprite2D" parent="Sprites/Head" unique_id=1496063972]
+position = Vector2(8.024605, -28.141964)
+rotation = 1.9753448
+scale = Vector2(0.9999969, -0.9999969)
 texture = ExtResource("1_m1lgk")
 centered = false
 offset = Vector2(-3, -2)
 region_enabled = true
 region_rect = Rect2(27, 22, 5, 4)
 
-[node name="Neck4" type="Sprite2D" parent="Sprites/Head"]
-position = Vector2(9.691583, -38.117947)
-rotation = 2.2203803
-scale = Vector2(0.9999912, -0.9999911)
+[node name="Neck4" type="Sprite2D" parent="Sprites/Head" unique_id=373496910]
+position = Vector2(9.598997, -31.819103)
+rotation = 1.6200874
+scale = Vector2(0.99999094, -0.99999094)
 texture = ExtResource("1_m1lgk")
 centered = false
 offset = Vector2(-3, -2)
 region_enabled = true
 region_rect = Rect2(27, 22, 5, 4)
 
-[node name="Neck3" type="Sprite2D" parent="Sprites/Head"]
-position = Vector2(12.110972, -41.30329)
-rotation = 0.93600726
-scale = Vector2(0.99998856, -0.99998844)
+[node name="Neck3" type="Sprite2D" parent="Sprites/Head" unique_id=1460941342]
+position = Vector2(9.796053, -35.81423)
+rotation = 1.0301671
+scale = Vector2(0.9999883, -0.9999883)
 texture = ExtResource("1_m1lgk")
 centered = false
 offset = Vector2(-3, -2)
 region_enabled = true
 region_rect = Rect2(27, 22, 5, 4)
 
-[node name="Neck2" type="Sprite2D" parent="Sprites/Head"]
-position = Vector2(9.7389345, -44.52404)
-rotation = 0.09294279
-scale = Vector2(0.99998546, -0.9999856)
+[node name="Neck2" type="Sprite2D" parent="Sprites/Head" unique_id=1391965754]
+position = Vector2(7.737341, -39.243736)
+rotation = 0.5076831
+scale = Vector2(0.9999854, -0.9999854)
 texture = ExtResource("1_m1lgk")
 centered = false
 offset = Vector2(-3, -2)
 region_enabled = true
 region_rect = Rect2(27, 22, 5, 4)
 
-[node name="Neck1" type="Sprite2D" parent="Sprites/Head"]
-position = Vector2(5.756234, -44.895245)
-rotation = -0.176311
-scale = Vector2(0.999981, -0.9999812)
+[node name="Neck1" type="Sprite2D" parent="Sprites/Head" unique_id=442812902]
+position = Vector2(4.2418685, -41.18831)
+rotation = 0.1853667
+scale = Vector2(0.999981, -0.999981)
 texture = ExtResource("1_m1lgk")
 centered = false
 offset = Vector2(-3, -2)
 region_enabled = true
 region_rect = Rect2(27, 22, 5, 4)
 
-[node name="Neck0" type="Sprite2D" parent="Sprites/Head"]
-position = Vector2(1.8183043, -44.19363)
-rotation = -0.30300882
-scale = Vector2(0.9999764, -0.9999766)
+[node name="Neck0" type="Sprite2D" parent="Sprites/Head" unique_id=216104267]
+position = Vector2(0.31044364, -41.9255)
+rotation = 0.017253693
+scale = Vector2(0.9999764, -0.9999764)
 texture = ExtResource("1_m1lgk")
 centered = false
 offset = Vector2(-3, -2)
 region_enabled = true
 region_rect = Rect2(27, 22, 5, 4)
 
-[node name="Head" type="Sprite2D" parent="Sprites/Head"]
-position = Vector2(-1.9993773, -43.000084)
-rotation = -2.9816852
-scale = Vector2(0.99997383, -0.9999741)
+[node name="Head" type="Sprite2D" parent="Sprites/Head" unique_id=1100018969]
+position = Vector2(-3.6888666, -41.994507)
+rotation = -2.801882
+scale = Vector2(0.99997383, -0.99997383)
 texture = ExtResource("1_m1lgk")
 centered = false
 offset = Vector2(-4, -5)
 region_enabled = true
 region_rect = Rect2(21, 31, 10, 10)
 
-[node name="Body" type="Node2D" parent="Sprites"]
+[node name="Body" type="Node2D" parent="Sprites" unique_id=770045907]
 modulate = Color(0.71190935, 0.51678985, 0.6570056, 1)
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="Spine" type="Sprite2D" parent="Sprites/Body"]
-position = Vector2(-2.3409312, -33.970726)
-rotation = -1.4811627
+[node name="Spine" type="Sprite2D" parent="Sprites/Body" unique_id=1824167570]
+position = Vector2(-1.3409331, -26.970726)
+rotation = -1.4796001
 scale = Vector2(0.99999905, -0.99999905)
 texture = ExtResource("1_m1lgk")
 centered = false
@@ -471,9 +471,9 @@ offset = Vector2(-2, -2)
 region_enabled = true
 region_rect = Rect2(1, 17, 15, 4)
 
-[node name="Pelvis" type="Sprite2D" parent="Sprites/Body"]
-position = Vector2(-1.9999975, -32)
-rotation = 2.9702892
+[node name="Pelvis" type="Sprite2D" parent="Sprites/Body" unique_id=1094272718]
+position = Vector2(-0.99999994, -25)
+rotation = 2.9702895
 scale = Vector2(1, -1)
 texture = ExtResource("1_m1lgk")
 centered = false
@@ -481,24 +481,24 @@ offset = Vector2(-4, -5)
 region_enabled = true
 region_rect = Rect2(36, 51, 9, 12)
 
-[node name="Torso" type="Sprite2D" parent="Sprites/Body"]
-position = Vector2(-0.12142348, -46.436043)
-rotation = 2.9453828
-scale = Vector2(0.99999976, -0.9999999)
+[node name="Torso" type="Sprite2D" parent="Sprites/Body" unique_id=965114697]
+position = Vector2(0.8811743, -39.43889)
+rotation = 2.945382
+scale = Vector2(0.99999976, -0.99999976)
 texture = ExtResource("1_m1lgk")
 centered = false
 offset = Vector2(-4, -8)
 region_enabled = true
 region_rect = Rect2(23, 43, 11, 13)
 
-[node name="LegR" type="Node2D" parent="Sprites"]
+[node name="LegR" type="Node2D" parent="Sprites" unique_id=1733143207]
 position = Vector2(0, 5)
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="HipR" type="Sprite2D" parent="Sprites/LegR"]
-position = Vector2(-0.1623038, -32.24365)
-rotation = 2.6329284
+[node name="HipR" type="Sprite2D" parent="Sprites/LegR" unique_id=1130984415]
+position = Vector2(0.83769256, -25.243649)
+rotation = -2.9893396
 scale = Vector2(0.9999974, -0.9999974)
 texture = ExtResource("1_m1lgk")
 centered = false
@@ -506,20 +506,20 @@ offset = Vector2(-3, -3)
 region_enabled = true
 region_rect = Rect2(1, 31, 16, 6)
 
-[node name="CalveR" type="Sprite2D" parent="Sprites/LegR"]
-position = Vector2(-9.76962, -26.88652)
-rotation = 1.7596188
-scale = Vector2(0.999994, -0.999994)
+[node name="CalveR" type="Sprite2D" parent="Sprites/LegR" unique_id=614545520]
+position = Vector2(-10.035034, -26.91194)
+rotation = 1.7474992
+scale = Vector2(0.99999404, -0.99999404)
 texture = ExtResource("1_m1lgk")
 centered = false
 offset = Vector2(-3, -3)
 region_enabled = true
 region_rect = Rect2(0, 23, 25, 6)
 
-[node name="Gun" type="Sprite2D" parent="Sprites"]
-position = Vector2(-14.000055, -52)
-rotation = 3.0863862
-scale = Vector2(0.99999994, -0.99999994)
+[node name="Gun" type="Sprite2D" parent="Sprites" unique_id=55110229]
+position = Vector2(-12.000053, -47.999992)
+rotation = 2.999979
+scale = Vector2(0.9999999, -0.9999999)
 texture = ExtResource("1_m1lgk")
 centered = false
 offset = Vector2(-9, -2)
@@ -528,16 +528,16 @@ region_rect = Rect2(12, 1, 35, 11)
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="ArmR" type="Node2D" parent="Sprites"]
+[node name="ArmR" type="Node2D" parent="Sprites" unique_id=2063570607]
 z_index = 1
 position = Vector2(-2, -14)
 rotation = -1.57079
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="ForeArmR" type="Sprite2D" parent="Sprites/ArmR"]
-position = Vector2(22.296677, 2.4324012)
-rotation = -0.84310156
+[node name="ForeArmR" type="Sprite2D" parent="Sprites/ArmR" unique_id=1780507791]
+position = Vector2(15.490172, 1.0360564)
+rotation = -0.50639635
 scale = Vector2(1, -1)
 texture = ExtResource("1_m1lgk")
 centered = false
@@ -545,10 +545,10 @@ offset = Vector2(-2, -2)
 region_enabled = true
 region_rect = Rect2(1, 47, 20, 5)
 
-[node name="HandR" type="Sprite2D" parent="Sprites/ArmR"]
-position = Vector2(32.175213, -8.674342)
-rotation = -1.626009
-scale = Vector2(0.99999994, -0.99999994)
+[node name="HandR" type="Sprite2D" parent="Sprites/ArmR" unique_id=2022473531]
+position = Vector2(28.486546, -6.1854)
+rotation = -1.712416
+scale = Vector2(0.99999976, -0.9999999)
 texture = ExtResource("8_d1pxi")
 centered = false
 offset = Vector2(-4, -7)
@@ -557,10 +557,10 @@ frame = 1
 region_enabled = true
 region_rect = Rect2(0, 0, 28, 12)
 
-[node name="ArmR" type="Sprite2D" parent="Sprites/ArmR"]
-position = Vector2(35.572826, 2.2735205)
-rotation = 3.056775
-scale = Vector2(1.0000002, -1)
+[node name="ArmR" type="Sprite2D" parent="Sprites/ArmR" unique_id=406504559]
+position = Vector2(28.575306, 3.2763085)
+rotation = -3.0448577
+scale = Vector2(1.0000002, -1.0000001)
 texture = ExtResource("1_m1lgk")
 centered = false
 offset = Vector2(-3, -3)
@@ -568,139 +568,139 @@ flip_h = true
 region_enabled = true
 region_rect = Rect2(1, 39, 18, 6)
 
-[node name="Skelly" type="Skeleton2D" parent="."]
+[node name="Skelly" type="Skeleton2D" parent="." unique_id=1306613033]
 visible = false
 z_index = 2
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="GUN" type="Bone2D" parent="Skelly"]
-position = Vector2(-14.000001, -52)
-rotation = 3.0863862
-scale = Vector2(0.99999994, -0.99999994)
+[node name="GUN" type="Bone2D" parent="Skelly" unique_id=603783350]
+position = Vector2(-11.999999, -48)
+rotation = 2.999979
+scale = Vector2(0.9999999, -0.9999999)
 rest = Transform2D(1, 8.88506e-06, -8.88506e-06, 1, 16, -15)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 0.0
 script = ExtResource("6_f4u0y")
 transform_mode = 0
-target_rotation = 3.0863862
-target_position = Vector2(-14.000001, -52)
+target_rotation = 2.999979
+target_position = Vector2(-11.999999, -48)
 metadata/_custom_type_script = "uid://c20kgrku2joaj"
 metadata/_edit_group_ = true
 
-[node name="GunRT" type="RemoteTransform2D" parent="Skelly/GUN"]
+[node name="GunRT" type="RemoteTransform2D" parent="Skelly/GUN" unique_id=1193114524]
 position = Vector2(5.43594e-05, -1.91139e-06)
 remote_path = NodePath("../../../Sprites/Gun")
 
-[node name="PelvisBone" type="Bone2D" parent="Skelly"]
-position = Vector2(-1.9999975, -32)
-rotation = 2.9702892
+[node name="PelvisBone" type="Bone2D" parent="Skelly" unique_id=1404993081]
+position = Vector2(-0.99999994, -25)
+rotation = 2.9702895
 scale = Vector2(1, -1)
 rest = Transform2D(0.999996, 0, 0, 0.999996, 0, 0)
 script = ExtResource("6_f4u0y")
 transform_mode = 0
 target_rotation = 2.9702892
-target_position = Vector2(-1.9999975, -32)
+target_position = Vector2(-0.99999994, -25)
 ease_rotation = true
 rotation_easing_params = SubResource("Resource_80v25")
 metadata/_edit_group_ = true
 
-[node name="PelvisRT" type="RemoteTransform2D" parent="Skelly/PelvisBone"]
+[node name="PelvisRT" type="RemoteTransform2D" parent="Skelly/PelvisBone" unique_id=1054268857]
 remote_path = NodePath("../../../Sprites/Body/Pelvis")
 
-[node name="SpineBone" type="Bone2D" parent="Skelly/PelvisBone"]
+[node name="SpineBone" type="Bone2D" parent="Skelly/PelvisBone" unique_id=306506010]
 position = Vector2(0, -2)
-rotation = -1.8317335
+rotation = -1.8332958
 scale = Vector2(0.999999, 0.999999)
 rest = Transform2D(2.2212628e-06, -0.9999989, 0.9999989, 2.2212628e-06, 0, -2)
 script = ExtResource("6_f4u0y")
 transform_mode = 0
-target_rotation = -1.8317335
+target_rotation = -1.8332957
 target_position = Vector2(0, -2)
 ease_rotation = true
 rotation_easing_params = SubResource("Resource_3c0sd")
 limit_rotation = true
 constraint_data = SubResource("Resource_s4x0r")
 
-[node name="SpineRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone"]
+[node name="SpineRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone" unique_id=356733331]
 remote_path = NodePath("../../../../Sprites/Body/Spine")
 
-[node name="TorsoBone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone"]
-position = Vector2(12.613966, -1.0947819)
-rotation = 1.8566399
-scale = Vector2(1.0000008, 1.000001)
+[node name="TorsoBone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone" unique_id=372793445]
+position = Vector2(12.618732, -1.0773994)
+rotation = 1.8582032
+scale = Vector2(1.0000008, 1.0000008)
 rest = Transform2D(2.2212648e-06, 0.99999994, -0.99999994, 2.2212648e-06, 10, -0.999932)
 script = ExtResource("6_f4u0y")
 transform_mode = 0
-target_rotation = 1.8566399
-target_position = Vector2(12.613966, -1.0947819)
+target_rotation = 1.8582023
+target_position = Vector2(12.618732, -1.0773994)
 ease_rotation = true
 rotation_easing_params = SubResource("Resource_3c0sd")
 limit_rotation = true
 limit_position = true
 constraint_data = SubResource("Resource_2qrkb")
 
-[node name="TorsoRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone"]
+[node name="TorsoRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone" unique_id=595761125]
 remote_path = NodePath("../../../../../Sprites/Body/Torso")
 
-[node name="Neck5Bone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone"]
+[node name="Neck5Bone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone" unique_id=1852769664]
 position = Vector2(-4, -4.00001)
-rotation = 0.64387864
-scale = Vector2(0.9999972, 0.9999972)
+rotation = 0.9700373
+scale = Vector2(0.99999714, 0.99999714)
 rest = Transform2D(2.2212585e-06, 0.9999971, -0.9999971, 2.2212585e-06, -4, -4.00001)
 
-[node name="Neck5RT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone"]
+[node name="Neck5RT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone" unique_id=42005989]
 remote_path = NodePath("../../../../../../Sprites/Head/Neck5")
 
-[node name="Neck4Bone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone"]
+[node name="Neck4Bone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone" unique_id=773791326]
 position = Vector2(-4.00002, -2.76566e-05)
-rotation = 0.08112368
-scale = Vector2(0.9999941, 0.9999941)
+rotation = 0.3552574
+scale = Vector2(0.99999404, 0.99999404)
 rest = Transform2D(0.9999969, 0, 0, 0.9999969, -4.00002, -2.76566e-05)
 
-[node name="Neck4RT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone"]
+[node name="Neck4RT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone" unique_id=1055365460]
 remote_path = NodePath("../../../../../../../Sprites/Head/Neck4")
 
-[node name="Neck3Bone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone"]
+[node name="Neck3Bone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone" unique_id=2136263051]
 position = Vector2(-4.00002, -2.76566e-05)
-rotation = 1.2843733
+rotation = 0.5899204
 scale = Vector2(0.9999973, 0.9999973)
 rest = Transform2D(0.9999979, 0, 0, 0.9999979, -4.00002, -2.76566e-05)
 
-[node name="Neck3RT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone/Neck3Bone"]
+[node name="Neck3RT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone/Neck3Bone" unique_id=375040595]
 remote_path = NodePath("../../../../../../../../Sprites/Head/Neck3")
 
-[node name="Neck2Bone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone/Neck3Bone"]
+[node name="Neck2Bone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone/Neck3Bone" unique_id=1671268979]
 position = Vector2(-4.00002, -2.76566e-05)
-rotation = 0.8430645
+rotation = 0.52248394
 scale = Vector2(0.999997, 0.999997)
 rest = Transform2D(0.9999976, 0, 0, 0.9999976, -4.00002, -2.76566e-05)
 
-[node name="Neck2RT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone/Neck3Bone/Neck2Bone"]
+[node name="Neck2RT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone/Neck3Bone/Neck2Bone" unique_id=519547881]
 remote_path = NodePath("../../../../../../../../../Sprites/Head/Neck2")
 
-[node name="Neck1Bone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone/Neck3Bone/Neck2Bone"]
+[node name="Neck1Bone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone/Neck3Bone/Neck2Bone" unique_id=1502585945]
 position = Vector2(-4.00002, -2.76566e-05)
-rotation = 0.26925373
+rotation = 0.32231638
 scale = Vector2(0.9999955, 0.9999955)
 rest = Transform2D(0.999997, 0, 0, 0.999997, -4.00002, -2.76566e-05)
 
-[node name="Neck1RT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone/Neck3Bone/Neck2Bone/Neck1Bone"]
+[node name="Neck1RT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone/Neck3Bone/Neck2Bone/Neck1Bone" unique_id=723140693]
 remote_path = NodePath("../../../../../../../../../../Sprites/Head/Neck1")
 
-[node name="Neck0Bone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone/Neck3Bone/Neck2Bone/Neck1Bone"]
+[node name="Neck0Bone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone/Neck3Bone/Neck2Bone/Neck1Bone" unique_id=176932361]
 position = Vector2(-4.00002, -2.76566e-05)
-rotation = 0.12669778
+rotation = 0.16811301
 scale = Vector2(0.9999954, 0.9999954)
 rest = Transform2D(0.9999965, 0, 0, 0.9999965, -4.00002, -2.76566e-05)
 
-[node name="Neck0RT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone/Neck3Bone/Neck2Bone/Neck1Bone/Neck0Bone"]
+[node name="Neck0RT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone/Neck3Bone/Neck2Bone/Neck1Bone/Neck0Bone" unique_id=1828034655]
 remote_path = NodePath("../../../../../../../../../../../Sprites/Head/Neck0")
 
-[node name="HeadBone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone/Neck3Bone/Neck2Bone/Neck1Bone/Neck0Bone"]
+[node name="HeadBone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone/Neck3Bone/Neck2Bone/Neck1Bone/Neck0Bone" unique_id=1763902838]
 position = Vector2(-4, 0)
-rotation = 2.6786764
+rotation = 2.8191357
 scale = Vector2(0.99999744, 0.99999744)
 rest = Transform2D(-0.99999815, 4.442522e-06, -4.442522e-06, -0.99999815, -4, 0)
 auto_calculate_length_and_angle = false
@@ -708,121 +708,121 @@ length = 8.0
 bone_angle = 0.0
 script = ExtResource("6_f4u0y")
 transform_mode = 0
-target_rotation = 2.6786766
+target_rotation = 2.819135
 target_position = Vector2(-4, 0)
 ease_rotation = true
 rotation_easing_params = SubResource("Resource_xpv7s")
 
-[node name="HeadRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone/Neck3Bone/Neck2Bone/Neck1Bone/Neck0Bone/HeadBone"]
+[node name="HeadRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/Neck5Bone/Neck4Bone/Neck3Bone/Neck2Bone/Neck1Bone/Neck0Bone/HeadBone" unique_id=2125791042]
 remote_path = NodePath("../../../../../../../../../../../../Sprites/Head/Head")
 
-[node name="ArmLBone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone"]
-position = Vector2(3.003931, -1.9942055)
-rotation = 0.81153953
-scale = Vector2(1.0000002, 1.0000002)
+[node name="ArmLBone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone" unique_id=437018030]
+position = Vector2(3.0040884, -1.9937439)
+rotation = 0.84570676
+scale = Vector2(1.0000004, 1.0000002)
 rest = Transform2D(2.221261e-06, 0.99999815, -0.99999815, 2.221261e-06, 3, -2.00001)
 
-[node name="ArmLRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/ArmLBone"]
+[node name="ArmLRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/ArmLBone" unique_id=2057430909]
 remote_path = NodePath("../../../../../../Sprites/ArmL/ArmL")
 
-[node name="ForeArmLBone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/ArmLBone"]
-position = Vector2(11.152958, -0.9383774)
-rotation = -1.422095
-scale = Vector2(0.9999999, 0.9999998)
+[node name="ForeArmLBone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/ArmLBone" unique_id=407705061]
+position = Vector2(11.1535, -0.9382553)
+rotation = -1.6246122
+scale = Vector2(0.9999998, 0.9999998)
 rest = Transform2D(0.9999975, 0, 0, 0.9999975, 13, -1.00001)
 
-[node name="ForeArmLRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/ArmLBone/ForeArmLBone"]
+[node name="ForeArmLRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/ArmLBone/ForeArmLBone" unique_id=270060158]
 remote_path = NodePath("../../../../../../../Sprites/ArmL/ForeArmL")
 
-[node name="HandLBone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/ArmLBone/ForeArmLBone"]
-position = Vector2(15.8538475, -0.1569233)
-rotation = 0.46955204
+[node name="HandLBone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/ArmLBone/ForeArmLBone" unique_id=417476756]
+position = Vector2(15.856186, -0.15744019)
+rotation = 0.72430843
 scale = Vector2(1.0000001, 1)
 rest = Transform2D(0.9999967, 0, 0, 0.9999967, 15, 0)
 auto_calculate_length_and_angle = false
 length = 4.0
 bone_angle = 0.0
 
-[node name="HandLRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/ArmLBone/ForeArmLBone/HandLBone"]
+[node name="HandLRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/ArmLBone/ForeArmLBone/HandLBone" unique_id=1491102863]
 remote_path = NodePath("../../../../../../../../Sprites/ArmL/HandL")
 
-[node name="ArmRBone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone"]
-position = Vector2(-0.99910927, -2.999546)
-rotation = 1.4593977
-scale = Vector2(1.0000004, 1.0000002)
+[node name="ArmRBone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone" unique_id=1556181600]
+position = Vector2(-0.99918175, -2.9991493)
+rotation = 1.2778447
+scale = Vector2(1.0000005, 1.0000004)
 rest = Transform2D(2.2212623e-06, 0.9999988, -0.9999988, 2.2212623e-06, -1, -2)
 
-[node name="ArmRRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/ArmRBone"]
+[node name="ArmRRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/ArmRBone" unique_id=771126527]
 remote_path = NodePath("../../../../../../Sprites/ArmR/ArmR")
 
-[node name="ForeArmRBone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/ArmRBone"]
-position = Vector2(13.241882, -0.9663906)
-rotation = -2.3833084
-scale = Vector2(0.9999998, 0.99999994)
+[node name="ForeArmRBone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/ArmRBone" unique_id=1086712004]
+position = Vector2(13.240328, -0.96596336)
+rotation = -2.5384614
+scale = Vector2(0.9999998, 0.9999998)
 rest = Transform2D(0.99999917, 0, 0, 0.99999917, 13, -1.00001)
 
-[node name="ForeArmRRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/ArmRBone/ForeArmRBone"]
+[node name="ForeArmRRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/ArmRBone/ForeArmRBone" unique_id=1916493600]
 remote_path = NodePath("../../../../../../../Sprites/ArmR/ForeArmR")
 
-[node name="HandRBone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/ArmRBone/ForeArmRBone"]
-position = Vector2(14.864222, 0.01125145)
-rotation = 0.78290725
-scale = Vector2(1.0000001, 0.99999964)
+[node name="HandRBone" type="Bone2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/ArmRBone/ForeArmRBone" unique_id=260650962]
+position = Vector2(14.867918, 0.011530876)
+rotation = 1.2060195
+scale = Vector2(0.9999998, 0.99999964)
 rest = Transform2D(0.99999946, 0, 0, 0.99999946, 15, 0)
 auto_calculate_length_and_angle = false
 length = 4.0
 bone_angle = 0.0
 
-[node name="HandRRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/ArmRBone/ForeArmRBone/HandRBone"]
+[node name="HandRRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/SpineBone/TorsoBone/ArmRBone/ForeArmRBone/HandRBone" unique_id=560184552]
 remote_path = NodePath("../../../../../../../../Sprites/ArmR/HandR")
 
-[node name="HipLBone" type="Bone2D" parent="Skelly/PelvisBone"]
+[node name="HipLBone" type="Bone2D" parent="Skelly/PelvisBone" unique_id=615109513]
 position = Vector2(2, 5)
-rotation = 1.700733
+rotation = 1.132577
 scale = Vector2(0.9999975, 0.9999975)
 rest = Transform2D(2.22126e-06, 0.9999978, -0.9999978, 2.22126e-06, 2, 5)
 
-[node name="HipLRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/HipLBone"]
+[node name="HipLRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/HipLBone" unique_id=195894484]
 remote_path = NodePath("../../../../Sprites/LegL/HipL")
 
-[node name="CalveLBone" type="Bone2D" parent="Skelly/PelvisBone/HipLBone"]
+[node name="CalveLBone" type="Bone2D" parent="Skelly/PelvisBone/HipLBone" unique_id=230449295]
 position = Vector2(11, 2.47955e-05)
-rotation = 0.35274723
+rotation = 1.3229111
 scale = Vector2(0.99999785, 0.99999785)
 rest = Transform2D(0.99999815, 0, 0, 0.99999815, 11, 2.47955e-05)
 auto_calculate_length_and_angle = false
 length = 22.0
 bone_angle = 4.999998
 
-[node name="CalveLRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/HipLBone/CalveLBone"]
+[node name="CalveLRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/HipLBone/CalveLBone" unique_id=89195192]
 remote_path = NodePath("../../../../../Sprites/LegL/CalveL")
 
-[node name="HipRBone" type="Bone2D" parent="Skelly/PelvisBone"]
+[node name="HipRBone" type="Bone2D" parent="Skelly/PelvisBone" unique_id=191550591]
 position = Vector2(-0.999996, 5)
-rotation = 0.33736086
+rotation = -0.3235562
 scale = Vector2(0.9999974, 0.9999974)
 rest = Transform2D(2.2212605e-06, 0.9999979, -0.9999979, 2.2212605e-06, -0.999996, 5)
 
-[node name="HipRRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/HipRBone"]
+[node name="HipRRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/HipRBone" unique_id=412425033]
 remote_path = NodePath("../../../../Sprites/LegR/HipR")
 
-[node name="CalveRBone" type="Bone2D" parent="Skelly/PelvisBone/HipRBone"]
+[node name="CalveRBone" type="Bone2D" parent="Skelly/PelvisBone/HipRBone" unique_id=1944863911]
 position = Vector2(11, 2.47955e-05)
-rotation = 0.8733097
+rotation = 1.5463464
 scale = Vector2(0.9999966, 0.9999966)
 rest = Transform2D(0.99999666, 0, 0, 0.99999666, 11, 2.47955e-05)
 auto_calculate_length_and_angle = false
 length = 22.0
 bone_angle = 4.999998
 
-[node name="CalveRRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/HipRBone/CalveRBone"]
+[node name="CalveRRT" type="RemoteTransform2D" parent="Skelly/PelvisBone/HipRBone/CalveRBone" unique_id=1472217082]
 remote_path = NodePath("../../../../../Sprites/LegR/CalveR")
 
-[node name="Wall of text" type="Control" parent="."]
+[node name="Wall of text" type="Control" parent="." unique_id=1727773369]
 layout_mode = 3
 anchors_preset = 0
 
-[node name="DemoText" type="RichTextLabel" parent="Wall of text"]
+[node name="DemoText" type="RichTextLabel" parent="Wall of text" unique_id=2052485553]
 layout_mode = 0
 offset_left = -61.0
 offset_top = -101.99999
@@ -841,7 +841,7 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="DemoText2" type="RichTextLabel" parent="Wall of text"]
+[node name="DemoText2" type="RichTextLabel" parent="Wall of text" unique_id=643807906]
 layout_mode = 0
 offset_left = 29.0
 offset_top = -53.0
@@ -856,7 +856,7 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="DemoText4" type="RichTextLabel" parent="Wall of text"]
+[node name="DemoText4" type="RichTextLabel" parent="Wall of text" unique_id=859790920]
 layout_mode = 0
 offset_left = 41.0
 offset_top = -24.0
@@ -873,7 +873,7 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="DemoText3" type="RichTextLabel" parent="Wall of text"]
+[node name="DemoText3" type="RichTextLabel" parent="Wall of text" unique_id=882810615]
 layout_mode = 0
 offset_left = -123.0
 offset_top = -23.000002
@@ -889,7 +889,7 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="DemoText5" type="RichTextLabel" parent="Wall of text"]
+[node name="DemoText5" type="RichTextLabel" parent="Wall of text" unique_id=1077310240]
 layout_mode = 0
 offset_left = -62.0
 offset_top = 10.0
@@ -904,7 +904,7 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="DemoText6" type="RichTextLabel" parent="Wall of text"]
+[node name="DemoText6" type="RichTextLabel" parent="Wall of text" unique_id=1935150172]
 layout_mode = 0
 offset_left = -11.999996
 offset_top = 36.0
